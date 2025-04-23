@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import { BASE_URI } from '@/constants/api'
 
-const BudgetURL = 'http://localhost:3000/budgets'
+const BudgetURL = BASE_URI + '/budgets'
 
 export const useBudgetStore = defineStore('budget', {
   state: () => ({

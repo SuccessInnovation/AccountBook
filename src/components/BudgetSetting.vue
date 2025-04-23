@@ -36,10 +36,7 @@ onMounted(async () => {
   await store.fetchBudgets(currentMonth) // 현재 월을 넘겨줌
   existingBudgets.value = store.budgets
 
-  //   console.log('불러온 예산:', store.budgets)
-  //   console.log('현재 월:', currentMonth)
-
-  // 어떤 함수인지?
+  // 카테고리 별로 설정된 예산을 매핑
   categoryData.value.forEach(item => {
     const matched = existingBudgets.value.find(
       b => b.category === item.category,
@@ -66,6 +63,7 @@ const handleReset = item => {
 const handleCancel = () => {
   emit('close')
 }
+
 // 저장 (POST 또는 PUT)
 const handleSubmit = async () => {
   for (const item of categoryData.value) {
@@ -80,17 +78,19 @@ const handleSubmit = async () => {
     }
 
     if (existing) {
-      // PUT 요청 (기존 항목 업데이트)
+      // 기존 예산 업데이트 (PUT)
       await axios.put(`${BASE_URI}/budgets/${existing.id}`, payload)
     } else {
-      // POST 요청 (새 항목 추가)
+      // 새 예산 설정 (POST)
       await axios.post(`${BASE_URI}/budgets`, payload)
     }
   }
-  await store.fetchBudgets() // 저장 후 store 재갱신
+  // 저장 후 예산 다시 불러오기
+  await store.fetchBudgets()
   emit('submit')
   emit('close')
 }
+
 // 예산 초기화 시 사용자 확인
 const showConfirm = ref(false)
 const confirmMessage = ref('') // 메시지도 동적으로 넣을 수 있음
@@ -124,6 +124,8 @@ const resetBudget = () => {
     })
   })
 }
+
+// 키보드로 컨트롤
 const handleKeyup = event => {
   if (event.key === 'Escape') {
     handleCancel()

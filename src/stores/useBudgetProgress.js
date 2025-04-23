@@ -1,5 +1,5 @@
 import { ref, onMounted, watch } from 'vue'
-import { statisticsStore } from '@/stores/statisticsStore' // 경로 맞게 조정 필요
+import { statisticsStore } from '@/stores/statisticsStore'
 import { useBudgetStore } from '@/stores/UseBudgetStore'
 import { use_calendar_store } from '@/stores/MonthSelector'
 import {
@@ -18,14 +18,14 @@ export function useBudgetProgress() {
   const expenseData = ref([])
   const incomeData = ref([])
 
-  // @params = 전체 예산, 전체 지출, 전체 비율
+  // @params = 전체 예산, 전체 지출, 전체 수입, 전체 비율, 남은 예산
   const totalBudget = ref(0)
   const totalSpent = ref(0)
   const totalIncome = ref(0)
   const overallPercent = ref(0)
   const totalLeft = ref(0)
 
-  // @params = 예산이 설정되지 않더라도 카테고리를 모두 더하는 함수
+  // @params = 예산이 설정되지 않더라도 카테고리를 모두 더한 값
   const rawTotalBudget = ref(0)
   const rawTotalSpent = ref(0)
   const rawTotalIncome = ref(0)
@@ -44,8 +44,6 @@ export function useBudgetProgress() {
       startDate,
       endDate,
     )
-    // 월 데이터를 잘 불러오고 있는지 확인 콘솔
-    // console.log('월별 전체 거래 데이터', result)
 
     const expenses = result.filter(exp => exp.type === 'expense')
     const incomes = result.filter(exp => exp.type === 'income')
@@ -74,7 +72,7 @@ export function useBudgetProgress() {
     const budgetByCategory = Object.fromEntries(
       store.budgets.map(b => [b.category, b.amount]),
     )
-
+    // 지출 데이터
     expenseData.value = EXPENSE_CATEGORIES.filter(
       cat => (budgetByCategory[cat] || 0) > 0,
     ).map(cat => {
@@ -93,6 +91,7 @@ export function useBudgetProgress() {
       }
     })
 
+    // 수입 데이터
     incomeData.value = INCOME_CATEGORIES.map(cat => {
       const income = incomeByCategory[cat] || 0
       return {
@@ -141,23 +140,10 @@ export function useBudgetProgress() {
     rawTotalIncome.value = INCOME_CATEGORIES.reduce((sum, cat) => {
       return sum + (incomeByCategory[cat] || 0)
     }, 0)
-    // 1. 전체 지출 합계
-    rawTotalSpent.value = EXPENSE_CATEGORIES.reduce((sum, cat) => {
-      return sum + (spendingByCategory[cat] || 0)
-    }, 0)
-
-    // 2. 전체 예산 합계
-    rawTotalBudget.value = EXPENSE_CATEGORIES.reduce((sum, cat) => {
-      return sum + (budgetByCategory[cat] || 0)
-    }, 0)
-
-    // 3. 전체 수입 합계
-    rawTotalIncome.value = INCOME_CATEGORIES.reduce((sum, cat) => {
-      return sum + (incomeByCategory[cat] || 0)
-    }, 0)
   }
   // endregion
 
+  // refresh 함수
   const refresh = async () => {
     await loadExpensebyMonth(
       calendar.monthStartDate,

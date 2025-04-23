@@ -110,12 +110,15 @@ const {
   refresh,
 } = useBudgetProgress()
 
+// ref.value.refresh 설정
 defineExpose({
-  refresh, // 👈 이걸 해줘야 ref.value.refresh가 가능해짐
+  refresh,
 })
+
+// 예산 설정 UI 열기
 const budgetSetting = () => {
   console.log('클릭됨')
-  emit('setting') // 예산 설정 UI 열기
+  emit('setting')
 }
 </script>
 
