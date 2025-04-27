@@ -263,24 +263,7 @@ function selectedDeleteHandler() {
   }
 }
 
-//#region 전체 삭제 이벤트
-/**
- * 모든 거래 내역을 삭제하는 함수
- * 거래 항목이 없을 경우 예외 처리
- */
-function allDeleteHandler() {
-  if (transactionStore.transactions.length === 0) {
-    alert('삭제할 항목이 없습니다!')
-    return
-  }
 
-  if (confirm('정말 모든 항목을 삭제하시겠습니까?')) {
-    transactionStore.transactions.forEach(record => {
-      transactionStore.deleteTransaction(record.id)
-    })
-  }
-}
-//#endregion
 
 //#region 행을 클릭하면 체크되는 이벤트
 /**
@@ -303,16 +286,10 @@ function toggleRow(record, event) {
           class="bg-white d-flex align-items-center px-3 py-2 rounded-4 gap-2"
         >
           <button
-            class="btn btn-outline-secondary btn-sm"
+            class="btn btn-outline-danger btn-sm"
             @click="selectedDeleteHandler"
           >
-            선택 삭제
-          </button>
-          <button
-            class="btn btn-outline-danger btn-sm"
-            @click="allDeleteHandler"
-          >
-            전체 삭제
+            체크된 항목 삭제
           </button>
         </div>
 
@@ -336,6 +313,7 @@ function toggleRow(record, event) {
               type="checkbox"
               id="incomeCheck"
               v-model="incomeChecked"
+              style="cursor: pointer;"
             />
             <label class="form-check-label fw-semibold" for="incomeCheck">
               수입
@@ -348,6 +326,7 @@ function toggleRow(record, event) {
               type="checkbox"
               id="expenseCheck"
               v-model="expenseChecked"
+              style="cursor: pointer;"
             />
             <label class="form-check-label fw-semibold" for="expenseCheck">
               지출
@@ -374,6 +353,7 @@ function toggleRow(record, event) {
                     type="checkbox"
                     :checked="isAllSelected"
                     @change="toggleSelectAll($event)"
+                    style="cursor: pointer;"
                   />
                 </th>
                 <th scope="col" style="width: 160px">날짜</th>
@@ -398,6 +378,7 @@ function toggleRow(record, event) {
                     type="checkbox"
                     v-model="filtered.selected"
                     @click.stop
+                    style="cursor: pointer;"
                   />
                 </td>
                 <td>{{ filtered.date }}</td>
