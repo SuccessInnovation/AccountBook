@@ -235,7 +235,7 @@ async function deleteHandler(id) {
 function handleEdit(record) {
   console.log('수정할 거래 id:', record.id)
   router.push({
-    name: 'TransactionEditPage', // 이동할 라우터 이름
+    name: 'TransactionEdit', // 이동할 라우터 이름
     params: { id: record.id }, // 수정할 거래 ID 전달
   })
 }
@@ -417,7 +417,7 @@ function toggleRow(record, event) {
                     style="cursor: pointer"
                     @click="
                       router.push({
-                        name: 'TransactionEditPage',
+                        name: 'TransactionEdit',
                         params: { id: filtered.id },
                       })
                     "

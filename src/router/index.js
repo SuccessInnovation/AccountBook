@@ -63,7 +63,7 @@ const routes = [
   {
     path: '/transaction/edit/:id',
     name: 'TransactionEdit',
-    component: TransactionEditPage, // 혹은 적절한 컴포넌트 경로
+    component: TransactionEditPage,
   },
   {
     path: '/statistics/summary',
