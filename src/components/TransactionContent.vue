@@ -47,18 +47,6 @@ onMounted(() => {
   transactionStore.fetchTransactions()
 })
 
-// 필터 상태: 수입/지출 (기본: 모두 체크)
-// const showIncome = ref(true)
-// const showExpense = ref(true)
-
-// 필터링된 거래 내역 목록 (수입/지출 체크 상태에 따라)
-// const filteredTransactions = computed(() => {
-//   return transactionStore.transactions.filter(record => {
-//     if (record.type === '수입' && showIncome.value) return true
-//     if (record.type === '지출' && showExpense.value) return true
-//     return false
-//   })
-// })
 // 상태변수 초기값 설정
 
 // '수입' 체크박스 - 기본: 체크됨
@@ -247,7 +235,7 @@ async function deleteHandler(id) {
 function handleEdit(record) {
   console.log('수정할 거래 id:', record.id)
   router.push({
-    name: 'TransactionEdit', // 이동할 라우터 이름
+    name: 'TransactionEditPage', // 이동할 라우터 이름
     params: { id: record.id }, // 수정할 거래 ID 전달
   })
 }
@@ -429,7 +417,7 @@ function toggleRow(record, event) {
                     style="cursor: pointer"
                     @click="
                       router.push({
-                        name: 'TransactionEdit',
+                        name: 'TransactionEditPage',
                         params: { id: filtered.id },
                       })
                     "

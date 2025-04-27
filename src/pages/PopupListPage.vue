@@ -1,11 +1,8 @@
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, defineEmits } from 'vue'
 import { useTransactionStore } from '@/stores/TransactionStore'
 import { useRoute, useRouter } from 'vue-router'
 const router = useRouter()
-
-// import TransactionEdit from '@/components/TransactionEdit.vue'
-// import
 
 const transactionStore = useTransactionStore()
 const route = useRoute()
@@ -75,7 +72,22 @@ function formatAmount(value, type) {
 // 혁신님이 주시면 갈아끼우기(handleEdit, handleDelete)
 // 수정 아이콘 클릭 시 처리 (수정 페이지로 이동)
 function handleEdit(record) {
-  router.push({ name: 'Popup', params: { id: record.id } })
+  const fromCalendar = route.query.date !== undefined
+  // 👉 현재 route.query에 date가 있으면 CalendarContentPage에서 온 거라고 판단
+
+  if (fromCalendar) {
+    router.push({
+      name: 'TransactionEdit',
+      params: { id: record.id },
+      query: { from: 'calendar' },
+    })
+  } else {
+    router.push({
+      name: 'TransactionEdit',
+      params: { id: record.id },
+      // 다른 경우에는 query 안 넘김
+    })
+  }
 }
 
 // 삭제 아이콘 클릭 시 처리 (삭제 확인 후 삭제)
@@ -108,7 +120,13 @@ function closeModal() {
       </div>
       <button class="closeBtn" @click="closeModal">✕</button>
 
-      <div class="scrollable-table">
+      <!-- 거래내역이 없을 경우 메시지 출력 -->
+      <div v-if="filteredByDate.length === 0" id="emptyTransaction">
+        표시할 내역이 없습니다.
+      </div>
+
+      <!-- 거래내역이 있을 경우 거래내역 출력 -->
+      <div v-else class="scrollable-table">
         <table class="ledger-table table">
           <thead>
             <tr>
@@ -143,12 +161,7 @@ function closeModal() {
               <td>
                 <i
                   class="icon-edit"
-                  @click="
-                    router.push({
-                      name: 'TransactionEdit',
-                      params: { id: record.id },
-                    })
-                  "
+                  @click="handleEdit(record)"
                   style="cursor: pointer"
                   >✏️</i
                 >

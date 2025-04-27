@@ -4,7 +4,7 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { use_calendar_store } from '@/stores/MonthSelector'
 // 거래 내역을 상태로 관리하는 Pinia store
 import { useTransactionStore } from '@/stores/TransactionStore'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 // import
 
 // 월 이동 컴포넌트 import
@@ -15,6 +15,7 @@ import AddListBtn from '@/components/AddListBtn.vue'
 import TransactionContent from '@/components/TransactionContent.vue'
 const transactionStore = useTransactionStore()
 const router = useRouter()
+const route = useRoute()
 // 상단 import 부분에 추가
 // setup 내에서 calendar 상태 불러오기
 const calendar = use_calendar_store()
@@ -203,6 +204,19 @@ watch([incomeChecked, expenseChecked], () => {
   // 드롭다운 초기화 - key값 변경 시 컴포넌트 리렌더링
   resetKey.value++
 })
+
+//탭 감시
+watch(
+  () => route.query.tab,
+  newTab => {
+    if (newTab === 'calendar') {
+      activeTab.value = 'calendar' // tab 쿼리값 보고 calendar로 세팅
+    } else if (newTab === 'list') {
+      activeTab.value = 'list'
+    }
+  },
+  { immediate: true }, // 바로 적용
+)
 </script>
 <!-- 탭메뉴 -->
 <template>
