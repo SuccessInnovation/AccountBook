@@ -16,6 +16,8 @@ const router = useRouter()
 // 필터링 컴포넌트 (카테고리 선택 / 메모 검색창)
 import FilterCategory from '@/components/FilterCategory.vue'
 import SearchByMemo from '@/components/SearchByMemo.vue'
+// 수정 모달 컴포넌트 import
+import TransactionEditModal from '@/components/TransactionEditModal.vue'
 
 // 미리 정의된 카테고리 목록 (수입 / 지출), 카테고리 항목 '영어 - 한글' 매핑
 import {
@@ -38,6 +40,10 @@ const expenseChecked = ref(true)
 const categorySelected = ref('all')
 // 메모 검색창 - 기본: ''
 const memoInputted = ref('')
+
+// 수정 모달 상태 관리
+const showEditModal = ref(false)
+const currentEditId = ref(null)
 
 const filteredTransactions = computed(() => {
   return transactionStore.transactions.filter(record => {
@@ -187,19 +193,28 @@ async function deleteHandler(id) {
 //#region 수정 버튼 클릭 핸들러
 /**
  * 거래내역 수정 요청 처리 함수
- * 클릭된 거래내역의 ID를 라우터를 통해 수정 페이지로 전달하여 이동
+ * 해당 거래 id를 저장하고 모달을 열어 편집 가능하게 함
  *
  * @param {Object} record - 수정할 거래 객체
  * @param {number|string} record.id - 거래의 고유 ID
  */
 function handleEdit(record) {
   console.log('수정할 거래 id:', record.id)
-  router.push({
-    name: 'TransactionEdit', // 이동할 라우터 이름
-    params: { id: record.id }, // 수정할 거래 ID 전달
-  })
+  currentEditId.value = record.id
+  showEditModal.value = true
 }
 //#endregion
+
+// 모달 닫기 핸들러
+function closeEditModal() {
+  showEditModal.value = false
+  currentEditId.value = null
+}
+
+// 거래 내역 업데이트 후 처리
+function handleTransactionUpdated() {
+  transactionStore.fetchTransactions() // 거래 내역 새로고침
+}
 
 //#region 선택 삭제 이벤트
 /**
@@ -354,12 +369,6 @@ function toggleRow(record, event) {
                   <i
                     class="text-success d-block mx-auto icon-hover"
                     style="cursor: pointer"
-                    @click="
-                      router.push({
-                        name: 'TransactionEdit',
-                        params: { id: filtered.id },
-                      })
-                    "
                     @click.stop="handleEdit(filtered)"
                     >✏️</i
                   >
@@ -378,9 +387,18 @@ function toggleRow(record, event) {
         </div>
       </div>
     </div>
+
+    <!-- 수정 모달 컴포넌트 -->
+    <TransactionEditModal
+      v-if="showEditModal"
+      :transactionId="currentEditId"
+      @close="closeEditModal"
+      @updated="handleTransactionUpdated"
+    />
   </div>
 </template>
 <style scoped>
+/* 스타일은 그대로 유지 */
 /* 월 이동 컴포넌트 */
 .container {
   background-color: var(--color-point-3);

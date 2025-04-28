@@ -2,36 +2,24 @@
 import { ref, computed, onMounted, watch, defineEmits } from 'vue'
 import { useTransactionStore } from '@/stores/TransactionStore'
 import { useRoute, useRouter } from 'vue-router'
-const router = useRouter()
+import axios from 'axios'
+import {
+  CATEGORY_MAP,
+  INCOME_CATEGORIES,
+  EXPENSE_CATEGORIES,
+} from '@/constants/categories'
 
+const router = useRouter()
 const transactionStore = useTransactionStore()
 const route = useRoute()
+const API_URL = 'http://localhost:3000/transactions'
 
 console.log('날짜:', route.query.date) // console.log(route.params.id)
-//달력 showCalendar, openCalendar
-// const showCalendar = ref(false)
-
-// const openCalendar = () => {
-//   showCalendar.value = true
-// }
 
 // 페이지 로드 시 거래 내역 불러오기
 onMounted(() => {
   transactionStore.fetchTransactions()
 })
-
-// 필터 상태: 수입/지출 (기본: 모두 체크)
-// const showIncome = ref(true)
-// const showExpense = ref(true)
-
-// 필터링된 거래 내역 목록 (수입/지출 체크 상태에 따라)
-// const filteredTransactions = computed(() => {
-//   return transactionStore.transactions.filter(record => {
-//     if (record.type === 'income' && showIncome.value) return true
-//     if (record.type === 'expense' && showExpense.value) return true
-//     return false
-//   })
-// })
 
 const selectedDate = ref(route.query.date || '')
 console.log('선택요일:', selectedDate.value)
@@ -69,25 +57,10 @@ function formatAmount(value, type) {
       : formatted
 }
 
-// 혁신님이 주시면 갈아끼우기(handleEdit, handleDelete)
-// 수정 아이콘 클릭 시 처리 (수정 페이지로 이동)
-function handleEdit(record) {
-  const fromCalendar = route.query.date !== undefined
-  // 👉 현재 route.query에 date가 있으면 CalendarContentPage에서 온 거라고 판단
-
-  if (fromCalendar) {
-    router.push({
-      name: 'TransactionEdit',
-      params: { id: record.id },
-      query: { from: 'calendar' },
-    })
-  } else {
-    router.push({
-      name: 'TransactionEdit',
-      params: { id: record.id },
-      // 다른 경우에는 query 안 넘김
-    })
-  }
+// 날짜 -> 요일로 바꾸는 함수
+function getKoreanDayName(dateStr) {
+  const date = new Date(dateStr)
+  return date.toLocaleDateString('ko-KR', { weekday: 'long' })
 }
 
 // 삭제 아이콘 클릭 시 처리 (삭제 확인 후 삭제)
@@ -96,21 +69,102 @@ function handleDelete(id) {
     transactionStore.deleteTransaction(id)
   }
 }
-// 날짜 -> 요일로 바꾸는 함수
-function getKoreanDayName(dateStr) {
-  const date = new Date(dateStr)
-  return date.toLocaleDateString('ko-KR', { weekday: 'long' })
-}
 
 // x버튼 (팝업 취소)
 const emit = defineEmits(['close'])
 function closeModal() {
   emit('close')
 }
+
+// 수정 모달 관련 상태
+const showEditModal = ref(false)
+const selectedTransactionId = ref(null)
+
+// 수정 폼 데이터
+const formData = ref({
+  date: '',
+  type: '',
+  amount: '',
+  category: '',
+  paymentMethod: '',
+  memo: '',
+})
+
+// 수정 아이콘 클릭 시 처리
+async function handleEdit(transaction) {
+  selectedTransactionId.value = transaction.id
+  try {
+    const res = await axios.get(`${API_URL}/${transaction.id}`)
+    formData.value = res.data
+    showEditModal.value = true
+  } catch (err) {
+    console.error('거래 데이터 불러오기 실패:', err)
+  }
+}
+
+// 현재 거래 타입에 따라 표시할 카테고리 목록 계산
+const categoriesList = computed(() => {
+  if (formData.value.type === 'income') {
+    return INCOME_CATEGORIES
+  } else if (formData.value.type === 'expense') {
+    return EXPENSE_CATEGORIES
+  } else {
+    return [] // 타입이 없는 경우 빈 배열 반환
+  }
+})
+
+// 폼 제출 유효성 검사
+const amountError = computed(() => {
+  const amount = Number(formData.value.amount)
+  return amount <= 0 ? '금액은 0원보다 커야 합니다' : ''
+})
+
+const isFormValid = computed(() => {
+  const amount = Number(formData.value.amount)
+  const category = formData.value.category
+  const type = formData.value.type
+  const date = formData.value.date
+  const payment = formData.value.paymentMethod
+
+  const isAmountValid = amount > 0
+  const isCategoryValid = category !== ''
+  const isDateValid = date !== ''
+  const isTypeValid = type === 'income' || type === 'expense'
+  const isPaymentValid = type === 'expense' ? payment !== '' : true
+
+  return (
+    isAmountValid &&
+    isCategoryValid &&
+    isDateValid &&
+    isTypeValid &&
+    isPaymentValid
+  )
+})
+
+// 수정 요청 보내기
+async function handleUpdate() {
+  try {
+    await axios.put(`${API_URL}/${selectedTransactionId.value}`, formData.value)
+    alert('수정 완료!')
+    // 수정 후 거래 내역 다시 불러오기
+    transactionStore.fetchTransactions()
+    // 모달 닫기
+    closeEditModal()
+  } catch (err) {
+    alert('수정 요청 실패')
+    console.error('수정 오류:', err)
+  }
+}
+
+// 수정 모달 닫기
+function closeEditModal() {
+  showEditModal.value = false
+  selectedTransactionId.value = null
+}
 </script>
 
 <template>
-  <div class="popupOverlay p-4 border rounded shadow" @click.self="closeModal">
+  <div v-if="!showEditModal" class="popupOverlay p-4 border rounded shadow" @click.self="closeModal">
     <!-- 목록/달력 토글 & 검색/필터 영역 -->
     <!-- 테이블 영역 -->
     <div class="popupContainer">
@@ -182,9 +236,73 @@ function closeModal() {
       <button class="closepopuplist" @click="closepopuplist" />
     </div>
   </div>
+
+  <!-- 수정 모달 -->
+  <div v-if="showEditModal" class="popupOverlay" @click.self="closeEditModal">
+    <div class="edit-container">
+      <h2>거래 수정</h2>
+      <form @submit.prevent="handleUpdate">
+        <!-- 수정할 거래 데이터 입력 (예시로 날짜, 금액, 메모) -->
+        <label for="editDate">날짜</label>
+        <input type="date" v-model="formData.date" id="editDate" />
+        <label for="editAmount">금액</label>
+        <input
+          type="number"
+          v-model="formData.amount"
+          placeholder="금액"
+          id="editAmount"
+        />
+        <p
+          v-if="amountError"
+          style="color: red; font-size: 0.875rem; margin: 0 0 3px"
+        >
+          {{ amountError }}
+        </p>
+        <label for="editCategory">카테고리</label>
+        <select v-model="formData.category" id="editCategory" required>
+          <option value="" disabled>카테고리 선택</option>
+          <option
+            v-for="(label, key) in categoriesList"
+            :key="key"
+            :value="label"
+          >
+            {{ CATEGORY_MAP[label] }}
+          </option>
+        </select>
+        <!-- 지출인 경우에만 결제 수단 표시 -->
+        <div
+          class="payment_block"
+          v-if="formData.type === 'expense'"
+          style="display: flex; flex-direction: column"
+        >
+          <label for="editPayment">결제 수단</label>
+          <select v-model="formData.paymentMethod" id="editPayment" required>
+            <option value="" disabled>결제 수단 선택</option>
+            <option value="card">카드</option>
+            <option value="cash">현금</option>
+          </select>
+        </div>
+        <label for="editMemo">메모</label>
+        <input
+          type="text"
+          v-model="formData.memo"
+          placeholder="메모"
+          id="editMemo"
+        />
+
+        <div class="button-group">
+          <button type="submit" class="editSubmit" :disabled="!isFormValid">
+            수정 완료
+          </button>
+          <button type="button" class="editCancel" @click="closeEditModal">
+            취소
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
 </template>
 
-/* 혁신님 팝업 페이지 스타일 */
 <style scoped>
 .popupOverlay {
   position: fixed;
@@ -400,5 +518,84 @@ function closeModal() {
 .closepopuplist {
   background-color: var(--point-1-color);
   color: white;
+}
+
+/* 수정 모달 스타일 */
+.edit-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.edit-container {
+  width: 550px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: sans-serif;
+  position: relative;
+}
+
+.edit-container h2 {
+  margin-bottom: 16px;
+  text-align: center;
+}
+.edit-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.payment_block {
+  gap: 10px;
+}
+
+.edit-container form > input,
+.edit-container form > select,
+.payment_block > select {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+}
+
+#editDate {
+  cursor: pointer;
+}
+
+/* 하단 버튼 그룹 */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.editSubmit,
+.editCancel {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.editSubmit {
+  background-color: #a3c39c;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.editCancel {
+  background-color: #ddd;
+  color: #333;
 }
 </style>
