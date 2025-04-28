@@ -59,7 +59,13 @@ const pageNumbers = computed(() => {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in paginatedItems" :key="item.id">
+          <!-- 미조회 시 안내문구 출력 -->
+          <tr v-if="store.filteredTransaction.length === 0">
+            <td colspan="4" class="empty-message">조회 버튼을 눌러주세요</td>
+          </tr>
+
+          <!-- 조회 시 데이터 출력 -->
+          <tr v-else v-for="item in paginatedItems" :key="item.id">
             <td>{{ item.date }}</td>
             <td>{{ item.category }}</td>
             <td>{{ item.memo || '-' }}</td>

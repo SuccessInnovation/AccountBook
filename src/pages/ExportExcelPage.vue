@@ -27,6 +27,8 @@ import { statisticsStore } from '@/stores/statisticsStore'
 const store = statisticsStore()
 const isSearched = ref(false)
 
+store.filteredTransaction = []
+
 const handleSearch = () => {
   isSearched.value = true
 }
