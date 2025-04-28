@@ -7,41 +7,46 @@ import { useRouter } from 'vue-router'
 import PopupListPage from '@/pages/PopupListPage.vue'
 
 const calendar = use_calendar_store()
-const transactionStore = useTransactionStore()
-const { transactions } = storeToRefs(transactionStore)
+const transaction_store = useTransactionStore()
+const { transactions } = storeToRefs(transaction_store)
 const { current_year, current_month } = storeToRefs(calendar)
 const router = useRouter()
 
+const today = new Date()
+const days = ['일', '월', '화', '수', '목', '금', '토']
+
+const show_selected_date_list = ref(false)
+
 onMounted(() => {
-  transactionStore.fetchTransactions()
+  transaction_store.fetchTransactions()
 })
 
-const days = ['일', '월', '화', '수', '목', '금', '토']
-const today = new Date()
-
-const showSelectedDateList = ref(false)
-
-const openSelectedDateList = day => {
+function openSelectedDateList(day) {
   if (!day) return
-  const selectedDate = `${current_year.value}-${String(current_month.value + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-  router.replace({ query: { date: selectedDate } })
-  showSelectedDateList.value = true
+  const selected_date = `${current_year.value}-${String(current_month.value + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+  router.replace({ query: { date: selected_date } })
+  show_selected_date_list.value = true
 }
 
-const closePopup = () => {
-  showSelectedDateList.value = false
+function closePopup() {
+  show_selected_date_list.value = false
 }
 
-const getDaysInMonth = (year, month) => new Date(year, month + 1, 0).getDate()
-const getStartDay = (year, month) => new Date(year, month, 1).getDay()
+function getDaysInMonth(year, month) {
+  return new Date(year, month + 1, 0).getDate()
+}
+
+function getStartDay(year, month) {
+  return new Date(year, month, 1).getDay()
+}
 
 const weeks = computed(() => {
-  const totalDays = getDaysInMonth(current_year.value, current_month.value)
-  const startDay = getStartDay(current_year.value, current_month.value)
+  const total_days = getDaysInMonth(current_year.value, current_month.value)
+  const start_day = getStartDay(current_year.value, current_month.value)
   const dates = []
 
-  for (let i = 0; i < startDay; i++) dates.push(null)
-  for (let i = 1; i <= totalDays; i++) dates.push(i)
+  for (let i = 0; i < start_day; i++) dates.push(null)
+  for (let i = 1; i <= total_days; i++) dates.push(i)
   while (dates.length % 7 !== 0) dates.push(null)
 
   const result = []
@@ -51,20 +56,21 @@ const weeks = computed(() => {
   return result
 })
 
-const getDailySummary = day => {
+function getDailySummary(day) {
   if (!day) return { income: 0, expense: 0 }
-  const dateStr = `${current_year.value}-${String(current_month.value + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
-  const dailyRecords = transactions.value?.filter(r => r.date === dateStr) || []
-  const income = dailyRecords
+  const date_str = `${current_year.value}-${String(current_month.value + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`
+  const daily_records =
+    transactions.value?.filter(r => r.date === date_str) || []
+  const income = daily_records
     .filter(r => r.type === 'income')
     .reduce((sum, r) => sum + r.amount, 0)
-  const expense = dailyRecords
+  const expense = daily_records
     .filter(r => r.type === 'expense')
     .reduce((sum, r) => sum + r.amount, 0)
   return { income, expense }
 }
 
-const isToday = day => {
+function isToday(day) {
   return (
     today.getDate() === day &&
     today.getMonth() === current_month.value &&
@@ -72,6 +78,7 @@ const isToday = day => {
   )
 }
 </script>
+
 <template>
   <div class="calendar-wrapper">
     <table class="calendar-table">
@@ -83,10 +90,10 @@ const isToday = day => {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(week, wIdx) in weeks" :key="wIdx">
+        <tr v-for="(week, w_idx) in weeks" :key="w_idx">
           <td
-            v-for="(date, dIdx) in week"
-            :key="dIdx"
+            v-for="(date, d_idx) in week"
+            :key="d_idx"
             @click="openSelectedDateList(date)"
             class="calendar-cell"
             :class="{ today_highlight: isToday(date) }"
@@ -105,11 +112,12 @@ const isToday = day => {
       </tbody>
     </table>
 
-    <PopupListPage v-if="showSelectedDateList" @close="closePopup" />
+    <PopupListPage v-if="show_selected_date_list" @close="closePopup" />
   </div>
 </template>
 
 <style scoped>
+/* 1. 캘린더 전체 */
 .calendar-wrapper {
   max-width: 860px;
   margin: 2rem auto;
@@ -119,12 +127,14 @@ const isToday = day => {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
+/* 2. 캘린더 테이블 */
 .calendar-table {
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
 }
 
+/* 3. 요일 헤더 */
 .day-header {
   color: #267c49;
   font-weight: bold;
@@ -132,6 +142,7 @@ const isToday = day => {
   font-size: 1rem;
 }
 
+/* 4. 캘린더 날짜 셀 */
 .calendar-cell {
   height: 100px;
   padding: 0.5rem;
@@ -145,16 +156,19 @@ const isToday = day => {
   padding-left: 0.2rem;
 }
 
+/* 5. 수입 텍스트 */
 .text-income {
   color: #267caa;
   font-size: 0.85rem;
 }
 
+/* 6. 지출 텍스트 */
 .text-expense {
   color: #d9534f;
   font-size: 0.85rem;
 }
 
+/* 7. 오늘 날짜 하이라이트 */
 .today_highlight {
   background-color: rgba(153, 188, 133, 0.5);
   border-radius: 12px;

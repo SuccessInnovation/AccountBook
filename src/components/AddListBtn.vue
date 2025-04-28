@@ -2,10 +2,10 @@
 import { ref } from 'vue'
 import PopupPage from '@/pages/PopupPage.vue'
 
-const showPopup = ref(false)
+const show_popup = ref(false)
 
 function goToPopup() {
-  showPopup.value = true
+  show_popup.value = true
 }
 </script>
 
@@ -15,17 +15,19 @@ function goToPopup() {
   </div>
 
   <!-- 팝업이 열릴 때만 보여짐 -->
-  <PopupPage v-if="showPopup" @close="showPopup = false" />
+  <PopupPage v-if="show_popup" @close="show_popup = false" />
 </template>
 
 <style scoped>
-/* 하단 '추가' 버튼 영역 */
+/* 1. 하단 '추가' 버튼 영역 */
 .add-button-area {
   display: flex;
   justify-content: center;
   padding: 20px;
   background-color: #fff;
 }
+
+/* 2. 추가 버튼 */
 .add-button {
   background-color: var(--color-point-3);
   color: #fff;
@@ -36,6 +38,7 @@ function goToPopup() {
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
 .add-button:hover {
   background-color: var(--color-point-1);
 }

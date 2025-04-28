@@ -8,12 +8,13 @@ import {
 } from '@/constants/categories'
 import { useTransactionStore } from '@/stores/TransactionStore'
 
-const API_URL = 'http://localhost:3000/transactions'
-const transactionStore = useTransactionStore()
+const api_url = 'http://localhost:3000/transactions'
+const transaction_store = useTransactionStore()
 const records = ref([])
+
 async function getRecords() {
   try {
-    const response = await axios.get(API_URL)
+    const response = await axios.get(api_url)
     records.value = response.data
   } catch (error) {
     console.error('데이터 로딩 오류:', error)
@@ -29,9 +30,9 @@ function closeModal() {
   emit('close')
 }
 
-const transactionType = ref('expenses')
+const transaction_type = ref('expenses')
 
-const formData = ref({
+const form_data = ref({
   date: '',
   amount: '',
   category: '',
@@ -39,7 +40,6 @@ const formData = ref({
   memo: '',
 })
 
-// errors 객체: 각 필드에 대한 에러 메시지 저장
 const errors = ref({
   date: '',
   amount: '',
@@ -47,21 +47,19 @@ const errors = ref({
   payment: '',
 })
 
-// checkRequired: 특정 필드가 비어있으면 "필수 항목입니다"를 할당
 function checkRequired(field) {
-  if (!formData.value[field]) {
+  if (!form_data.value[field]) {
     errors.value[field] = '필수 항목입니다'
   } else {
     errors.value[field] = ''
   }
 }
 
-// checkAmount: 금액 필드가 비어있지 않은 경우 숫자 여부 확인
 function checkAmount() {
-  if (!formData.value.amount) {
+  if (!form_data.value.amount) {
     errors.value.amount = '필수 항목입니다'
   } else {
-    const num = parseFloat(formData.value.amount)
+    const num = parseFloat(form_data.value.amount)
     if (isNaN(num)) {
       errors.value.amount = '숫자만 입력해주세요'
     } else {
@@ -70,20 +68,17 @@ function checkAmount() {
   }
 }
 
-// computed 속성: 금액이 0 이하인 경우에만 경고 메시지 출력
-const amountError = computed(() => {
-  // 빈 문자열이면 에러 메시지 표시 안 함
-  if (formData.value.amount === '') return ''
-  const num = Number(formData.value.amount)
+const amount_error = computed(() => {
+  if (form_data.value.amount === '') return ''
+  const num = Number(form_data.value.amount)
   return num <= 0 ? '금액은 0원보다 커야 합니다' : ''
 })
 
 async function handleSubmit() {
-  // 전체 필드 검증: 날짜, 금액, 카테고리, (지출일 경우 결제 수단)
   checkRequired('date')
   checkAmount()
   checkRequired('category')
-  if (transactionType.value === 'expenses') {
+  if (transaction_type.value === 'expenses') {
     checkRequired('payment')
   }
 
@@ -96,33 +91,31 @@ async function handleSubmit() {
     return
   }
 
-  const dataToSend = {
+  const data_to_send = {
     id: String(Date.now()),
-    date: formData.value.date,
-    type: transactionType.value === 'expenses' ? 'expense' : 'income',
-    category: formData.value.category,
+    date: form_data.value.date,
+    type: transaction_type.value === 'expenses' ? 'expense' : 'income',
+    category: form_data.value.category,
     paymentMethod:
-      transactionType.value === 'expenses' ? formData.value.payment : '',
-    amount: parseFloat(formData.value.amount),
-    memo: formData.value.memo,
+      transaction_type.value === 'expenses' ? form_data.value.payment : '',
+    amount: parseFloat(form_data.value.amount),
+    memo: form_data.value.memo,
     createdAt: new Date().toISOString(),
   }
 
   try {
-    await axios.post(API_URL, dataToSend)
+    await axios.post(api_url, data_to_send)
     alert('새 항목이 추가되었습니다!')
-    // store 업데이트: 새 항목 추가 후, 거래 내역을 DB에서 다시 불러옴
-    await transactionStore.fetchTransactions()
+    await transaction_store.fetchTransactions()
     closeModal()
-    // 폼 초기화
-    formData.value = {
+    form_data.value = {
       date: '',
       amount: '',
       category: '',
       payment: '',
       memo: '',
     }
-    transactionType.value = 'expenses'
+    transaction_type.value = 'expenses'
   } catch (error) {
     console.error('거래 추가 오류:', error)
     alert('등록 중 오류가 발생했습니다.')
@@ -131,54 +124,29 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <!-- 오버레이가 전체 화면을 덮으며 중앙에 팝업을 배치 -->
-  <div class="popupOverlay" @click.self="closeModal">
-    <div class="popupContainer">
+  <div class="popup_overlay" @click.self="closeModal">
+    <div class="popup_container">
       <h1 style="text-align: center; margin-bottom: 16px">내역 추가</h1>
-      <button class="closeBtn" @click="closeModal">✕</button>
+      <button class="close_btn" @click="closeModal">✕</button>
 
-      <!-- 탭 영역: '지출' / '수입' 선택 -->
-      <div
-        style="
-          display: flex;
-          gap: 4px;
-          justify-content: space-between;
-          margin-bottom: 16px;
-        "
-      >
+      <div class="tab_area">
         <button
-          style="
-            flex: 1;
-            padding: 12px;
-            border-radius: 4px;
-            margin-right: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            border: none;
-          "
-          @click.prevent="transactionType = 'expenses'"
+          class="tab_button"
+          @click.prevent="transaction_type = 'expenses'"
           :style="{
             backgroundColor:
-              transactionType === 'expenses' ? '#47a447' : '#aedda9',
+              transaction_type === 'expenses' ? '#47a447' : '#aedda9',
             color: 'white',
           }"
         >
           지출
         </button>
         <button
-          style="
-            flex: 1;
-            padding: 12px;
-            border-radius: 4px;
-            margin-left: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            border: none;
-          "
-          @click.prevent="transactionType = 'income'"
+          class="tab_button"
+          @click.prevent="transaction_type = 'income'"
           :style="{
             backgroundColor:
-              transactionType === 'income' ? '#47a447' : '#aedda9',
+              transaction_type === 'income' ? '#47a447' : '#aedda9',
             color: 'white',
           }"
         >
@@ -186,65 +154,38 @@ async function handleSubmit() {
         </button>
       </div>
 
-      <!-- 입력 폼 -->
-      <form
-        novalidate
-        @submit.prevent="handleSubmit"
-        style="display: flex; flex-direction: column; gap: 12px"
-      >
-        <!-- 날짜 입력 -->
+      <form novalidate @submit.prevent="handleSubmit" class="form_area">
         <div>
           <input
             type="date"
-            v-model="formData.date"
+            v-model="form_data.date"
             @blur="checkRequired('date')"
-            style="
-              padding: 8px;
-              border-radius: 4px;
-              border: 1px solid #ccc;
-              width: 100%;
-            "
+            class="input_box"
             required
           />
-          <div v-if="errors.date" style="color: red; font-size: 12px">
-            {{ errors.date }}
-          </div>
+          <div v-if="errors.date" class="error_text">{{ errors.date }}</div>
         </div>
 
-        <!-- 금액 입력 -->
         <div>
           <input
             type="text"
             placeholder="금액"
-            v-model="formData.amount"
+            v-model="form_data.amount"
             @blur="checkAmount"
-            style="
-              padding: 8px;
-              border-radius: 4px;
-              border: 1px solid #ccc;
-              width: 100%;
-            "
+            class="input_box"
             required
           />
-          <div v-if="errors.amount" style="color: red; font-size: 12px">
-            {{ errors.amount }}
-          </div>
-          <div v-else-if="amountError" style="color: red; font-size: 12px">
-            {{ amountError }}
+          <div v-if="errors.amount" class="error_text">{{ errors.amount }}</div>
+          <div v-else-if="amount_error" class="error_text">
+            {{ amount_error }}
           </div>
         </div>
 
-        <!-- 카테고리 선택 -->
-        <div v-if="transactionType === 'expenses'">
+        <div v-if="transaction_type === 'expenses'">
           <select
-            v-model="formData.category"
+            v-model="form_data.category"
             @blur="checkRequired('category')"
-            style="
-              padding: 8px;
-              border-radius: 4px;
-              border: 1px solid #ccc;
-              width: 100%;
-            "
+            class="input_box"
             required
           >
             <option value="">카테고리</option>
@@ -256,20 +197,16 @@ async function handleSubmit() {
               {{ CATEGORY_MAP[label] }}
             </option>
           </select>
-          <div v-if="errors.category" style="color: red; font-size: 12px">
+          <div v-if="errors.category" class="error_text">
             {{ errors.category }}
           </div>
         </div>
+
         <div v-else>
           <select
-            v-model="formData.category"
+            v-model="form_data.category"
             @blur="checkRequired('category')"
-            style="
-              padding: 8px;
-              border-radius: 4px;
-              border: 1px solid #ccc;
-              width: 100%;
-            "
+            class="input_box"
             required
           >
             <option value="">카테고리</option>
@@ -281,62 +218,39 @@ async function handleSubmit() {
               {{ CATEGORY_MAP[label] }}
             </option>
           </select>
-          <div v-if="errors.category" style="color: red; font-size: 12px">
+          <div v-if="errors.category" class="error_text">
             {{ errors.category }}
           </div>
         </div>
 
-        <!-- 결제 수단 (지출일 경우에만 표시) -->
-        <div v-if="transactionType === 'expenses'">
+        <div v-if="transaction_type === 'expenses'">
           <select
-            v-model="formData.payment"
+            v-model="form_data.payment"
             @blur="checkRequired('payment')"
-            style="
-              padding: 8px;
-              border-radius: 4px;
-              border: 1px solid #ccc;
-              width: 100%;
-            "
+            class="input_box"
             required
           >
             <option value="">결제 수단</option>
             <option value="card">카드</option>
             <option value="cash">현금</option>
           </select>
-          <div v-if="errors.payment" style="color: red; font-size: 12px">
+          <div v-if="errors.payment" class="error_text">
             {{ errors.payment }}
           </div>
         </div>
 
-        <!-- 메모 (선택 사항) -->
         <div>
           <textarea
             placeholder="메모"
-            v-model="formData.memo"
-            style="
-              padding: 8px;
-              border-radius: 4px;
-              border: 1px solid #ccc;
-              width: 100%;
-              height: 60px;
-            "
+            v-model="form_data.memo"
+            class="textarea_box"
           ></textarea>
         </div>
 
-        <!-- 추가 버튼 -->
         <button
           type="submit"
-          :disabled="amountError !== ''"
-          style="
-            background-color: #47a447;
-            color: white;
-            padding: 12px 0;
-            border-radius: 4px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 8px;
-          "
+          class="submit_button"
+          :disabled="amount_error !== ''"
         >
           추가 +
         </button>
@@ -346,20 +260,20 @@ async function handleSubmit() {
 </template>
 
 <style scoped>
-.popupOverlay {
+.popup_overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.4); /* 배경 딤 처리 */
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999; /* 다른 컴포넌트 위에 표시 */
+  z-index: 999;
 }
 
-.popupContainer {
+.popup_container {
   width: 350px;
   padding: 20px;
   background-color: #fff;
@@ -369,11 +283,64 @@ async function handleSubmit() {
   position: relative;
 }
 
-.closeBtn {
+.close_btn {
   position: absolute;
   right: 24px;
   top: 24px;
   cursor: pointer;
   font-size: 24px;
+}
+
+.tab_area {
+  display: flex;
+  gap: 4px;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.tab_button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  border: none;
+}
+
+.form_area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input_box {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+.textarea_box {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 100%;
+  height: 60px;
+}
+
+.error_text {
+  color: red;
+  font-size: 12px;
+}
+
+.submit_button {
+  background-color: #47a447;
+  color: white;
+  padding: 12px 0;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 8px;
 }
 </style>
