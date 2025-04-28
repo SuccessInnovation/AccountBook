@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 // 메뉴 목록
 const menuLists = [
-  { label: 'HOME', to: '/' },
+  { label: 'HOME', to: '/home' },
   { label: '수입/지출 내역', to: '/transaction' },
   {
     label: '통계 및 내보내기',
