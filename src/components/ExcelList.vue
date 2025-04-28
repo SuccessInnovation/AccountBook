@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { statisticsStore } from '@/stores/statisticsStore'
+import { CATEGORY_MAP, CATEGORY_IMG } from '@/constants/categories'
 
 const store = statisticsStore()
 
@@ -67,7 +68,14 @@ const pageNumbers = computed(() => {
           <!-- 조회 시 데이터 출력 -->
           <tr v-else v-for="item in paginatedItems" :key="item.id">
             <td>{{ item.date }}</td>
-            <td>{{ item.category }}</td>
+            <td class="category_cell">
+              <span
+                ><img
+                  class="category_icon"
+                  :src="CATEGORY_IMG[item.category]"
+                  :alt="CATEGORY_MAP[item.category]" /></span
+              >{{ CATEGORY_MAP[item.category] }}
+            </td>
             <td>{{ item.memo || '-' }}</td>
             <!-- 내용 없으면 '-' 표시 -->
             <td id="data_amount">{{ item.amount.toLocaleString() }}원</td>
@@ -163,5 +171,14 @@ tbody td {
   font-weight: 900;
   background-color: transparent;
   border: none;
+}
+
+.category_icon {
+  width: 1rem;
+}
+
+.category_cell {
+  display: flex;
+  gap: 1rem;
 }
 </style>
