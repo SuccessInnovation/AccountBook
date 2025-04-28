@@ -10,8 +10,8 @@ import PopupPage from '@/pages/PopupPage.vue'
 import StatisticsPage from '@/pages/StatisticsPage.vue'
 import BudgetPage from '@/pages/BudgetPage.vue'
 import ExportExcelPage from '@/pages/ExportExcelPage.vue'
-import TransactionEdit from '@/pages/TransactionEditPage.vue'
-import TransactionEditPage from '@/pages/TransactionEditPage.vue'
+// import TransactionEdit from '@/pages/TransactionEditPage.vue'
+// import TransactionEditPage from '@/pages/TransactionEditPage.vue'
 
 const routes = [
   {
@@ -60,11 +60,11 @@ const routes = [
     component: PopupPage,
     meta: { layout: 'default' },
   },
-  {
-    path: '/transaction/edit/:id',
-    name: 'TransactionEdit',
-    component: TransactionEditPage,
-  },
+//   {
+//     path: '/transaction/edit/:id',
+//     name: 'TransactionEdit',
+//     component: TransactionEditPage,
+//   },
   {
     path: '/statistics/summary',
     name: 'Statistics',
