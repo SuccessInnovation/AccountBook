@@ -1,6 +1,4 @@
-<script setup>
-import FeautureSlider from '@/components/FeautureSlider.vue'
-</script>
+<script setup></script>
 
 <template>
   <div class="StartPage">
@@ -19,7 +17,6 @@ import FeautureSlider from '@/components/FeautureSlider.vue'
           </div>
         </div>
         <div class="function_slide">
-          <FeautureSlider />
           <!-- <h2>제공하는 기능들 보여주는 슬라이드 (아래 > 위 슬라이드)</h2> -->
         </div>
       </div>
@@ -76,7 +73,7 @@ p {
 .wrap_content {
   width: 100%;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: center;
 
   align-items: center;
