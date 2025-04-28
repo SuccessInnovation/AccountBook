@@ -1,4 +1,5 @@
 <script setup>
+// 수정날짜 : 2025.04.28
 import { ref } from 'vue'
 // Swiper.js Vue 컴포넌트 및 모듈 임포트
 import { Swiper, SwiperSlide } from 'swiper/vue'
