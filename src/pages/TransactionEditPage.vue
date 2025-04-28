@@ -84,7 +84,11 @@ async function handleUpdate() {
   try {
     await axios.put(`${API_URL}/${transactionId}`, formData.value)
     alert('수정 완료!')
-    router.push({ name: 'Transaction' }) // 수정 후 거래 목록 페이지로 이동
+    if (route.query.from === 'calendar') {
+      router.push({ name: 'Transaction', query: { tab: 'calendar' } }) // 수정 후 캘린더로 복귀
+    } else {
+      router.push({ name: 'Transaction' }) // 수정 후 거래내역으로 복귀
+    }
   } catch (err) {
     alert('수정 요청 실패')
     console.error('수정 오류:', err)
@@ -92,8 +96,13 @@ async function handleUpdate() {
 }
 
 // 모달 닫기 (또는 수정 취소)
+
 function closeModal() {
-  router.push({ name: 'Transaction' })
+  if (route.query.from === 'calendar') {
+    router.push({ name: 'Transaction', query: { tab: 'calendar' } }) // 캘린더로 복귀
+  } else {
+    router.push({ name: 'Transaction' }) // 거래내역으로 복귀
+  }
 }
 </script>
 

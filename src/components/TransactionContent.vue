@@ -13,9 +13,6 @@ const { current_year, current_month } = storeToRefs(calendar)
 const transactionStore = useTransactionStore()
 const router = useRouter()
 
-// const calendar = use_calendar_store()
-const { transactions } = storeToRefs(transactionStore)
-
 // 필터링 컴포넌트 (카테고리 선택 / 메모 검색창)
 import FilterCategory from '@/components/FilterCategory.vue'
 import SearchByMemo from '@/components/SearchByMemo.vue'
@@ -27,40 +24,12 @@ import {
   CATEGORY_MAP,
 } from '@/constants/categories'
 
-// Pinia store 불러오기
-// const transactionStore = useTransactionStore()
-
 // 마운트될 때 거래 내역 불러오기
 onMounted(() => {
   transactionStore.fetchTransactions()
 })
 
-const { visible_months } = storeToRefs(calendar)
-const month_names = calendar.month_names
-
-const activeTab = ref('list') // 기본 탭: list
-
-// const tabs = ['목록', '달력']
-
-// 페이지 로드 시 거래 내역 불러오기
-onMounted(() => {
-  transactionStore.fetchTransactions()
-})
-
-// 필터 상태: 수입/지출 (기본: 모두 체크)
-// const showIncome = ref(true)
-// const showExpense = ref(true)
-
-// 필터링된 거래 내역 목록 (수입/지출 체크 상태에 따라)
-// const filteredTransactions = computed(() => {
-//   return transactionStore.transactions.filter(record => {
-//     if (record.type === '수입' && showIncome.value) return true
-//     if (record.type === '지출' && showExpense.value) return true
-//     return false
-//   })
-// })
 // 상태변수 초기값 설정
-
 // '수입' 체크박스 - 기본: 체크됨
 const incomeChecked = ref(true)
 // '지출' 체크박스 - 기본: 체크됨
@@ -70,17 +39,6 @@ const categorySelected = ref('all')
 // 메모 검색창 - 기본: ''
 const memoInputted = ref('')
 
-// '수입/지출' 체크박스 상태를 기준으로 거래 내역 필터링
-// const filteredTransactions = computed(() => {
-//   return transactionStore.transactions.filter(record => {
-//     // type이 '수입' & '수입' 체크박스 체크 O
-//     if (record.type === 'income' && incomeChecked.value) return true
-//     // type이 '수출' & '수출' 체크박스 체크 O
-//     if (record.type === 'expense' && expenseChecked.value) return true
-//     // '수입/수출' 체크박스 모두 체크 X
-//     return false
-//   })
-// })
 const filteredTransactions = computed(() => {
   return transactionStore.transactions.filter(record => {
     const date = new Date(record.date)
@@ -103,17 +61,7 @@ const filteredTransactions = computed(() => {
   })
 })
 
-// 페이지 관련 변수
-const currentPage = ref(1)
-const pageSize = ref(10)
-
-// 총 페이지 수 계산
-const totalPages = computed(() => {
-  return Math.ceil(filteredTransactions.value.length / pageSize.value) || 1
-})
-
-//#region 💰 금액 포맷 함수
-
+//#region 금액 포맷 함수
 /**
  * 금액에 부호(+, -)를 붙이고 천 단위 쉼표로 포맷된 문자열을 반환합니다.
  *
@@ -275,25 +223,6 @@ function selectedDeleteHandler() {
   }
 }
 
-//#region 전체 삭제 이벤트
-/**
- * 모든 거래 내역을 삭제하는 함수
- * 거래 항목이 없을 경우 예외 처리
- */
-function allDeleteHandler() {
-  if (transactionStore.transactions.length === 0) {
-    alert('삭제할 항목이 없습니다!')
-    return
-  }
-
-  if (confirm('정말 모든 항목을 삭제하시겠습니까?')) {
-    transactionStore.transactions.forEach(record => {
-      transactionStore.deleteTransaction(record.id)
-    })
-  }
-}
-//#endregion
-
 //#region 행을 클릭하면 체크되는 이벤트
 /**
  * 만약 클릭한 요소가 이미 수정/삭제 아이콘 등 click.stop 처리된 요소가 아니라면,
@@ -315,16 +244,10 @@ function toggleRow(record, event) {
           class="bg-white d-flex align-items-center px-3 py-2 rounded-4 gap-2"
         >
           <button
-            class="btn btn-outline-secondary btn-sm"
+            class="btn btn-outline-danger btn-sm"
             @click="selectedDeleteHandler"
           >
-            선택 삭제
-          </button>
-          <button
-            class="btn btn-outline-danger btn-sm"
-            @click="allDeleteHandler"
-          >
-            전체 삭제
+            체크된 항목 삭제
           </button>
         </div>
 
@@ -348,6 +271,7 @@ function toggleRow(record, event) {
               type="checkbox"
               id="incomeCheck"
               v-model="incomeChecked"
+              style="cursor: pointer"
             />
             <label class="form-check-label fw-semibold" for="incomeCheck">
               수입
@@ -360,6 +284,7 @@ function toggleRow(record, event) {
               type="checkbox"
               id="expenseCheck"
               v-model="expenseChecked"
+              style="cursor: pointer"
             />
             <label class="form-check-label fw-semibold" for="expenseCheck">
               지출
@@ -386,6 +311,7 @@ function toggleRow(record, event) {
                     type="checkbox"
                     :checked="isAllSelected"
                     @change="toggleSelectAll($event)"
+                    style="cursor: pointer"
                   />
                 </th>
                 <th scope="col" style="width: 160px">날짜</th>
@@ -410,6 +336,7 @@ function toggleRow(record, event) {
                     type="checkbox"
                     v-model="filtered.selected"
                     @click.stop
+                    style="cursor: pointer"
                   />
                 </td>
                 <td>{{ filtered.date }}</td>
@@ -466,82 +393,6 @@ function toggleRow(record, event) {
   gap: 10px;
 }
 
-.calendar_carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-}
-
-.month_slider {
-  display: flex;
-  width: 500px;
-  overflow: hidden;
-  justify-content: space-between;
-}
-
-.month_item {
-  width: 100px;
-  text-align: center;
-  font-size: 1.2rem;
-  opacity: 0.6;
-  transform: scale(0.9);
-  transition: all 0.5s ease;
-}
-
-.month_item p {
-  font-size: 2.5rem;
-}
-
-.faded {
-  opacity: 0.4;
-}
-.active {
-  font-weight: bold;
-}
-
-.month_item.active {
-  font-size: 1.5rem;
-  font-weight: bold;
-  opacity: 1;
-  transform: scale(1.1);
-}
-
-.arrow {
-  font-size: 2rem;
-  cursor: pointer;
-  background: none;
-  border: none;
-  color: #4caf50;
-  transition: transform 0.2s ease;
-}
-.arrow:hover {
-  transform: scale(1.2);
-}
-
-/* 전체 컨테이너 */
-/* .ledger-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  font-family: sans-serif;
-  background-color: #fff;
-} */
-
-/* 상단 연/월 네비게이션 */
-/* .ledger-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px 0;
-  gap: 40px;
-  background-color: #fff;
-} */
-/* .month-nav {
-  font-size: 1.1rem;
-  color: #888;
-  cursor: pointer;
-} */
 .current-month {
   display: flex;
   flex-direction: column;
@@ -557,34 +408,6 @@ function toggleRow(record, event) {
   margin-top: 2px;
 }
 
-/* 중간의 '목록/달력/카테고리/검색/수입/지출' 섹션 */
-.ledger-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #a3c39c;
-  padding: 10px 20px;
-  color: #fff;
-}
-.nav-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.nav-btn {
-  background: none;
-  border: none;
-  color: #fff;
-  font-weight: bold;
-  padding: 8px 14px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-.nav-btn.active,
-.nav-btn:hover {
-  background-color: #8eb58d;
-}
 .category-select {
   background-color: #fff;
   color: #333;
@@ -592,22 +415,13 @@ function toggleRow(record, event) {
   padding: 8px;
   border-radius: 4px;
 }
-.nav-center {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
+
 .search-input {
   width: 300px;
   padding: 8px 12px;
   border: none;
   border-radius: 4px;
   outline: none;
-}
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
 }
 .income-checkbox,
 .expense-checkbox {
@@ -616,79 +430,6 @@ function toggleRow(record, event) {
   gap: 4px;
   cursor: pointer;
 }
-
-/* 테이블 영역 */
-.ledger-table-section {
-  padding: 20px;
-  background-color: #f8f8f8;
-}
-.ledger-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-.ledger-table thead {
-  background-color: #e2e2e2;
-}
-.ledger-table th,
-.ledger-table td {
-  text-align: left;
-  padding: 12px;
-  border-bottom: 1px solid #eee;
-}
-.ledger-table th {
-  font-weight: bold;
-  font-size: 0.9rem;
-  color: #333;
-}
-.ledger-table td {
-  font-size: 0.88rem;
-  color: #555;
-}
-.ledger-table td i {
-  cursor: pointer;
-}
-
-/* 페이징 컨트롤 */
-.pagination-controls button {
-  padding: 6px 12px;
-  margin: 0 6px;
-  border: none;
-  background-color: #a3c39c;
-  color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.pagination-controls button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* 하단 '추가' 버튼 영역 */
-.add-button-area {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-  background-color: #fff;
-}
-.add-button {
-  background-color: #a3c39c;
-  color: #fff;
-  border: none;
-  padding: 12px 30px;
-  font-size: 1rem;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.add-button:hover {
-  background-color: #8eb58d;
-}
-
 /* 탭메뉴 */
 .nav-tabs .nav-link {
   cursor: pointer;
@@ -698,19 +439,6 @@ function toggleRow(record, event) {
   border-radius: 15px;
 }
 
-/* --color-font-main: #3f3e3c;
-  --color-point-1: #328e6e;
-  --color-point-2: #67ae6e;
-  --color-point-3: #99bc85;
-  --color-point-4: #b7ccb4;
-  --color-point-5: #d3ded9;
-  --color-input-box: #dbdbdb;
-  --color-brown-dark: #706d54;
-  --color-brown-light: #c9b194;
-  --color-brown-very-light: #ededed;
-  --color-red-100: #f93949;
-  --color-red-light: rgba(249, 57, 73, 0.2);
-  --color-green-light: rgba(42, 125, 92, 0.2); */
 /* '수입' 체크박스 */
 #incomeCheck {
   background-color: var(--color-green-light);
