@@ -187,7 +187,7 @@ function closeEditModal() {
               <td>{{ formatAmount(record.amount, record.type) }}</td>
               <td>
                 <i
-                  class="icon_edit"
+                  class="text-success d-block mx-auto icon-hover"
                   @click="handleEdit(record)"
                   style="cursor: pointer"
                   >✏️</i
@@ -195,7 +195,7 @@ function closeEditModal() {
               </td>
               <td>
                 <i
-                  class="icon_delete"
+                  class="text-danger d-block mx-auto icon-hover"
                   @click="handleDelete(record.id)"
                   style="cursor: pointer"
                   >🗑️</i
@@ -426,5 +426,9 @@ function closeEditModal() {
 .edit_cancel {
   background-color: #ddd;
   color: #333;
+}
+.icon-hover:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease;
 }
 </style>
