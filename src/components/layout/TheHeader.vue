@@ -15,6 +15,12 @@ const headerTitle = computed(() => {
       </router-link>
     </h1>
     <div id="title">{{ headerTitle }}</div>
+    <!-- 알림 기능 추가  -->
+    <!-- v-if로 알림내역 없으면 -> alarm_on.png  -->
+    <!-- v-else로 알림내역 있으면 -> alarm_off.png -->
+    <div id="alarm_img">
+      <img src="../../img/icons/alarm_on.png" alt="알림 이지" />
+    </div>
     <div id="profile_img">
       <router-link to="register">
         <img
@@ -64,6 +70,15 @@ const headerTitle = computed(() => {
   overflow: hidden;
   justify-self: center;
 }
+
+#alarm_img {
+  position: fixed;
+  top: 15px;
+  right: 100px;
+  width: 50px;
+  height: 50px;
+}
+
 #profile_img {
   position: fixed;
   right: 10px;
