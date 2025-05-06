@@ -23,11 +23,18 @@ const headerTitle = computed(() => {
 >>>>>>> 11a397e (feature: 작업중)
 =======
 
-//추가 - 알림창 표시
-const isAlarmOpen = ref(false)
+// 추가 - 알림창 표시
+// 알림창이 열러 있는지 여부
+const isAlarmOpen = ref(false) //기본값: 닫혀있음
+//#region 알림창 열기/닫기
+/**
+ * 알림 아이콘 클릭 시 알림창을 열거나 닫음
+ * 현재 상태가 true면 false로, false면 true로 반전시켜 토글 동작 수행
+ */
 const toggleAlarm = () => {
   isAlarmOpen.value = !isAlarmOpen.value
 }
+//#endregion
 </script>
 >>>>>>> 7a5c5a6 (Fix: 알림 아이콘 클릭 시 알림내역 뜨기 구현 05-06)
 >>>>>>> 86740bb (Fix: 알림 아이콘 클릭 시 알림내역 뜨기 구현 05-06)
