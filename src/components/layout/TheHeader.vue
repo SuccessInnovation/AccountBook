@@ -1,18 +1,36 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <script setup>
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
 
 import Notifications from '../Notifications.vue'
 
+=======
+=======
+<script setup>
+import { useRoute } from 'vue-router'
+import { ref, computed } from 'vue'
+>>>>>>> 86740bb (Fix: 알림 아이콘 클릭 시 알림내역 뜨기 구현 05-06)
 const route = useRoute()
 const headerTitle = computed(() => {
   return route.meta.title || '페이지'
 })
+<<<<<<< HEAD
 </script>
 
 =======
 >>>>>>> 11a397e (feature: 작업중)
+=======
+
+//추가 - 알림창 표시
+const isAlarmOpen = ref(false)
+const toggleAlarm = () => {
+  isAlarmOpen.value = !isAlarmOpen.value
+}
+</script>
+>>>>>>> 7a5c5a6 (Fix: 알림 아이콘 클릭 시 알림내역 뜨기 구현 05-06)
+>>>>>>> 86740bb (Fix: 알림 아이콘 클릭 시 알림내역 뜨기 구현 05-06)
 <template>
   <div class="header_grid">
     <h1 class="logo">
@@ -83,9 +101,18 @@ const headerTitle = computed(() => {
     <!-- 알림 기능 추가  -->
     <!-- v-if로 알림내역 없으면 -> alarm_on.png  -->
     <!-- v-else로 알림내역 있으면 -> alarm_off.png -->
-    <div id="alarm_img">
+    <div id="alarm_img" @click="toggleAlarm">
       <img src="../../img/icons/alarm_on.png" alt="알림 이지" />
     </div>
+
+    <div v-if="isAlarmOpen" class="alarm_box">
+      <p>알림 내역</p>
+      <ul>
+        <li>예산 초과 알림</li>
+        <li>매월 20일 - 예산 현황</li>
+      </ul>
+    </div>
+
     <div id="profile_img">
       <router-link to="register">
         <img
@@ -180,7 +207,38 @@ function logout() {
   width: 50px;
   height: 50px;
 }
+<<<<<<< HEAD
 >>>>>>> 6378ae2 (Feat: 알림 기능 아이콘 생성 05-05)
+=======
+.alarm_box {
+  position: fixed;
+  top: 70px;
+  right: 100px;
+  width: 200px;
+  background-color: white;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 999;
+}
+
+.alarm_box p {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.alarm_box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alarm_box li {
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+>>>>>>> 86740bb (Fix: 알림 아이콘 클릭 시 알림내역 뜨기 구현 05-06)
 .profile {
   margin: 0;
   padding: 0;
