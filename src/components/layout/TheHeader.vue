@@ -24,16 +24,17 @@
         alt="더보기"
         @click="toggleModal"
       />
-    </div>
-    <!-- 모달창 -->
-    <div class="modal" v-if="modalShow">
-      <ul>
-        <router-link to="/mypage"
-          ><li @click="toggleModal">My Page</li></router-link
-        >
-        <li id="datrkmode_btn">Dark Mode</li>
-        <li id="logout_btn" @click="logout">Log out</li>
-      </ul>
+      <!-- 모달창 -->
+      <div class="modal" v-if="modalShow">
+        <ul>
+          <li id="email">{{ userInfo.email }}</li>
+          <router-link to="/mypage"
+            ><li @click="toggleModal">My Page</li></router-link
+          >
+          <li id="datrkmode_btn">Dark Mode</li>
+          <li id="logout_btn" @click="logout">Log out</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -58,7 +59,11 @@ function toggleModal() {
 }
 
 function logout() {
-  logoutUser()
+  try {
+    logoutUser()
+  } catch (error) {
+    console.log('로그아웃 실패: ', error)
+  }
 }
 </script>
 <style scoped>
@@ -69,6 +74,7 @@ function logout() {
   grid-template-columns: 200px 1fr 100px;
   align-items: center;
   height: 100%;
+  width: 100%;
 }
 .logo {
   grid-column: 1;
@@ -98,14 +104,68 @@ function logout() {
   overflow: hidden;
   justify-self: center;
 }
+.profile {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  right: 15px;
+  width: 200px;
+}
 #profile_img {
-  position: fixed;
-  right: 10px;
   width: 70px;
   height: 70px;
   object-fit: cover; /* 이미지 비율 잘 맞추기: 화면 비율 고정*/
   border-radius: 50%;
   border: 3px solid white;
+}
+#user_name {
+  font-weight: bold;
+}
+#more_icon {
   cursor: pointer;
+}
+
+/* 모달창 */
+.modal {
+  background: grey;
+  height: 170px;
+  width: 200px;
+  position: absolute;
+  top: 50px; /* 상단 여백 조정 */
+  left: 10px;
+  z-index: 1000; /* 다른 요소들 위로 올리기 */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 0; /* 내용에 맞춰서 크기 조절 */
+  overflow-y: visible; /* 내용이 넘칠 경우 스크롤 생기도록 */
+}
+
+.modal ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.modal li {
+  cursor: pointer;
+  display: block;
+  padding: 10px;
+  background-color: white;
+  border-bottom: 1px solid var(--color-point-5);
+  font-size: 14px;
+}
+
+.modal li:not(#email):hover {
+  background-color: var(--color-point-5);
+}
+
+#email {
+  text-align: center;
+  padding-bottom: 14px;
 }
 </style>
