@@ -4067,20 +4067,22 @@
   ],
   "users": [
     {
-      "id": "1",
       "email": "activeuser@kb.com",
-      "password": "1234",
-      "name": "안다윤",
-      "status": "active",
+      "password": "123Qwe123!",
+      "name": "2222",
+      "profileImage": "/src/img/profile/pretty_cabbage.jpg",
       "role": "User",
+      "status": "active",
       "createdAt": "2025-04-30-목 23:11:35",
-      "updatedAt": "2025-05-08-목 16:24:11"
+      "updatedAt": "2025-05-09-금 04:36:36",
+      "id": "1"
     },
     {
       "id": "2",
       "email": "deactivateduser@kb.com",
       "password": "1234",
       "name": "홍길동",
+      "profileImage": "/src/img/profile/pretty_cabbage.jpg",
       "status": "active",
       "role": "User",
       "createdAt": "2025-04-23-목 23:11:35",
@@ -4092,9 +4094,13 @@
       "password": "1234",
       "name": "관리자",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "profileImage": "/src/img/profile/pretty_cabbage.jpg",
 =======
 >>>>>>> 73e720c (Fix: 프로필 클릭 시 나타나는 모달창 수정)
+=======
+      "profileImage": "/src/img/profile/pretty_cabbage.jpg",
+>>>>>>> 0eac7ee (feature: 비밀번호 유효성 검증 작업중)
       "status": "active",
       "role": "Admin",
       "createdAt": "2025-04-29-수 23:11:35",
