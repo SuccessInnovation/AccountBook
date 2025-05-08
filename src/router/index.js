@@ -4,6 +4,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import StartPage from '@/pages/StartPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import RegisterPage from '@/pages/RegisterPage.vue'
+import MyPage from '@/pages/MyPage.vue'
+import AdminPage from '@/pages/AdminPage.vue'
 import HomePage from '@/pages/HomePage.vue'
 import TransactionPage from '@/pages/TransactionPage.vue'
 import PopupPage from '@/pages/PopupPage.vue'
@@ -49,6 +51,18 @@ const routes = [
     meta: { title: '회원가입', layout: 'none' },
   },
   {
+    path: '/mypage',
+    name: 'MyPage',
+    component: MyPage,
+    meta: { title: '마이 페이지', layout: 'none' },
+  },
+  {
+    path: '/adminpage',
+    name: 'AdminPage',
+    component: AdminPage,
+    meta: { title: '관리자 페이지', layout: 'none' },
+  },
+  {
     path: '/transaction',
     name: 'Transaction',
     component: TransactionPage,
@@ -60,11 +74,11 @@ const routes = [
     component: PopupPage,
     meta: { layout: 'default' },
   },
-//   {
-//     path: '/transaction/edit/:id',
-//     name: 'TransactionEdit',
-//     component: TransactionEditPage,
-//   },
+  //   {
+  //     path: '/transaction/edit/:id',
+  //     name: 'TransactionEdit',
+  //     component: TransactionEditPage,
+  //   },
   {
     path: '/statistics/summary',
     name: 'Statistics',
@@ -88,6 +102,27 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+// 전역 네비게이션 가드 (로그인 체크, 타이틀 설정 등)
+router.beforeEach((to, from, next) => {
+  const isLoggedIn = !!localStorage.getItem('token') // 예: JWT 토큰 기반 로그인 체크
+
+  // 인증 필요한 페이지 접근 시 로그인 여부 확인
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    next('/login')
+  } else {
+    // 타이틀 설정
+    if (to.meta.title) {
+      document.title = to.meta.title
+    }
+    next()
+  }
+})
+
+// 페이지 이동 후 처리 (예: 로딩 스피너 종료 등)
+router.afterEach((to, from) => {
+  // 예: console.log 또는 전역 로딩 상태 OFF
+  console.log(`✅ Moved to ${to.fullPath}`)
 })
 
 export default router
