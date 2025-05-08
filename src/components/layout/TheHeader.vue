@@ -1,11 +1,3 @@
-<script setup>
-import { useRoute } from 'vue-router'
-import { computed } from 'vue'
-const route = useRoute()
-const headerTitle = computed(() => {
-  return route.meta.title || '페이지'
-})
-</script>
 <template>
   <div class="header_grid">
     <h1 class="logo">
@@ -15,18 +7,60 @@ const headerTitle = computed(() => {
       </router-link>
     </h1>
     <div id="title">{{ headerTitle }}</div>
-    <div id="profile_img">
-      <router-link to="register">
-        <img
-          class="rounded-circle"
-          src="../../img/cabbage/pretty_cabbage.jpg"
-          alt="프로필 이미지"
-        />
-      </router-link>
+    <div class="profile">
+      <img
+        class="rounded-circle"
+        id="profile_img"
+        src="@/img/cabbage/pretty_cabbage.jpg"
+        alt="프로필 이미지"
+      />
+      <div class="info_text">
+        <div id="user_name">{{ userInfo.name }}</div>
+        <div id="user_role">{{ userInfo.role }}</div>
+      </div>
+      <img
+        id="more_icon"
+        src="@/img/icons/more-profile.svg"
+        alt="더보기"
+        @click="toggleModal"
+      />
+    </div>
+    <!-- 모달창 -->
+    <div class="modal" v-if="modalShow">
+      <ul>
+        <router-link to="/mypage"
+          ><li @click="toggleModal">My Page</li></router-link
+        >
+        <li id="datrkmode_btn">Dark Mode</li>
+        <li id="logout_btn" @click="logout">Log out</li>
+      </ul>
     </div>
   </div>
 </template>
 
+<script setup>
+import { useRoute } from 'vue-router'
+import { ref, computed } from 'vue'
+import { useUsersTableStore } from '@/stores/UsersTableStore'
+
+const route = useRoute()
+const headerTitle = computed(() => {
+  return route.meta.title || '페이지'
+})
+
+const { getUserInfoLocalStorage, logoutUser } = useUsersTableStore()
+const userInfo = getUserInfoLocalStorage()
+const modalShow = ref(false)
+
+function toggleModal() {
+  modalShow.value = !modalShow.value
+  console.log(modalShow.value)
+}
+
+function logout() {
+  logoutUser()
+}
+</script>
 <style scoped>
 .header_grid {
   position: relative;
