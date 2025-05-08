@@ -46,7 +46,7 @@
     <table>
       <tbody>
         <tr>
-          <td>이름</td>
+          <td>이름 변경</td>
           <td>
             <input
               class="input_box"
@@ -57,7 +57,7 @@
           </td>
         </tr>
         <tr>
-          <td>이메일</td>
+          <td>이메일 변경</td>
           <td>
             <input
               class="input_box"
@@ -68,7 +68,7 @@
           </td>
         </tr>
         <tr>
-          <td>새 비밀번호</td>
+          <td>비밀번호 변경</td>
           <td>
             <input
               class="input_box"
@@ -138,7 +138,7 @@ const editedUser = reactive({
 const { getUserInfoLocalStorage, getUserInfoById, updateUser } =
   useUsersTableStore()
 const route = useRoute()
-const defaultProfileImage = '@/img/cabbage/pretty_cabbage.jpg' // 기본 이미지
+const defaultProfileImage = '@/img/profile/pretty_cabbage.jpg' // 기본 이미지
 
 // 사용자 정보 수정
 const editMode = ref(false)
@@ -175,8 +175,7 @@ function formatDate(dateStr) {
 
 function toggleEditMode() {
   editMode.value = !editMode.value
-  console.log('수정하기 모드')
-  return editMode
+  console.log('수정하기 모드:', editMode.value)
 }
 
 function extractFileName(path) {
@@ -203,10 +202,17 @@ function saveChanges() {
     alert('비밀번호가 일치하지 않습니다.')
     return
   }
-  updateUser(editedUser, () => {
-    toggleEditMode()
-  })
-  console.log('정보가 업데이트되었습니다.')
+  try {
+    const success = updateUser(editedUser)
+    if (success) {
+      toggleEditMode()
+      console.log('정보가 업데이트되었습니다.')
+    } else {
+      return
+    }
+  } catch (error) {
+    console.error('업데이트 오류:', error)
+  }
 }
 </script>
 
@@ -227,8 +233,7 @@ img {
 table {
   margin: 30px 0 0 0;
   padding: 10px 30px;
-  max-width: 400px;
-  width: 40%;
+  width: 400px;
   border-spacing: 0 20px; /* tr 수직 간격 */
   border-collapse: separate;
   border: 1px solid var(--color-point-1);
@@ -269,7 +274,8 @@ button {
 /* editMode = true */
 .input_box {
   text-align: right;
-  width: 100%;
+  width: 90%;
+  border: 0.5px solid var(--color-point-4);
 }
 .input_box::placeholder {
   color: var(--color-point-4);

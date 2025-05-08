@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { reactive } from 'vue'
 import { BASE_URI } from '@/constants/api' // BASE_URI (db.json)
-import { isEmpty, validateUserInput } from '@/utils/validators'
+import { isEmpty, isValidPassword, validateUserInput } from '@/utils/validators'
 import { currentTimestampToString, currentDateToString } from '@/utils/date'
 import { createTestJwt, parseJwt } from '@/utils/jwt'
 
@@ -110,7 +110,13 @@ export const useUsersTableStore = defineStore('users', () => {
     if (isEmpty(email)) email = originalUserInfo.email
     if (isEmpty(password)) password = originalUserInfo.password
     if (isEmpty(name)) name = originalUserInfo.name
-    if (isEmpty(profileImage)) profileImage = '@/img/cabbage/pretty_cabbage.jpg' // 기본 이미지 경로
+    if (isEmpty(profileImage)) profileImage = '@/img/profile/pretty_cabbage.jpg' // 기본 이미지 경로
+
+    // 비밀번호 유효성 검사
+    if (!isValidPassword(password)) {
+      alert('비밀번호는 8자 이상이며 영문자, 숫자, 특수문자를 포함해야 합니다.')
+      return false
+    }
 
     const createdAt = originalUserInfo?.createdAt || currentDateToString()
 
@@ -156,6 +162,7 @@ export const useUsersTableStore = defineStore('users', () => {
     } catch (error) {
       console.error('❌ 사용자 정보 수정 에러:', error)
     }
+    return true
   }
 
   // 로그인

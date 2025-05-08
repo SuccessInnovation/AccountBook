@@ -54,13 +54,13 @@ const routes = [
     path: '/mypage',
     name: 'MyPage',
     component: MyPage,
-    meta: { title: '마이 페이지', layout: 'none' },
+    meta: { title: '마이 페이지', layout: 'default' },
   },
   {
     path: '/adminpage',
     name: 'AdminPage',
     component: AdminPage,
-    meta: { title: '관리자 페이지', layout: 'none' },
+    meta: { title: '관리자 페이지', layout: 'default' },
   },
   {
     path: '/transaction',
