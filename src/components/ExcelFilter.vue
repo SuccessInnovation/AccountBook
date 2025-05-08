@@ -15,6 +15,10 @@
         3개월
       </label>
       <label class="period_selector">
+        <input type="radio" value="1year" v-model="selectPeriod" />
+        1년
+      </label>
+      <label class="period_selector">
         <input type="radio" value="custom" v-model="selectPeriod" />
         기간설정
       </label>
@@ -66,15 +70,28 @@ const emit = defineEmits(['search'])
 const handleSubmit = () => {
   console.log('선택된 기간:', selectPeriod.value)
 
+  // 1개월
   if (selectPeriod.value === '1months') {
     store.fetchTransactionsByPeriod()
-  } else if (selectPeriod.value === '3months') {
+  }
+  // 3개월
+  else if (selectPeriod.value === '3months') {
     const startDate = new Date()
     startDate.setMonth(today.getMonth() - 3)
 
     const start = formatDate(startDate)
     store.fetchTransactionsByPeriod(start, formatDate(today))
-  } else if (selectPeriod.value === 'custom') {
+  }
+  // 1년
+  else if (selectPeriod.value === '1year') {
+    const startDate = new Date()
+    startDate.setFullYear(today.getFullYear() - 1)
+
+    const start = formatDate(startDate)
+    store.fetchTransactionsByPeriod(start, formatDate(today))
+  }
+  // 기간 설정
+  else if (selectPeriod.value === 'custom') {
     // 입력 확인
     if (!customStartDate.value || !customEndDate.value) {
       alert('시작일과 종료일을 모두 입력하세요.')
@@ -105,6 +122,11 @@ watch(selectPeriod, newVal => {
     const threeMonthsAgo = new Date()
     threeMonthsAgo.setMonth(today.getMonth() - 3)
     customStartDate.value = formatDate(threeMonthsAgo)
+    customEndDate.value = formatDate(today)
+  } else if (newVal === '1year') {
+    const oneYearAgo = new Date()
+    oneYearAgo.setFullYear(today.getFullYear() - 1)
+    customStartDate.value = formatDate(oneYearAgo)
     customEndDate.value = formatDate(today)
   } else if (newVal === 'custom') {
     customStartDate.value = ''

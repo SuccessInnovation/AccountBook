@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { statisticsStore } from '@/stores/statisticsStore'
 import { CATEGORY_MAP, CATEGORY_IMG } from '@/constants/categories'
 
@@ -43,6 +43,14 @@ const pageNumbers = computed(() => {
   }
   return range
 })
+
+// 다른 페이지에서 조회를 누르면 다시 1페이지로 초기화
+watch(
+  () => store.filteredTransaction,
+  () => {
+    currentPage.value = 1
+  },
+)
 </script>
 <template>
   <div class="wrapper">

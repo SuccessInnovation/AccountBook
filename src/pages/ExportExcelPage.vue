@@ -23,6 +23,7 @@ import ExcelList from '@/components/ExcelList.vue'
 import * as XLSX from 'xlsx'
 import { ref } from 'vue'
 import { statisticsStore } from '@/stores/statisticsStore'
+import { CATEGORY_MAP } from '@/constants/categories'
 
 const store = statisticsStore()
 const isSearched = ref(false)
@@ -32,6 +33,15 @@ store.filteredTransaction = []
 const handleSearch = () => {
   isSearched.value = true
 }
+const TYPE_MAP = {
+  expense: '지출',
+  income: '수입',
+}
+const PAYMENT_METHOD_MAP = {
+  cash: '현금',
+  card: '카드',
+  transfer: '이체',
+}
 
 const downloadExcel = data => {
   if (!data || data.length === 0) {
@@ -39,10 +49,27 @@ const downloadExcel = data => {
     return
   }
 
-  const worksheet = XLSX.utils.json_to_sheet(data)
+  const exportData = data.map(item => ({
+    날짜: item.date,
+    유형: TYPE_MAP[item.type] || item.type,
+    카테고리: CATEGORY_MAP[item.category] || item.category,
+    결제수단: PAYMENT_METHOD_MAP[item.paymentMethod] || item.paymentMethod,
+    금액: item.amount,
+    메모: item.memo || '',
+  }))
+
+  // xlsx 내보내기
+  // 1. 파일 이름 앞에 날짜 추가
+  const today = new Date()
+  const formattedDate = today.toISOString().split('T')[0] // 'YYYY-MM-DD'
+
+  const filename = `${formattedDate}_가계부_내역.xlsx`
+
+  // 2. 파일 내보내기
+  const worksheet = XLSX.utils.json_to_sheet(exportData)
   const workbook = XLSX.utils.book_new()
   XLSX.utils.book_append_sheet(workbook, worksheet, '가계부')
-  XLSX.writeFile(workbook, 'transactionList.xlsx')
+  XLSX.writeFile(workbook, filename)
 }
 </script>
 
