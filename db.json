@@ -2,6 +2,9 @@
   "transactions": [
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cf756ef (Docs: db.json 2월 추가 05-11)
       "id": "1746951112734",
       "date": "2024-10-01",
       "type": "expense",
@@ -302,8 +305,11 @@
       "createdAt": "2025-05-11T08:11:52.763Z"
     },
     {
+<<<<<<< HEAD
 =======
 >>>>>>> 2125a37 (Docs: db.json 2월 추가 05-11)
+=======
+>>>>>>> cf756ef (Docs: db.json 2월 추가 05-11)
       "id": "1746950759095",
       "date": "2025-02-01",
       "type": "expense",
@@ -315,6 +321,9 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cf756ef (Docs: db.json 2월 추가 05-11)
       "id": "1746951112734",
       "date": "2024-10-14",
       "type": "expense",
@@ -515,8 +524,11 @@
       "createdAt": "2025-05-11T08:12:11.734Z"
     },
     {
+<<<<<<< HEAD
 =======
 >>>>>>> 2125a37 (Docs: db.json 2월 추가 05-11)
+=======
+>>>>>>> cf756ef (Docs: db.json 2월 추가 05-11)
       "id": "1746950819719",
       "date": "2025-02-01",
       "type": "expense",
@@ -4000,6 +4012,7 @@
   ],
   "budgets": [
     {
+<<<<<<< HEAD
 =======
     },
     {
@@ -4102,6 +4115,78 @@
       "amount": 35000,
       "memo": "개강 전 동기 모임",
       "createdAt": "2025-05-11T08:30:22.526Z"
+=======
+      "category": "food",
+      "amount": 1000000,
+      "month": "2025-04",
+      "id": "f388"
+    },
+    {
+      "category": "dessert",
+      "amount": 100000,
+      "month": "2025-04",
+      "id": "f047"
+    },
+    {
+      "category": "entertainment",
+      "amount": 400000,
+      "month": "2025-04",
+      "id": "2ab8"
+    },
+    {
+      "category": "shopping",
+      "amount": 4000000,
+      "month": "2025-04",
+      "id": "b378"
+    },
+    {
+      "category": "transportation",
+      "amount": 0,
+      "month": "2025-04",
+      "id": "8aa8"
+    },
+    {
+      "category": "utilities",
+      "amount": 500000,
+      "month": "2025-04",
+      "id": "3e5b"
+    },
+    {
+      "category": "health",
+      "amount": 48088,
+      "month": "2025-04",
+      "id": "6ff9"
+    },
+    {
+      "category": "leisure",
+      "amount": 0,
+      "month": "2025-04",
+      "id": "14a8"
+    },
+    {
+      "category": "travel",
+      "amount": 0,
+      "month": "2025-04",
+      "id": "7e64"
+    },
+    {
+      "category": "contributions",
+      "amount": 0,
+      "month": "2025-04",
+      "id": "67cf"
+    },
+    {
+      "category": "savings",
+      "amount": 0,
+      "month": "2025-04",
+      "id": "9f7c"
+    },
+    {
+      "category": "etc",
+      "amount": 0,
+      "month": "2025-04",
+      "id": "6b4d"
+>>>>>>> cf756ef (Docs: db.json 2월 추가 05-11)
     }
   ],
   "users": [
