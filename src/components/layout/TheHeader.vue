@@ -10,12 +10,20 @@ import Notifications from '../Notifications.vue'
 =======
 <script setup>
 import { useRoute } from 'vue-router'
+<<<<<<< HEAD
 import { ref, computed } from 'vue'
 >>>>>>> 86740bb (Fix: 알림 아이콘 클릭 시 알림내역 뜨기 구현 05-06)
+=======
+import { computed } from 'vue'
+
+import Notifications from '../Notifications.vue'
+
+>>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
 const route = useRoute()
 const headerTitle = computed(() => {
   return route.meta.title || '페이지'
 })
+<<<<<<< HEAD
 <<<<<<< HEAD
 </script>
 
@@ -35,9 +43,18 @@ const toggleAlarm = () => {
   isAlarmOpen.value = !isAlarmOpen.value
 }
 //#endregion
+=======
+>>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
 </script>
+<<<<<<< HEAD
 >>>>>>> 7a5c5a6 (Fix: 알림 아이콘 클릭 시 알림내역 뜨기 구현 05-06)
+<<<<<<< HEAD
 >>>>>>> 86740bb (Fix: 알림 아이콘 클릭 시 알림내역 뜨기 구현 05-06)
+=======
+=======
+
+>>>>>>> 7279e2c (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
+>>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
 <template>
   <div class="header_grid">
     <h1 class="logo">
@@ -47,6 +64,7 @@ const toggleAlarm = () => {
       </router-link>
     </h1>
     <div id="title">{{ headerTitle }}</div>
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     <!-- 알림 컴포넌트 -->
@@ -61,6 +79,8 @@ const toggleAlarm = () => {
         />
       </router-link>
 =======
+=======
+>>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
     <div class="profile">
       <img
         class="rounded-circle"
@@ -111,14 +131,11 @@ const toggleAlarm = () => {
     <div id="alarm_img" @click="toggleAlarm">
       <img src="../../img/icons/alarm_on.png" alt="알림 이지" />
     </div>
+=======
+>>>>>>> 7279e2c (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
 
-    <div v-if="isAlarmOpen" class="alarm_box">
-      <p>알림 내역</p>
-      <ul>
-        <li>예산 초과 알림</li>
-        <li>매월 20일 - 예산 현황</li>
-      </ul>
-    </div>
+    <!-- 알림 컴포넌트 -->
+    <Notifications />
 
     <div id="profile_img">
       <router-link to="register">
@@ -204,9 +221,12 @@ function logout() {
 }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 =======
+=======
+>>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
 #alarm_img {
   position: fixed;
   top: 15px;
@@ -256,7 +276,13 @@ function logout() {
   right: 15px;
   width: 200px;
 }
+<<<<<<< HEAD
 >>>>>>> 73e720c (Fix: 프로필 클릭 시 나타나는 모달창 수정)
+=======
+=======
+
+>>>>>>> 7279e2c (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
+>>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
 #profile_img {
   width: 70px;
   height: 70px;

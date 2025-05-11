@@ -35,6 +35,7 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
 import { computed, ref, onMounted } from 'vue'
 import { useBudgetStore } from '@/stores/UseBudgetStore'
 import { use_calendar_store } from '@/stores/MonthSelector'
@@ -74,6 +75,36 @@ onMounted(async () => {
 
   notifications.value = alerts
 })
+=======
+import { computed, ref } from 'vue'
+
+// 알림 내역 상태
+const notifications = ref([])
+
+// 알림 추가
+notifications.value.push('알림내역1')
+notifications.value.push('알림내역2')
+notifications.value.push('알림내역3')
+notifications.value.push('알림내역4')
+
+// 알림 내역 유무
+// 1개 이상이면 true
+const hasNotifications = computed(() => notifications.value.length > 0)
+
+// 알림창 표시
+// 알림창이 열러 있는지 여부
+const isAlarmOpen = ref(false) // 기본값: 닫혀있음
+
+// 알림창 열기/닫기
+const toggleAlarm = () => {
+  isAlarmOpen.value = !isAlarmOpen.value
+}
+
+// 알림 삭제
+const removeNotification = index => {
+  notifications.value.splice(index, 1)
+}
+>>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
 </script>
 
 <style scoped>
@@ -90,12 +121,20 @@ onMounted(async () => {
   position: fixed;
   top: 70px;
   right: 100px;
+<<<<<<< HEAD
   width: 320px; /* 기존보다 넓게 */
+=======
+  width: 200px;
+>>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
   background-color: white;
   border: 2px solid #ccc;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+<<<<<<< HEAD
   padding: 12px;
+=======
+  padding: 10px;
+>>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
   z-index: 999;
 }
 
@@ -113,7 +152,11 @@ onMounted(async () => {
 }
 
 .alarm_box li {
+<<<<<<< HEAD
   padding: 6px 10px;
+=======
+  padding: 5px 10px;
+>>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
   margin: 6px 0;
   border-radius: 13px;
   background-color: var(--color-green-light);
