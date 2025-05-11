@@ -1,6 +1,7 @@
 {
   "transactions": [
     {
+<<<<<<< HEAD
       "id": "1746951112734",
       "date": "2024-10-01",
       "type": "expense",
@@ -301,6 +302,8 @@
       "createdAt": "2025-05-11T08:11:52.763Z"
     },
     {
+=======
+>>>>>>> 2125a37 (Docs: db.json 2월 추가 05-11)
       "id": "1746950759095",
       "date": "2025-02-01",
       "type": "expense",
@@ -311,6 +314,7 @@
       "createdAt": "2025-05-11T08:05:59.096Z"
     },
     {
+<<<<<<< HEAD
       "id": "1746951112734",
       "date": "2024-10-14",
       "type": "expense",
@@ -511,6 +515,8 @@
       "createdAt": "2025-05-11T08:12:11.734Z"
     },
     {
+=======
+>>>>>>> 2125a37 (Docs: db.json 2월 추가 05-11)
       "id": "1746950819719",
       "date": "2025-02-01",
       "type": "expense",
@@ -779,6 +785,7 @@
       "amount": 12000,
       "memo": "스시붐",
       "createdAt": "2025-05-11T08:24:26.685Z"
+<<<<<<< HEAD
     },
     {
       "id": "1746951885521",
@@ -3993,76 +4000,108 @@
   ],
   "budgets": [
     {
-      "category": "food",
-      "amount": 1000000,
-      "month": "2025-04",
-      "id": "f388"
+=======
     },
     {
-      "category": "dessert",
-      "amount": 100000,
-      "month": "2025-04",
-      "id": "f047"
-    },
-    {
-      "category": "entertainment",
-      "amount": 400000,
-      "month": "2025-04",
-      "id": "2ab8"
-    },
-    {
-      "category": "shopping",
-      "amount": 4000000,
-      "month": "2025-04",
-      "id": "b378"
-    },
-    {
-      "category": "transportation",
-      "amount": 0,
-      "month": "2025-04",
-      "id": "8aa8"
-    },
-    {
-      "category": "utilities",
-      "amount": 500000,
-      "month": "2025-04",
-      "id": "3e5b"
-    },
-    {
-      "category": "health",
-      "amount": 48088,
-      "month": "2025-04",
-      "id": "6ff9"
-    },
-    {
+      "id": "1746951885521",
+      "date": "2025-02-16",
+      "type": "expense",
       "category": "leisure",
-      "amount": 0,
-      "month": "2025-04",
-      "id": "14a8"
+      "paymentMethod": "card",
+      "amount": 14000,
+      "memo": "영화 관람",
+      "createdAt": "2025-05-11T08:24:45.521Z"
     },
     {
-      "category": "travel",
-      "amount": 0,
-      "month": "2025-04",
-      "id": "7e64"
+      "id": "1746951911067",
+      "date": "2025-02-17",
+      "type": "expense",
+      "category": "dessert",
+      "paymentMethod": "card",
+      "amount": 6000,
+      "memo": "편의점",
+      "createdAt": "2025-05-11T08:25:11.067Z"
     },
     {
+      "id": "1746951960789",
+      "date": "2025-02-19",
+      "type": "expense",
+>>>>>>> 2125a37 (Docs: db.json 2월 추가 05-11)
+      "category": "food",
+      "paymentMethod": "card",
+      "amount": 8100,
+      "memo": "맥도날드",
+      "createdAt": "2025-05-11T08:26:00.789Z"
+    },
+    {
+      "id": "1746951980039",
+      "date": "2025-02-20",
+      "type": "expense",
+      "category": "dessert",
+      "paymentMethod": "card",
+      "amount": 12100,
+      "memo": "스타벅스",
+      "createdAt": "2025-05-11T08:26:20.039Z"
+    },
+    {
+      "id": "1746952005408",
+      "date": "2025-02-22",
+      "type": "expense",
+      "category": "food",
+      "paymentMethod": "card",
+      "amount": 35000,
+      "memo": "식재료 배송",
+      "createdAt": "2025-05-11T08:26:45.408Z"
+    },
+    {
+      "id": "1746952111526",
+      "date": "2025-02-22",
+      "type": "expense",
+      "category": "shopping",
+      "paymentMethod": "card",
+      "amount": 89200,
+      "memo": "올리브영",
+      "createdAt": "2025-05-11T08:28:31.526Z"
+    },
+    {
+      "id": "1746952130377",
+      "date": "2025-02-23",
+      "type": "expense",
+      "category": "shopping",
+      "paymentMethod": "card",
+      "amount": 125700,
+      "memo": "무신사",
+      "createdAt": "2025-05-11T08:28:50.377Z"
+    },
+    {
+      "id": "1746952154127",
+      "date": "2025-02-27",
+      "type": "expense",
+      "category": "shopping",
+      "paymentMethod": "card",
+      "amount": 66600,
+      "memo": "헤라 쿠션",
+      "createdAt": "2025-05-11T08:29:14.127Z"
+    },
+    {
+      "id": "1746952202994",
+      "date": "2025-02-28",
+      "type": "expense",
       "category": "contributions",
-      "amount": 0,
-      "month": "2025-04",
-      "id": "67cf"
+      "paymentMethod": "card",
+      "amount": 30000,
+      "memo": "친구 생일선물",
+      "createdAt": "2025-05-11T08:30:02.994Z"
     },
     {
-      "category": "savings",
-      "amount": 0,
-      "month": "2025-04",
-      "id": "9f7c"
-    },
-    {
-      "category": "etc",
-      "amount": 0,
-      "month": "2025-04",
-      "id": "6b4d"
+      "id": "1746952222526",
+      "date": "2025-02-28",
+      "type": "expense",
+      "category": "contributions",
+      "paymentMethod": "card",
+      "amount": 35000,
+      "memo": "개강 전 동기 모임",
+      "createdAt": "2025-05-11T08:30:22.526Z"
     }
   ],
   "users": [
