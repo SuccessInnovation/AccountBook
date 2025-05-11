@@ -3,8 +3,11 @@
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> cf756ef (Docs: db.json 2월 추가 05-11)
+=======
+>>>>>>> e2efcd4 (Docs: db.json 2월 추가 및 기존 데이터 삭제 05-11)
       "id": "1746951112734",
       "date": "2024-10-01",
       "type": "expense",
@@ -306,10 +309,15 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 2125a37 (Docs: db.json 2월 추가 05-11)
 =======
 >>>>>>> cf756ef (Docs: db.json 2월 추가 05-11)
+=======
+=======
+>>>>>>> 5b71e1c (Docs: db.json 2월 추가 및 기존 데이터 삭제 05-11)
+>>>>>>> e2efcd4 (Docs: db.json 2월 추가 및 기존 데이터 삭제 05-11)
       "id": "1746950759095",
       "date": "2025-02-01",
       "type": "expense",
@@ -322,8 +330,11 @@
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> cf756ef (Docs: db.json 2월 추가 05-11)
+=======
+>>>>>>> e2efcd4 (Docs: db.json 2월 추가 및 기존 데이터 삭제 05-11)
       "id": "1746951112734",
       "date": "2024-10-14",
       "type": "expense",
@@ -525,10 +536,15 @@
     },
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 2125a37 (Docs: db.json 2월 추가 05-11)
 =======
 >>>>>>> cf756ef (Docs: db.json 2월 추가 05-11)
+=======
+=======
+>>>>>>> 5b71e1c (Docs: db.json 2월 추가 및 기존 데이터 삭제 05-11)
+>>>>>>> e2efcd4 (Docs: db.json 2월 추가 및 기존 데이터 삭제 05-11)
       "id": "1746950819719",
       "date": "2025-02-01",
       "type": "expense",
@@ -3083,6 +3099,108 @@
 >>>>>>> 9ced243 (Update : 페르소나 시나리오 db 50개 작성 완료)
 =======
 >>>>>>> 54ddb50 (Update : 페르소나 시나리오 db 50개 작성 완료)
+=======
+    },
+    {
+      "id": "1746951885521",
+      "date": "2025-02-16",
+      "type": "expense",
+      "category": "leisure",
+      "paymentMethod": "card",
+      "amount": 14000,
+      "memo": "영화 관람",
+      "createdAt": "2025-05-11T08:24:45.521Z"
+    },
+    {
+      "id": "1746951911067",
+      "date": "2025-02-17",
+      "type": "expense",
+      "category": "dessert",
+      "paymentMethod": "card",
+      "amount": 6000,
+      "memo": "편의점",
+      "createdAt": "2025-05-11T08:25:11.067Z"
+    },
+    {
+      "id": "1746951960789",
+      "date": "2025-02-19",
+      "type": "expense",
+      "category": "food",
+      "paymentMethod": "card",
+      "amount": 8100,
+      "memo": "맥도날드",
+      "createdAt": "2025-05-11T08:26:00.789Z"
+    },
+    {
+      "id": "1746951980039",
+      "date": "2025-02-20",
+      "type": "expense",
+      "category": "dessert",
+      "paymentMethod": "card",
+      "amount": 12100,
+      "memo": "스타벅스",
+      "createdAt": "2025-05-11T08:26:20.039Z"
+    },
+    {
+      "id": "1746952005408",
+      "date": "2025-02-22",
+      "type": "expense",
+      "category": "food",
+      "paymentMethod": "card",
+      "amount": 35000,
+      "memo": "식재료 배송",
+      "createdAt": "2025-05-11T08:26:45.408Z"
+    },
+    {
+      "id": "1746952111526",
+      "date": "2025-02-22",
+      "type": "expense",
+      "category": "shopping",
+      "paymentMethod": "card",
+      "amount": 89200,
+      "memo": "올리브영",
+      "createdAt": "2025-05-11T08:28:31.526Z"
+    },
+    {
+      "id": "1746952130377",
+      "date": "2025-02-23",
+      "type": "expense",
+      "category": "shopping",
+      "paymentMethod": "card",
+      "amount": 125700,
+      "memo": "무신사",
+      "createdAt": "2025-05-11T08:28:50.377Z"
+    },
+    {
+      "id": "1746952154127",
+      "date": "2025-02-27",
+      "type": "expense",
+      "category": "shopping",
+      "paymentMethod": "card",
+      "amount": 66600,
+      "memo": "헤라 쿠션",
+      "createdAt": "2025-05-11T08:29:14.127Z"
+    },
+    {
+      "id": "1746952202994",
+      "date": "2025-02-28",
+      "type": "expense",
+      "category": "contributions",
+      "paymentMethod": "card",
+      "amount": 30000,
+      "memo": "친구 생일선물",
+      "createdAt": "2025-05-11T08:30:02.994Z"
+    },
+    {
+      "id": "1746952222526",
+      "date": "2025-02-28",
+      "type": "expense",
+      "category": "contributions",
+      "paymentMethod": "card",
+      "amount": 35000,
+      "memo": "개강 전 동기 모임",
+      "createdAt": "2025-05-11T08:30:22.526Z"
+>>>>>>> 5b71e1c (Docs: db.json 2월 추가 및 기존 데이터 삭제 05-11)
     },
     {
       "id": "1746504409360",
