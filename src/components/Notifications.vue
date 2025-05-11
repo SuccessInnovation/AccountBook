@@ -102,7 +102,7 @@ const removeNotification = index => {
 }
 
 .alarm_box li {
-  padding: 5px 10px;
+  padding: 6px 10px;
   margin: 6px 0;
   border-radius: 13px;
   background-color: var(--color-green-light);
