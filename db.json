@@ -2539,6 +2539,456 @@
       "amount": 106000,
       "memo": "풀리오 목/어깨 마사지기",
       "createdAt": "2025-05-12T00:21:48.148Z"
+    },
+    {
+      "id": "1747010689004",
+      "date": "2024-11-01",
+      "type": "expense",
+      "category": "utilities",
+      "paymentMethod": "cash",
+      "amount": 600000,
+      "memo": "월세",
+      "createdAt": "2025-05-12T00:44:49.004Z"
+    },
+    {
+      "id": "1747010838373",
+      "date": "2024-11-01",
+      "type": "expense",
+      "category": "utilities",
+      "paymentMethod": "cash",
+      "amount": 12220,
+      "memo": "수도세",
+      "createdAt": "2025-05-12T00:47:18.373Z"
+    },
+    {
+      "id": "1747010892949",
+      "date": "2024-11-01",
+      "type": "expense",
+      "category": "utilities",
+      "paymentMethod": "cash",
+      "amount": 32250,
+      "memo": "전기세",
+      "createdAt": "2025-05-12T00:48:12.949Z"
+    },
+    {
+      "id": "1747013749812",
+      "date": "2024-11-01",
+      "type": "expense",
+      "category": "utilities",
+      "paymentMethod": "cash",
+      "amount": 65340,
+      "memo": "관리비",
+      "createdAt": "2025-05-12T01:35:49.812Z"
+    },
+    {
+      "id": "1747013801190",
+      "date": "2024-11-01",
+      "type": "expense",
+      "category": "utilities",
+      "paymentMethod": "cash",
+      "amount": 34200,
+      "memo": "가스비",
+      "createdAt": "2025-05-12T01:36:41.190Z"
+    },
+    {
+      "id": "1747013826962",
+      "date": "2024-11-01",
+      "type": "expense",
+      "category": "utilities",
+      "paymentMethod": "cash",
+      "amount": 64260,
+      "memo": "핸드폰 요금제",
+      "createdAt": "2025-05-12T01:37:06.962Z"
+    },
+    {
+      "id": "1747013860004",
+      "date": "2024-11-01",
+      "type": "expense",
+      "category": "utilities",
+      "paymentMethod": "cash",
+      "amount": 8800,
+      "memo": "와이파이",
+      "createdAt": "2025-05-12T01:37:40.004Z"
+    },
+    {
+      "id": "1747013889556",
+      "date": "2024-11-01",
+      "type": "expense",
+      "category": "leisure",
+      "paymentMethod": "cash",
+      "amount": 5500,
+      "memo": "넷플릭스",
+      "createdAt": "2025-05-12T01:38:09.556Z"
+    },
+    {
+      "id": "1747013933387",
+      "date": "2024-11-01",
+      "type": "expense",
+      "category": "leisure",
+      "paymentMethod": "card",
+      "amount": 14900,
+      "memo": "유튜브 프리미엄",
+      "createdAt": "2025-05-12T01:38:53.387Z"
+    },
+    {
+      "id": "1747013991183",
+      "date": "2024-11-01",
+      "type": "income",
+      "category": "allowance",
+      "paymentMethod": "",
+      "amount": 1000000,
+      "memo": "부모님 용돈",
+      "createdAt": "2025-05-12T01:39:51.183Z"
+    },
+    {
+      "id": "1747014307456",
+      "date": "2024-11-01",
+      "type": "income",
+      "category": "salary",
+      "paymentMethod": "",
+      "amount": 750000,
+      "memo": "학원 알바",
+      "createdAt": "2025-05-12T01:45:07.456Z"
+    },
+    {
+      "id": "1747015186935",
+      "date": "2024-11-01",
+      "type": "expense",
+      "category": "transportation",
+      "paymentMethod": "cash",
+      "amount": 16200,
+      "memo": "후불 교통비",
+      "createdAt": "2025-05-12T01:59:46.935Z"
+    },
+    {
+      "id": "1747015764284",
+      "date": "2024-11-04",
+      "type": "expense",
+      "category": "etc",
+      "paymentMethod": "card",
+      "amount": 18800,
+      "memo": "시험원서접수",
+      "createdAt": "2025-05-12T02:09:24.284Z"
+    },
+    {
+      "id": "1747015820703",
+      "date": "2024-11-05",
+      "type": "expense",
+      "category": "food",
+      "paymentMethod": "card",
+      "amount": 12000,
+      "memo": "맥도날드",
+      "createdAt": "2025-05-12T02:10:20.703Z"
+    },
+    {
+      "id": "1747015889712",
+      "date": "2024-11-06",
+      "type": "expense",
+      "category": "leisure",
+      "paymentMethod": "card",
+      "amount": 11000,
+      "memo": "CJ CGV 영화관람권",
+      "createdAt": "2025-05-12T02:11:29.712Z"
+    },
+    {
+      "id": "1747015925876",
+      "date": "2024-11-13",
+      "type": "expense",
+      "category": "leisure",
+      "paymentMethod": "card",
+      "amount": 11000,
+      "memo": "메가박스",
+      "createdAt": "2025-05-12T02:12:05.876Z"
+    },
+    {
+      "id": "1747016075332",
+      "date": "2024-11-09",
+      "type": "expense",
+      "category": "dessert",
+      "paymentMethod": "card",
+      "amount": 3700,
+      "memo": "어글리 베이커리",
+      "createdAt": "2025-05-12T02:14:35.332Z"
+    },
+    {
+      "id": "1747016252622",
+      "date": "2024-11-09",
+      "type": "expense",
+      "category": "dessert",
+      "paymentMethod": "card",
+      "amount": 8000,
+      "memo": "후와후와",
+      "createdAt": "2025-05-12T02:17:32.622Z"
+    },
+    {
+      "id": "1747016276907",
+      "date": "2024-11-09",
+      "type": "expense",
+      "category": "shopping",
+      "paymentMethod": "card",
+      "amount": 13200,
+      "memo": "올리브영",
+      "createdAt": "2025-05-12T02:17:56.907Z"
+    },
+    {
+      "id": "1747016734139",
+      "date": "2024-11-08",
+      "type": "expense",
+      "category": "dessert",
+      "paymentMethod": "card",
+      "amount": 5100,
+      "memo": "투썸플레이스",
+      "createdAt": "2025-05-12T02:25:34.139Z"
+    },
+    {
+      "id": "1747016792000",
+      "date": "2024-11-09",
+      "type": "expense",
+      "category": "food",
+      "paymentMethod": "card",
+      "amount": 16000,
+      "memo": "이치젠",
+      "createdAt": "2025-05-12T02:26:32.000Z"
+    },
+    {
+      "id": "1747016848438",
+      "date": "2024-11-09",
+      "type": "expense",
+      "category": "entertainment",
+      "paymentMethod": "card",
+      "amount": 8000,
+      "memo": "포토이즘",
+      "createdAt": "2025-05-12T02:27:28.438Z"
+    },
+    {
+      "id": "1747016939264",
+      "date": "2024-11-11",
+      "type": "expense",
+      "category": "dessert",
+      "paymentMethod": "card",
+      "amount": 8000,
+      "memo": "빼빼로",
+      "createdAt": "2025-05-12T02:28:59.264Z"
+    },
+    {
+      "id": "1747016978410",
+      "date": "2024-11-11",
+      "type": "income",
+      "category": "etc",
+      "paymentMethod": "",
+      "amount": 3850,
+      "memo": "체크 할인",
+      "createdAt": "2025-05-12T02:29:38.410Z"
+    },
+    {
+      "id": "1747017142804",
+      "date": "2024-11-07",
+      "type": "expense",
+      "category": "health",
+      "paymentMethod": "card",
+      "amount": 9000,
+      "memo": "안과 정기검진",
+      "createdAt": "2025-05-12T02:32:22.804Z"
+    },
+    {
+      "id": "1747017235092",
+      "date": "2024-11-18",
+      "type": "expense",
+      "category": "leisure",
+      "paymentMethod": "cash",
+      "amount": 154000,
+      "memo": "콘서트 예매",
+      "createdAt": "2025-05-12T02:33:55.092Z"
+    },
+    {
+      "id": "1747017262341",
+      "date": "2024-11-27",
+      "type": "expense",
+      "category": "leisure",
+      "paymentMethod": "card",
+      "amount": 7000,
+      "memo": "CJ CGV",
+      "createdAt": "2025-05-12T02:34:22.341Z"
+    },
+    {
+      "id": "1747017352019",
+      "date": "2024-11-23",
+      "type": "expense",
+      "category": "leisure",
+      "paymentMethod": "card",
+      "amount": 15000,
+      "memo": "롯데시네마",
+      "createdAt": "2025-05-12T02:35:52.019Z"
+    },
+    {
+      "id": "1747017399952",
+      "date": "2024-11-15",
+      "type": "expense",
+      "category": "food",
+      "paymentMethod": "card",
+      "amount": 1200,
+      "memo": "편의점",
+      "createdAt": "2025-05-12T02:36:39.952Z"
+    },
+    {
+      "id": "1747017552218",
+      "date": "2024-11-22",
+      "type": "expense",
+      "category": "etc",
+      "paymentMethod": "card",
+      "amount": 32000,
+      "memo": "챗지피티 1개월 결제",
+      "createdAt": "2025-05-12T02:39:12.218Z"
+    },
+    {
+      "id": "1747017723426",
+      "date": "2024-11-19",
+      "type": "expense",
+      "category": "food",
+      "paymentMethod": "card",
+      "amount": 12000,
+      "memo": "시홍쓰",
+      "createdAt": "2025-05-12T02:42:03.426Z"
+    },
+    {
+      "id": "1747017746030",
+      "date": "2024-11-16",
+      "type": "expense",
+      "category": "food",
+      "paymentMethod": "card",
+      "amount": 11000,
+      "memo": "죠스떡볶이",
+      "createdAt": "2025-05-12T02:42:26.030Z"
+    },
+    {
+      "id": "1747017780792",
+      "date": "2024-11-29",
+      "type": "expense",
+      "category": "food",
+      "paymentMethod": "card",
+      "amount": 5600,
+      "memo": "씨유편의점",
+      "createdAt": "2025-05-12T02:43:00.792Z"
+    },
+    {
+      "id": "1747017819643",
+      "date": "2024-11-14",
+      "type": "expense",
+      "category": "shopping",
+      "paymentMethod": "card",
+      "amount": 125800,
+      "memo": "에어포스",
+      "createdAt": "2025-05-12T02:43:39.643Z"
+    },
+    {
+      "id": "1747023740830",
+      "date": "2024-11-25",
+      "type": "expense",
+      "category": "food",
+      "paymentMethod": "card",
+      "amount": 13000,
+      "memo": "포케올데이",
+      "createdAt": "2025-05-12T04:22:20.830Z"
+    },
+    {
+      "id": "1747023831853",
+      "date": "2024-11-17",
+      "type": "expense",
+      "category": "entertainment",
+      "paymentMethod": "card",
+      "amount": 65000,
+      "memo": "친구 생일파티",
+      "createdAt": "2025-05-12T04:23:51.853Z"
+    },
+    {
+      "id": "1747023872989",
+      "date": "2024-11-01",
+      "type": "expense",
+      "category": "savings",
+      "paymentMethod": "cash",
+      "amount": 200000,
+      "memo": "저축",
+      "createdAt": "2025-05-12T04:24:32.989Z"
+    },
+    {
+      "id": "1747023919957",
+      "date": "2024-11-10",
+      "type": "expense",
+      "category": "supplies",
+      "paymentMethod": "card",
+      "amount": 125600,
+      "memo": "장보기(홈플러스)",
+      "createdAt": "2025-05-12T04:25:19.957Z"
+    },
+    {
+      "id": "1747024133645",
+      "date": "2024-11-30",
+      "type": "expense",
+      "category": "shopping",
+      "paymentMethod": "card",
+      "amount": 95000,
+      "memo": "더현대 옷쇼핑",
+      "createdAt": "2025-05-12T04:28:53.645Z"
+    },
+    {
+      "id": "1747024217417",
+      "date": "2024-11-22",
+      "type": "expense",
+      "category": "food",
+      "paymentMethod": "card",
+      "amount": 15000,
+      "memo": "떡볶이 농장",
+      "createdAt": "2025-05-12T04:30:17.417Z"
+    },
+    {
+      "id": "1747024295685",
+      "date": "2024-11-22",
+      "type": "expense",
+      "category": "shopping",
+      "paymentMethod": "card",
+      "amount": 13000,
+      "memo": "커비 키링 구매",
+      "createdAt": "2025-05-12T04:31:35.685Z"
+    },
+    {
+      "id": "1747024352927",
+      "date": "2024-12-20",
+      "type": "expense",
+      "category": "food",
+      "paymentMethod": "card",
+      "amount": 11000,
+      "memo": "찬스부리또",
+      "createdAt": "2025-05-12T04:32:32.927Z"
+    },
+    {
+      "id": "1747024371987",
+      "date": "2024-11-26",
+      "type": "expense",
+      "category": "dessert",
+      "paymentMethod": "card",
+      "amount": 4500,
+      "memo": "공차",
+      "createdAt": "2025-05-12T04:32:51.987Z"
+    },
+    {
+      "id": "1747024457788",
+      "date": "2024-11-21",
+      "type": "expense",
+      "category": "food",
+      "paymentMethod": "card",
+      "amount": 11500,
+      "memo": "프레퍼스",
+      "createdAt": "2025-05-12T04:34:17.788Z"
+    },
+    {
+      "id": "1747024547495",
+      "date": "2024-11-24",
+      "type": "expense",
+      "category": "etc",
+      "paymentMethod": "cash",
+      "amount": 10000,
+      "memo": "유니세프 후원",
+      "createdAt": "2025-05-12T04:35:47.495Z"
     }
   ],
   "budgets": [
