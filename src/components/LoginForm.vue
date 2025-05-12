@@ -44,6 +44,7 @@
       <button
         class="login_btn btn disabled_box clickable_text"
         :disabled="!userInput.email || !userInput.password"
+        @click="login"
       >
         로그인
       </button>

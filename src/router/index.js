@@ -14,6 +14,7 @@ import BudgetPage from '@/pages/BudgetPage.vue'
 import ExportExcelPage from '@/pages/ExportExcelPage.vue'
 // import TransactionEdit from '@/pages/TransactionEditPage.vue'
 // import TransactionEditPage from '@/pages/TransactionEditPage.vue'
+import { useUsersTableStore } from '@/stores/UsersTableStore'
 
 const routes = [
   {
@@ -54,13 +55,13 @@ const routes = [
     path: '/mypage',
     name: 'MyPage',
     component: MyPage,
-    meta: { title: '마이 페이지', layout: 'default' },
+    meta: { title: '마이페이지', layout: 'default' },
   },
   {
-    path: '/adminpage',
-    name: 'AdminPage',
+    path: '/admin',
+    name: 'Admin',
     component: AdminPage,
-    meta: { title: '관리자 페이지', layout: 'default' },
+    meta: { title: '관리자페이지', layout: 'default' },
   },
   {
     path: '/transaction',
@@ -103,26 +104,31 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 })
-// 전역 네비게이션 가드 (로그인 체크, 타이틀 설정 등)
-router.beforeEach((to, from, next) => {
-  const isLoggedIn = !!localStorage.getItem('token') // 예: JWT 토큰 기반 로그인 체크
 
-  // 인증 필요한 페이지 접근 시 로그인 여부 확인
-  if (to.meta.requiresAuth && !isLoggedIn) {
-    next('/login')
+router.beforeEach((to, from, next) => {
+  const userStore = useUsersTableStore()
+  const userInfo = userStore.getUserInfoLocalStorage?.()
+  const isAuthenticated = !!userInfo
+  // 로그인이 필요한 라우터
+  const authRequiredRoutes = [
+    'MyPage',
+    'Admin',
+    'Home',
+    'Transaction',
+    'Statistics',
+    'Exports',
+    'Budget',
+  ]
+
+  if (authRequiredRoutes.includes(to.name) && !isAuthenticated) {
+    next({ name: 'Login' })
   } else {
-    // 타이틀 설정
-    if (to.meta.title) {
-      document.title = to.meta.title
-    }
     next()
   }
 })
 
-// 페이지 이동 후 처리 (예: 로딩 스피너 종료 등)
+// 화면 전환 전 후
 router.afterEach((to, from) => {
-  // 예: console.log 또는 전역 로딩 상태 OFF
-  console.log(`✅ Moved to ${to.fullPath}`)
+  console.log(`✅ 이동 완료: ${from.fullPath} ➡ ${to.fullPath}`)
 })
-
 export default router

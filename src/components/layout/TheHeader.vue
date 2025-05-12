@@ -44,8 +44,8 @@ const headerTitle = computed(() => {
         alt="프로필 이미지"
       />
       <div class="info_text">
-        <div id="user_name">{{ userInfo.name }}</div>
-        <div id="user_role">{{ userInfo.role }}</div>
+        <div id="user_name">{{ userInfo?.name }}</div>
+        <div id="user_role">{{ userInfo?.role }}</div>
       </div>
       <img
         id="more_icon"
@@ -83,11 +83,12 @@ const headerTitle = computed(() => {
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { ref, computed } from 'vue'
 import { useUsersTableStore } from '@/stores/UsersTableStore'
 
 const route = useRoute()
+const router = useRouter()
 const headerTitle = computed(() => {
   return route.meta.title || '페이지'
 })
@@ -102,8 +103,11 @@ function toggleModal() {
 }
 
 function logout() {
+  console.log('로그아웃 버튼 클릭됨')
   try {
     logoutUser()
+    console.log('logoutUser 실행 완료')
+    router.push({ name: 'Login' })
   } catch (error) {
     console.log('로그아웃 실패: ', error)
   }
