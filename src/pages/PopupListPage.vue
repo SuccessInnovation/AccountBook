@@ -1,66 +1,86 @@
 <script setup>
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch, defineEmits } from 'vue'
 import { useTransactionStore } from '@/stores/TransactionStore'
-import { useRoute, useRouter } from 'vue-router'
-const router = useRouter()
+import { useRoute } from 'vue-router'
+import axios from 'axios'
+import {
+  CATEGORY_MAP,
+  INCOME_CATEGORIES,
+  EXPENSE_CATEGORIES,
+} from '@/constants/categories'
 
-// import TransactionEdit from '@/components/TransactionEdit.vue'
-// import
-
-const transactionStore = useTransactionStore()
+const transaction_store = useTransactionStore()
 const route = useRoute()
+const api_url = 'http://localhost:3000/transactions'
 
-console.log('날짜:', route.query.date) // console.log(route.params.id)
-//달력 showCalendar, openCalendar
-// const showCalendar = ref(false)
+const selected_date = ref(route.query.date || '')
+const show_edit_modal = ref(false)
+const selected_transaction_id = ref(null)
+const form_data = ref({
+  date: '',
+  type: '',
+  amount: '',
+  category: '',
+  payment_method: '',
+  memo: '',
+})
 
-// const openCalendar = () => {
-//   showCalendar.value = true
-// }
+const emit = defineEmits(['close'])
 
-// 페이지 로드 시 거래 내역 불러오기
 onMounted(() => {
-  transactionStore.fetchTransactions()
+  transaction_store.fetchTransactions()
 })
 
-// 필터 상태: 수입/지출 (기본: 모두 체크)
-// const showIncome = ref(true)
-// const showExpense = ref(true)
-
-// 필터링된 거래 내역 목록 (수입/지출 체크 상태에 따라)
-// const filteredTransactions = computed(() => {
-//   return transactionStore.transactions.filter(record => {
-//     if (record.type === 'income' && showIncome.value) return true
-//     if (record.type === 'expense' && showExpense.value) return true
-//     return false
-//   })
-// })
-
-const selectedDate = ref(route.query.date || '')
-console.log('선택요일:', selectedDate.value)
-onMounted(() => {
-  transactionStore.fetchTransactions()
-})
-
-// 날짜 기준으로 필터링
-const filteredByDate = computed(() => {
-  return transactionStore.transactions.filter(
-    t => t.date === selectedDate.value,
-  )
-})
 watch(
   () => route.query.date,
-  newVal => {
-    selectedDate.value = newVal
+  new_val => {
+    selected_date.value = new_val
   },
 )
-console.log('선택된 날짜:', selectedDate.value)
-console.log('전체 거래 내역:', transactionStore.transactions)
-console.log('필터된 결과:', filteredByDate.value)
 
-// 금액 포맷 함수:
-// - value를 숫자로 변환하고,
-// - 거래 유형에 따라 '수입'은 '+' 기호, '지출'은 '-' 기호 추가
+const filtered_by_date = computed(() => {
+  return transaction_store.transactions.filter(
+    t => t.date === selected_date.value,
+  )
+})
+
+const categories_list = computed(() => {
+  if (form_data.value.type === 'income') {
+    return INCOME_CATEGORIES
+  } else if (form_data.value.type === 'expense') {
+    return EXPENSE_CATEGORIES
+  } else {
+    return []
+  }
+})
+
+const amount_error = computed(() => {
+  const amount = Number(form_data.value.amount)
+  return amount <= 0 ? '금액은 0원보다 커야 합니다' : ''
+})
+
+const is_form_valid = computed(() => {
+  const amount = Number(form_data.value.amount)
+  const category = form_data.value.category
+  const type = form_data.value.type
+  const date = form_data.value.date
+  const payment = form_data.value.payment_method
+
+  const is_amount_valid = amount > 0
+  const is_category_valid = category !== ''
+  const is_date_valid = date !== ''
+  const is_type_valid = type === 'income' || type === 'expense'
+  const is_payment_valid = type === 'expense' ? payment !== '' : true
+
+  return (
+    is_amount_valid &&
+    is_category_valid &&
+    is_date_valid &&
+    is_type_valid &&
+    is_payment_valid
+  )
+})
+
 function formatAmount(value, type) {
   const num = parseFloat(value)
   if (isNaN(num)) return value
@@ -72,48 +92,74 @@ function formatAmount(value, type) {
       : formatted
 }
 
-// 혁신님이 주시면 갈아끼우기(handleEdit, handleDelete)
-// 수정 아이콘 클릭 시 처리 (수정 페이지로 이동)
-function handleEdit(record) {
-  router.push({ name: 'Popup', params: { id: record.id } })
-}
-
-// 삭제 아이콘 클릭 시 처리 (삭제 확인 후 삭제)
-function handleDelete(id) {
-  if (window.confirm('정말 삭제하시겠습니까?')) {
-    transactionStore.deleteTransaction(id)
-  }
-}
-// 날짜 -> 요일로 바꾸는 함수
-function getKoreanDayName(dateStr) {
-  const date = new Date(dateStr)
+function getKoreanDayName(date_str) {
+  const date = new Date(date_str)
   return date.toLocaleDateString('ko-KR', { weekday: 'long' })
 }
 
-// x버튼 (팝업 취소)
-const emit = defineEmits(['close'])
+function handleDelete(id) {
+  if (window.confirm('정말 삭제하시겠습니까?')) {
+    transaction_store.deleteTransaction(id)
+  }
+}
+
 function closeModal() {
   emit('close')
+}
+
+async function handleEdit(transaction) {
+  selected_transaction_id.value = transaction.id
+  try {
+    const res = await axios.get(`${api_url}/${transaction.id}`)
+    form_data.value = res.data
+    show_edit_modal.value = true
+  } catch (err) {
+    console.error('거래 데이터 불러오기 실패:', err)
+  }
+}
+
+async function handleUpdate() {
+  try {
+    await axios.put(
+      `${api_url}/${selected_transaction_id.value}`,
+      form_data.value,
+    )
+    alert('수정 완료!')
+    transaction_store.fetchTransactions()
+    closeEditModal()
+  } catch (err) {
+    alert('수정 요청 실패')
+    console.error('수정 오류:', err)
+  }
+}
+
+function closeEditModal() {
+  show_edit_modal.value = false
+  selected_transaction_id.value = null
 }
 </script>
 
 <template>
-  <div class="popupOverlay p-4 border rounded shadow" @click.self="closeModal">
-    <!-- 목록/달력 토글 & 검색/필터 영역 -->
-    <!-- 테이블 영역 -->
-    <div class="popupContainer">
-      <div class="topDate">
-        {{ selectedDate }}
-        {{ getKoreanDayName(selectedDate) }}
+  <div
+    v-if="!show_edit_modal"
+    class="popup_overlay p-4 border rounded shadow"
+    @click.self="closeModal"
+  >
+    <div class="popup_container">
+      <div class="top_date">
+        {{ selected_date }}
+        {{ getKoreanDayName(selected_date) }}
       </div>
-      <button class="closeBtn" @click="closeModal">✕</button>
+      <button class="close_btn" @click="closeModal">✕</button>
 
-      <div class="scrollable-table">
-        <table class="ledger-table table">
+      <div v-if="filtered_by_date.length === 0" id="empty_transaction">
+        표시할 내역이 없습니다.
+      </div>
+
+      <div v-else class="scrollable_table">
+        <table class="ledger_table table">
           <thead>
             <tr>
-              <!-- 선택삭제용 체크박스 열 -->
-              <!-- 아직 구현 X -->
               <th style="width: 40px"><input type="checkbox" /></th>
               <th style="width: 120px">날짜</th>
               <th style="width: 120px">카테고리</th>
@@ -124,9 +170,7 @@ function closeModal() {
             </tr>
           </thead>
           <tbody>
-            <!-- 필터 상태에 따라 페이징된 거래 목록 렌더링 -->
-            <tr v-for="record in filteredByDate" :key="record.id">
-              <!-- 선택삭제 체크박스 -->
+            <tr v-for="record in filtered_by_date" :key="record.id">
               <td>
                 <input
                   type="checkbox"
@@ -137,26 +181,18 @@ function closeModal() {
               <td>{{ record.date }}</td>
               <td>{{ record.category }}</td>
               <td>{{ record.memo }}</td>
-              <!--  description에서 memo로 변경 -->
               <td>{{ formatAmount(record.amount, record.type) }}</td>
-              <!-- 수정 아이콘 -->
               <td>
                 <i
-                  class="icon-edit"
-                  @click="
-                    router.push({
-                      name: 'TransactionEdit',
-                      params: { id: record.id },
-                    })
-                  "
+                  class="icon_edit"
+                  @click="handleEdit(record)"
                   style="cursor: pointer"
                   >✏️</i
                 >
               </td>
-              <!-- 삭제 아이콘 -->
               <td>
                 <i
-                  class="icon-delete"
+                  class="icon_delete"
                   @click="handleDelete(record.id)"
                   style="cursor: pointer"
                   >🗑️</i
@@ -166,27 +202,91 @@ function closeModal() {
           </tbody>
         </table>
       </div>
-      <button class="closepopuplist" @click="closepopuplist" />
+
+      <button class="close_popup_list" />
+    </div>
+  </div>
+
+  <div
+    v-if="show_edit_modal"
+    class="popup_overlay"
+    @click.self="closeEditModal"
+  >
+    <div class="edit_container">
+      <h2>거래 수정</h2>
+      <form @submit.prevent="handleUpdate">
+        <label for="edit_date">날짜</label>
+        <input type="date" v-model="form_data.date" id="edit_date" />
+
+        <label for="edit_amount">금액</label>
+        <input type="number" v-model="form_data.amount" id="edit_amount" />
+
+        <p
+          v-if="amount_error"
+          style="color: red; font-size: 0.875rem; margin: 0 0 3px"
+        >
+          {{ amount_error }}
+        </p>
+
+        <label for="edit_category">카테고리</label>
+        <select v-model="form_data.category" id="edit_category" required>
+          <option value="" disabled>카테고리 선택</option>
+          <option
+            v-for="(label, key) in categories_list"
+            :key="key"
+            :value="label"
+          >
+            {{ CATEGORY_MAP[label] }}
+          </option>
+        </select>
+
+        <div
+          class="payment_block"
+          v-if="form_data.type === 'expense'"
+          style="display: flex; flex-direction: column"
+        >
+          <label for="edit_payment">결제 수단</label>
+          <select v-model="form_data.payment_method" id="edit_payment" required>
+            <option value="" disabled>결제 수단 선택</option>
+            <option value="card">카드</option>
+            <option value="cash">현금</option>
+          </select>
+        </div>
+
+        <label for="edit_memo">메모</label>
+        <input type="text" v-model="form_data.memo" id="edit_memo" />
+
+        <div class="button_group">
+          <button type="submit" class="edit_submit" :disabled="!is_form_valid">
+            수정 완료
+          </button>
+          <button type="button" class="edit_cancel" @click="closeEditModal">
+            취소
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
 
-/* 혁신님 팝업 페이지 스타일 */
 <style scoped>
-.popupOverlay {
+/* 스네이크 케이스 통일 스타일 */
+/* 오버레이 */
+.popup_overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.4); /* 배경 딤 처리 */
+  background: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999; /* 다른 컴포넌트 위에 표시 */
+  z-index: 9999;
 }
 
-.popupContainer {
+/* 컨테이너 */
+.popup_container {
   width: 60rem;
   padding: 20px;
   background-color: #fff;
@@ -195,129 +295,28 @@ function closeModal() {
   font-family: sans-serif;
   position: relative;
 }
-.topDate {
+
+/* 날짜 */
+.top_date {
   text-align: center;
 }
-.closeBtn {
+
+/* 닫기버튼 */
+.close_btn {
   position: absolute;
   right: 40px;
   top: 24px;
   cursor: pointer;
   font-size: 24px;
-  /* margin-left: 200px; */
 }
 
-/* 전체 컨테이너 */
-.ledger-container {
-  width: 100%;
-  max-width: 1200px;
-  max-height: 20rem;
-  overflow-y: auto;
-  margin: 0 auto;
-  font-family: sans-serif;
-  background-color: #fff;
-}
-
-/* 상단 연/월 네비게이션 */
-.ledger-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px 0;
-  gap: 40px;
-  background-color: #fff;
-}
-.month-nav {
-  font-size: 1.1rem;
-  color: #888;
-  cursor: pointer;
-}
-.current-month {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.current-month .year {
-  font-size: 1rem;
-  color: #999;
-}
-.current-month .month {
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin-top: 2px;
-}
-
-/* 중간의 '목록/달력/카테고리/검색/수입/지출' 섹션 */
-.ledger-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #a3c39c;
-  padding: 10px 20px;
-  color: #fff;
-}
-.nav-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.nav-btn {
-  background: none;
-  border: none;
-  color: #fff;
-  font-weight: bold;
-  padding: 8px 14px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-.nav-btn.active,
-.nav-btn:hover {
-  background-color: #8eb58d;
-}
-.category-select {
-  background-color: #fff;
-  color: #333;
-  border: none;
-  padding: 8px;
-  border-radius: 4px;
-}
-.nav-center {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-.search-input {
-  width: 300px;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 4px;
-  outline: none;
-}
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.income-checkbox,
-.expense-checkbox {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  cursor: pointer;
-}
-
-/* 테이블 영역 */
-.scrollable-table {
+/* 테이블 */
+.scrollable_table {
   max-height: 300px;
   overflow-y: auto;
 }
 
-.ledger-table-section {
-  padding: 20px;
-  background-color: #f8f8f8;
-}
-.ledger-table {
+.ledger_table {
   width: 100%;
   border-collapse: collapse;
   background-color: #fff;
@@ -326,66 +325,103 @@ function closeModal() {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   margin-top: 3rem;
 }
-.ledger-table thead {
+
+.ledger_table thead {
   background-color: #e2e2e2;
 }
-.ledger-table th,
-.ledger-table td {
+
+.ledger_table th,
+.ledger_table td {
   text-align: left;
   padding: 12px;
   border-bottom: 1px solid #eee;
 }
-.ledger-table th {
+
+.ledger_table th {
   font-weight: bold;
   font-size: 0.9rem;
   color: #333;
 }
-.ledger-table td {
+
+.ledger_table td {
   font-size: 0.88rem;
   color: #555;
 }
-.ledger-table td i {
+
+.ledger_table td i {
   cursor: pointer;
 }
 
-/* 페이징 컨트롤 */
-.pagination-controls button {
-  padding: 6px 12px;
-  margin: 0 6px;
-  border: none;
-  background-color: #a3c39c;
-  color: #fff;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.pagination-controls button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* 하단 '추가' 버튼 영역 */
-.add-button-area {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-  background-color: #fff;
-}
-.add-button {
-  background-color: #a3c39c;
-  color: #fff;
-  border: none;
-  padding: 12px 30px;
-  font-size: 1rem;
-  border-radius: 30px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.add-button:hover {
-  background-color: #8eb58d;
-}
-.closepopuplist {
+/* 버튼 */
+.close_popup_list {
   background-color: var(--point-1-color);
   color: white;
+}
+
+/* 수정 모달 */
+.edit_container {
+  width: 550px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: sans-serif;
+  position: relative;
+}
+
+.edit_container h2 {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.edit_container form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.payment_block {
+  gap: 10px;
+}
+
+.edit_container form > input,
+.edit_container form > select,
+.payment_block > select {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+}
+
+#edit_date {
+  cursor: pointer;
+}
+
+.button_group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.edit_submit,
+.edit_cancel {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.edit_submit {
+  background-color: #a3c39c;
+  color: #fff;
+  margin-right: 10px;
+}
+
+.edit_cancel {
+  background-color: #ddd;
+  color: #333;
 }
 </style>

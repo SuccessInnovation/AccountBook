@@ -10,6 +10,8 @@ import PopupPage from '@/pages/PopupPage.vue'
 import StatisticsPage from '@/pages/StatisticsPage.vue'
 import BudgetPage from '@/pages/BudgetPage.vue'
 import ExportExcelPage from '@/pages/ExportExcelPage.vue'
+// import TransactionEdit from '@/pages/TransactionEditPage.vue'
+// import TransactionEditPage from '@/pages/TransactionEditPage.vue'
 
 const routes = [
   {
@@ -28,11 +30,6 @@ const routes = [
       backgroundColor: '#b7ccb4',
       centerContent: true,
     },
-  },
-  {
-    path: '/transaction/edit/:id',
-    name: 'TransactionEdit',
-    component: () => import('@/pages/TransactionEdit.vue'), // 혹은 적절한 컴포넌트 경로
   },
   {
     path: '/login',
@@ -63,6 +60,11 @@ const routes = [
     component: PopupPage,
     meta: { layout: 'default' },
   },
+//   {
+//     path: '/transaction/edit/:id',
+//     name: 'TransactionEdit',
+//     component: TransactionEditPage,
+//   },
   {
     path: '/statistics/summary',
     name: 'Statistics',

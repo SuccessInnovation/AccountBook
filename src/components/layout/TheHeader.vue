@@ -9,7 +9,7 @@ const headerTitle = computed(() => {
 <template>
   <div class="header_grid">
     <h1 class="logo">
-      <router-link to="/" id="logo_link">
+      <router-link to="/home" id="logo_link">
         <span id="logo_txt">배추</span>
         <img id="logo_img" src="../../img/cabbage/logo1.png" alt="로고" />
       </router-link>

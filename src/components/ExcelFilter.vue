@@ -108,7 +108,7 @@ const handleSubmit = () => {
 
     store.fetchTransactionsByPeriod(customStartDate.value, customEndDate.value)
   }
-  emit('search')
+  emit('search') // 조회 완료 → 부모 컴포넌트에게 알림!
 }
 
 watch(selectPeriod, newVal => {

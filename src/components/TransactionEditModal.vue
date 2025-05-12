@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 import {
   CATEGORY_MAP,
@@ -8,13 +7,27 @@ import {
   EXPENSE_CATEGORIES,
 } from '@/constants/categories'
 
+// props로 transaction ID 받기
+const props = defineProps({
+  transactionId: {
+    type: String,
+    required: true,
+  },
+})
+
+const emit = defineEmits(['close', 'updated'])
+
 //#region 폼 제출 유효성 검사
 /**
  * 금액이 0 이하면 제출 버튼이 disabled 됨
  * 모든 항목에 대해 하나라도 선택되지 않으면 제출 버튼 disabled
- *
  */
 const amountError = computed(() => {
+  // 아직 데이터 로딩 중이면 에러 표시하지 않음
+  if (isLoading.value) {
+    return ''
+  }
+
   const amount = Number(formData.value.amount)
   return amount <= 0 ? '금액은 0원보다 커야 합니다' : ''
 })
@@ -43,17 +56,15 @@ const isFormValid = computed(() => {
 //#endregion
 
 const API_URL = 'http://localhost:3000/transactions'
-const route = useRoute()
-const router = useRouter()
-const transactionId = route.params.id // URL에서 id 받아오기
-console.log('받은 transactionId:', transactionId)
+
+const isLoading = ref(true)
 
 const formData = ref({
   date: '',
   type: '', // 거래 타입(income/expense) 추가
   amount: '',
   category: '',
-  payment: '',
+  paymentMethod: '',
   memo: '',
 })
 
@@ -71,29 +82,32 @@ const categoriesList = computed(() => {
 // 거래 데이터 불러오기
 onMounted(async () => {
   try {
-    const res = await axios.get(`${API_URL}/${transactionId}`)
+    const res = await axios.get(`${API_URL}/${props.transactionId}`)
     formData.value = res.data
     console.log('거래 데이터 불러옴:', res.data)
   } catch (err) {
     console.error('거래 데이터 불러오기 실패:', err)
+  } finally {
+    isLoading.value = false
   }
 })
 
 // 수정 요청 보내기
 async function handleUpdate() {
   try {
-    await axios.put(`${API_URL}/${transactionId}`, formData.value)
+    await axios.put(`${API_URL}/${props.transactionId}`, formData.value)
     alert('수정 완료!')
-    router.push({ name: 'Transaction' }) // 수정 후 거래 목록 페이지로 이동
+    emit('updated') // 거래 내역이 업데이트됨을 알림
+    emit('close') // 모달 닫기
   } catch (err) {
     alert('수정 요청 실패')
     console.error('수정 오류:', err)
   }
 }
 
-// 모달 닫기 (또는 수정 취소)
+// 모달 닫기
 function closeModal() {
-  router.push({ name: 'Transaction' })
+  emit('close')
 }
 </script>
 
@@ -174,7 +188,7 @@ function closeModal() {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 9999;
 }
 
 .edit-container {
