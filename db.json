@@ -1962,7 +1962,7 @@
     },
     {
       "id": "1747007746077",
-      "date": "2025-05-01",
+      "date": "2025-03-01",
       "type": "income",
       "category": "salary",
       "paymentMethod": "",
@@ -2529,6 +2529,16 @@
       "amount": 1500,
       "memo": "학관 카페",
       "createdAt": "2025-05-12T00:16:53.301Z"
+    },
+    {
+      "id": "1747009308148",
+      "date": "2025-03-22",
+      "type": "expense",
+      "category": "shopping",
+      "paymentMethod": "card",
+      "amount": 106000,
+      "memo": "풀리오 목/어깨 마사지기",
+      "createdAt": "2025-05-12T00:21:48.148Z"
     }
   ],
   "budgets": [
