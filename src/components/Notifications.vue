@@ -35,34 +35,45 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
+import { useBudgetStore } from '@/stores/UseBudgetStore'
+import { use_calendar_store } from '@/stores/MonthSelector'
+import { statisticsStore } from '@/stores/statisticsStore'
+import { useBudgetProgress } from '@/stores/useBudgetProgress'
+const { totalBudget, totalSpent } = useBudgetProgress()
 
-// 알림 내역 상태
+const calendar = use_calendar_store()
+const budgetStore = useBudgetStore()
+const statsStore = statisticsStore()
+const isAlarmOpen = ref(false)
+const toggleAlarm = () => (isAlarmOpen.value = !isAlarmOpen.value)
+
+// 알림 리스트 (삭제 가능하게 ref로 설정)
 const notifications = ref([])
-
-// 알림 추가
-notifications.value.push('알림내역1')
-notifications.value.push('알림내역2')
-notifications.value.push('알림내역3')
-notifications.value.push('알림내역4')
-
-// 알림 내역 유무
-// 1개 이상이면 true
 const hasNotifications = computed(() => notifications.value.length > 0)
+const removeNotification = index => notifications.value.splice(index, 1)
 
-// 알림창 표시
-// 알림창이 열러 있는지 여부
-const isAlarmOpen = ref(false) // 기본값: 닫혀있음
+onMounted(async () => {
+  await budgetStore.fetchBudgets(calendar.monthKey)
+  await statsStore.fetchTransactionsByPeriod()
 
-// 알림창 열기/닫기
-const toggleAlarm = () => {
-  isAlarmOpen.value = !isAlarmOpen.value
-}
+  const alerts = []
 
-// 알림 삭제
-const removeNotification = index => {
-  notifications.value.splice(index, 1)
-}
+  if (totalSpent.value > totalBudget.value) {
+    const exceeded = totalSpent.value - totalBudget.value
+    alerts.push(
+      `📌 총 예산을 초과했습니다!
+      초과 금액: ${exceeded.toLocaleString()}원`,
+    )
+  }
+
+  const today = new Date()
+  if (today.getDate() === 12) {
+    alerts.push('📌 D-3 매달 1일은 고정지출 결제일입니다.')
+  }
+
+  notifications.value = alerts
+})
 </script>
 
 <style scoped>
@@ -79,12 +90,12 @@ const removeNotification = index => {
   position: fixed;
   top: 70px;
   right: 100px;
-  width: 200px;
+  width: 320px; /* 기존보다 넓게 */
   background-color: white;
   border: 2px solid #ccc;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 10px;
+  padding: 12px;
   z-index: 999;
 }
 
