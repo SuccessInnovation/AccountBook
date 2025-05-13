@@ -15,7 +15,6 @@ const store = useBudgetStore()
 const emit = defineEmits(['close', 'submit'])
 
 const calendar = use_calendar_store()
-
 const currentMonth = calendar.monthKey
 
 // 카테고리 불러오기
@@ -39,7 +38,7 @@ onMounted(async () => {
   //   console.log('불러온 예산:', store.budgets)
   //   console.log('현재 월:', currentMonth)
 
-  // 어떤 함수인지?
+  // 예산의 카테고리를 실제 카테고리와 연결
   categoryData.value.forEach(item => {
     const matched = existingBudgets.value.find(
       b => b.category === item.category,
@@ -96,19 +95,21 @@ const showConfirm = ref(false)
 const confirmMessage = ref('') // 메시지도 동적으로 넣을 수 있음
 const onConfirm = ref(null) // 확인 시 실행할 콜백
 
+// 확인 모달 함수
 const openConfirm = (message, callback) => {
   confirmMessage.value = message
   showConfirm.value = true
   onConfirm.value = callback
 }
 
+// 예산 초기화 시 나타나는 모달
 const resetBudget = () => {
   openConfirm('정말로 예산을 초기화하시겠습니까?', async () => {
-    // 1. 현재 달 예산 불러오기
+    // 현재 달 예산 불러오기
     await store.fetchBudgets(currentMonth)
     const budgets = store.budgets
 
-    // 2. 예산 모두 0으로 초기화 (PUT 요청)
+    // 예산 모두 0으로 초기화 (PUT 요청)
     const resetRequests = budgets.map(b => {
       return axios.put(`${BASE_URI}/budgets/${b.id}`, {
         ...b,
@@ -124,6 +125,8 @@ const resetBudget = () => {
     })
   })
 }
+
+// 키보드 핸들링 가능
 const handleKeyup = event => {
   if (event.key === 'Escape') {
     handleCancel()
@@ -142,11 +145,12 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="BudgetSetting">
+    <!-- 예산 설정 팝업창 -->
     <div class="budget_popup">
       <div class="setting_title">
         <h2>예산 설정</h2>
       </div>
-      <!-- 예산 리스트 불러오기 -->
+      <!-- 카테고리별 예산 리스트 -->
       <div class="category_container">
         <div
           v-for="item in categoryData"
