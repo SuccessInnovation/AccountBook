@@ -1,20 +1,28 @@
 <script setup>
 import { useRoute } from 'vue-router'
 import { computed } from 'vue'
+
+import Notifications from '../Notifications.vue'
+
 const route = useRoute()
 const headerTitle = computed(() => {
   return route.meta.title || '페이지'
 })
 </script>
+
 <template>
   <div class="header_grid">
     <h1 class="logo">
-      <router-link to="/" id="logo_link">
+      <router-link to="/home" id="logo_link">
         <span id="logo_txt">배추</span>
         <img id="logo_img" src="../../img/cabbage/logo1.png" alt="로고" />
       </router-link>
     </h1>
     <div id="title">{{ headerTitle }}</div>
+
+    <!-- 알림 컴포넌트 -->
+    <Notifications />
+
     <div id="profile_img">
       <router-link to="register">
         <img
@@ -64,6 +72,7 @@ const headerTitle = computed(() => {
   overflow: hidden;
   justify-self: center;
 }
+
 #profile_img {
   position: fixed;
   right: 10px;
