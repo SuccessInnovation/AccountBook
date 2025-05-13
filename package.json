@@ -19,7 +19,6 @@
     "json-server": "^1.0.0-beta.3",
     "pinia": "^3.0.2",
     "router": "^2.2.0",
-    "swiper": "^11.2.6",
     "vue": "^3.5.13",
     "vue-chart": "^2.0.0",
     "vue-chartjs": "^5.3.2",

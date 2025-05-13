@@ -146,45 +146,48 @@ function closeEditModal() {
     @click.self="closeModal"
   >
     <div class="popup_container">
-      <div class="top_date">
-        {{ selected_date }}
-        {{ getKoreanDayName(selected_date) }}
+      <div class="top_date mt-3">
+        <b>
+          {{ selected_date }}
+          {{ getKoreanDayName(selected_date) }}
+        </b>
       </div>
-      <button class="close_btn" @click="closeModal">✕</button>
+      <button class="close_btn mt-0" @click="closeModal">✕</button>
 
-      <div v-if="filtered_by_date.length === 0" id="empty_transaction">
+      <div
+        v-if="filtered_by_date.length === 0"
+        id="empty_transaction"
+        style="text-align: center"
+        class="mt-5"
+      >
         표시할 내역이 없습니다.
       </div>
 
-      <div v-else class="scrollable_table">
-        <table class="ledger_table table">
-          <thead>
+      <div
+        v-else
+        class="table-responsive rounded shadow-sm bg-white px-3 w-100"
+        style="max-height: 400px; overflow-y: auto"
+      >
+        <table class="table table-hover mt-5 mb-0 text-center align-middle">
+          <thead class="table-light">
             <tr>
-              <th style="width: 40px"><input type="checkbox" /></th>
-              <th style="width: 120px">날짜</th>
-              <th style="width: 120px">카테고리</th>
-              <th>내용</th>
-              <th style="width: 120px">금액</th>
-              <th style="width: 60px">수정</th>
-              <th style="width: 60px">삭제</th>
+              <th scope="col" style="width: 160px">날짜</th>
+              <th scope="col" style="width: 150px">카테고리</th>
+              <th scope="col" style="width: auto">메모</th>
+              <th scope="col" style="width: 150px">금액</th>
+              <th scope="col" style="width: 60px">수정</th>
+              <th scope="col" style="width: 60px">삭제</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="record in filtered_by_date" :key="record.id">
-              <td>
-                <input
-                  type="checkbox"
-                  v-model="record.selected"
-                  style="width: 16px; height: 16px"
-                />
-              </td>
               <td>{{ record.date }}</td>
-              <td>{{ record.category }}</td>
+              <td>{{ CATEGORY_MAP[record.category] || record.category }}</td>
               <td>{{ record.memo }}</td>
               <td>{{ formatAmount(record.amount, record.type) }}</td>
               <td>
                 <i
-                  class="icon_edit"
+                  class="text-success d-block mx-auto icon-hover"
                   @click="handleEdit(record)"
                   style="cursor: pointer"
                   >✏️</i
@@ -192,7 +195,7 @@ function closeEditModal() {
               </td>
               <td>
                 <i
-                  class="icon_delete"
+                  class="text-danger d-block mx-auto icon-hover"
                   @click="handleDelete(record.id)"
                   style="cursor: pointer"
                   >🗑️</i
@@ -423,5 +426,9 @@ function closeEditModal() {
 .edit_cancel {
   background-color: #ddd;
   color: #333;
+}
+.icon-hover:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease;
 }
 </style>
