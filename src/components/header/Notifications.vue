@@ -35,17 +35,12 @@
 </template>
 
 <script setup>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b320dbd (Feat: 알림 기능 생성(예산 초과, 고정결제일 알림) Notifications.vue 05-12)
 import { computed, ref, onMounted } from 'vue'
 import { useBudgetStore } from '@/stores/UseBudgetStore'
 import { use_calendar_store } from '@/stores/MonthSelector'
 import { statisticsStore } from '@/stores/statisticsStore'
 import { useBudgetProgress } from '@/stores/useBudgetProgress'
 const { totalBudget, totalSpent } = useBudgetProgress()
-<<<<<<< HEAD
 
 const calendar = use_calendar_store()
 const budgetStore = useBudgetStore()
@@ -79,51 +74,6 @@ onMounted(async () => {
 
   notifications.value = alerts
 })
-=======
-import { computed, ref } from 'vue'
-=======
->>>>>>> b320dbd (Feat: 알림 기능 생성(예산 초과, 고정결제일 알림) Notifications.vue 05-12)
-
-const calendar = use_calendar_store()
-const budgetStore = useBudgetStore()
-const statsStore = statisticsStore()
-const isAlarmOpen = ref(false)
-const toggleAlarm = () => (isAlarmOpen.value = !isAlarmOpen.value)
-
-// 알림 리스트 (삭제 가능하게 ref로 설정)
-const notifications = ref([])
-const hasNotifications = computed(() => notifications.value.length > 0)
-const removeNotification = index => notifications.value.splice(index, 1)
-
-onMounted(async () => {
-  await budgetStore.fetchBudgets(calendar.monthKey)
-  await statsStore.fetchTransactionsByPeriod()
-
-  const alerts = []
-
-<<<<<<< HEAD
-// 알림 삭제
-const removeNotification = index => {
-  notifications.value.splice(index, 1)
-}
->>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
-=======
-  if (totalSpent.value > totalBudget.value) {
-    const exceeded = totalSpent.value - totalBudget.value
-    alerts.push(
-      `📌 총 예산을 초과했습니다!
-      초과 금액: ${exceeded.toLocaleString()}원`,
-    )
-  }
-
-  const today = new Date()
-  if (today.getDate() === 12) {
-    alerts.push('📌 D-3 매달 1일은 고정지출 결제일입니다.')
-  }
-
-  notifications.value = alerts
-})
->>>>>>> b320dbd (Feat: 알림 기능 생성(예산 초과, 고정결제일 알림) Notifications.vue 05-12)
 </script>
 
 <style scoped>
@@ -140,28 +90,12 @@ const removeNotification = index => {
   position: fixed;
   top: 70px;
   right: 100px;
-<<<<<<< HEAD
-<<<<<<< HEAD
   width: 320px; /* 기존보다 넓게 */
-=======
-  width: 200px;
->>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
-=======
-  width: 320px; /* 기존보다 넓게 */
->>>>>>> b320dbd (Feat: 알림 기능 생성(예산 초과, 고정결제일 알림) Notifications.vue 05-12)
   background-color: white;
   border: 2px solid #ccc;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-<<<<<<< HEAD
-<<<<<<< HEAD
   padding: 12px;
-=======
-  padding: 10px;
->>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
-=======
-  padding: 12px;
->>>>>>> b320dbd (Feat: 알림 기능 생성(예산 초과, 고정결제일 알림) Notifications.vue 05-12)
   z-index: 999;
 }
 
@@ -179,11 +113,7 @@ const removeNotification = index => {
 }
 
 .alarm_box li {
-<<<<<<< HEAD
   padding: 6px 10px;
-=======
-  padding: 5px 10px;
->>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
   margin: 6px 0;
   border-radius: 13px;
   background-color: var(--color-green-light);

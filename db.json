@@ -1,13 +1,6 @@
 {
   "transactions": [
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> cf756ef (Docs: db.json 2월 추가 05-11)
-=======
->>>>>>> e2efcd4 (Docs: db.json 2월 추가 및 기존 데이터 삭제 05-11)
       "id": "1746951112734",
       "date": "2024-10-01",
       "type": "expense",
@@ -308,16 +301,6 @@
       "createdAt": "2025-05-11T08:11:52.763Z"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 2125a37 (Docs: db.json 2월 추가 05-11)
-=======
->>>>>>> cf756ef (Docs: db.json 2월 추가 05-11)
-=======
-=======
->>>>>>> 5b71e1c (Docs: db.json 2월 추가 및 기존 데이터 삭제 05-11)
->>>>>>> e2efcd4 (Docs: db.json 2월 추가 및 기존 데이터 삭제 05-11)
       "id": "1746950759095",
       "date": "2025-02-01",
       "type": "expense",
@@ -328,13 +311,6 @@
       "createdAt": "2025-05-11T08:05:59.096Z"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> cf756ef (Docs: db.json 2월 추가 05-11)
-=======
->>>>>>> e2efcd4 (Docs: db.json 2월 추가 및 기존 데이터 삭제 05-11)
       "id": "1746951112734",
       "date": "2024-10-14",
       "type": "expense",
@@ -535,16 +511,6 @@
       "createdAt": "2025-05-11T08:12:11.734Z"
     },
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 2125a37 (Docs: db.json 2월 추가 05-11)
-=======
->>>>>>> cf756ef (Docs: db.json 2월 추가 05-11)
-=======
-=======
->>>>>>> 5b71e1c (Docs: db.json 2월 추가 및 기존 데이터 삭제 05-11)
->>>>>>> e2efcd4 (Docs: db.json 2월 추가 및 기존 데이터 삭제 05-11)
       "id": "1746950819719",
       "date": "2025-02-01",
       "type": "expense",
@@ -813,7 +779,6 @@
       "amount": 12000,
       "memo": "스시붐",
       "createdAt": "2025-05-11T08:24:26.685Z"
-<<<<<<< HEAD
     },
     {
       "id": "1746951885521",
@@ -2323,7 +2288,6 @@
       "paymentMethod": "cash",
       "amount": 14000,
       "memo": "영화 관람",
-<<<<<<< HEAD
       "createdAt": "2025-05-11T17:05:41.461Z"
     },
     {
@@ -2385,10 +2349,6 @@
       "amount": 7000,
       "memo": "약국",
       "createdAt": "2025-05-11T17:08:34.031Z"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 7ec3258 (Update : 3월 db 업데이트 05-12)
     },
     {
       "id": "1747007455834",
@@ -2502,15 +2462,7 @@
     },
     {
       "id": "1747007746077",
-<<<<<<< HEAD
-<<<<<<< HEAD
       "date": "2025-03-01",
-=======
-      "date": "2025-05-01",
->>>>>>> 7ec3258 (Update : 3월 db 업데이트 05-12)
-=======
-      "date": "2025-03-01",
->>>>>>> b22abb4 (Update : 3월 db 빠진 내용 추가 05-12)
       "type": "income",
       "category": "salary",
       "paymentMethod": "",
@@ -3077,10 +3029,6 @@
       "amount": 1500,
       "memo": "학관 카페",
       "createdAt": "2025-05-12T00:16:53.301Z"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> b22abb4 (Update : 3월 db 빠진 내용 추가 05-12)
     },
     {
       "id": "1747009308148",
@@ -3091,620 +3039,6 @@
       "amount": 106000,
       "memo": "풀리오 목/어깨 마사지기",
       "createdAt": "2025-05-12T00:21:48.148Z"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-      "createdAt": "2025-04-10T00:00:00Z"
-<<<<<<< HEAD
->>>>>>> 9ced243 (Update : 페르소나 시나리오 db 50개 작성 완료)
-=======
->>>>>>> 54ddb50 (Update : 페르소나 시나리오 db 50개 작성 완료)
-=======
-    },
-    {
-      "id": "1746951885521",
-      "date": "2025-02-16",
-      "type": "expense",
-      "category": "leisure",
-      "paymentMethod": "card",
-      "amount": 14000,
-      "memo": "영화 관람",
-      "createdAt": "2025-05-11T08:24:45.521Z"
-    },
-    {
-      "id": "1746951911067",
-      "date": "2025-02-17",
-      "type": "expense",
-      "category": "dessert",
-      "paymentMethod": "card",
-      "amount": 6000,
-      "memo": "편의점",
-      "createdAt": "2025-05-11T08:25:11.067Z"
-    },
-    {
-      "id": "1746951960789",
-      "date": "2025-02-19",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "card",
-      "amount": 8100,
-      "memo": "맥도날드",
-      "createdAt": "2025-05-11T08:26:00.789Z"
-    },
-    {
-      "id": "1746951980039",
-      "date": "2025-02-20",
-      "type": "expense",
-      "category": "dessert",
-      "paymentMethod": "card",
-      "amount": 12100,
-      "memo": "스타벅스",
-      "createdAt": "2025-05-11T08:26:20.039Z"
-    },
-    {
-      "id": "1746952005408",
-      "date": "2025-02-22",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "card",
-      "amount": 35000,
-      "memo": "식재료 배송",
-      "createdAt": "2025-05-11T08:26:45.408Z"
-    },
-    {
-      "id": "1746952111526",
-      "date": "2025-02-22",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "card",
-      "amount": 89200,
-      "memo": "올리브영",
-      "createdAt": "2025-05-11T08:28:31.526Z"
-    },
-    {
-      "id": "1746952130377",
-      "date": "2025-02-23",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "card",
-      "amount": 125700,
-      "memo": "무신사",
-      "createdAt": "2025-05-11T08:28:50.377Z"
-    },
-    {
-      "id": "1746952154127",
-      "date": "2025-02-27",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "card",
-      "amount": 66600,
-      "memo": "헤라 쿠션",
-      "createdAt": "2025-05-11T08:29:14.127Z"
-    },
-    {
-      "id": "1746952202994",
-      "date": "2025-02-28",
-      "type": "expense",
-      "category": "contributions",
-      "paymentMethod": "card",
-      "amount": 30000,
-      "memo": "친구 생일선물",
-      "createdAt": "2025-05-11T08:30:02.994Z"
-    },
-    {
-      "id": "1746952222526",
-      "date": "2025-02-28",
-      "type": "expense",
-      "category": "contributions",
-      "paymentMethod": "card",
-      "amount": 35000,
-      "memo": "개강 전 동기 모임",
-      "createdAt": "2025-05-11T08:30:22.526Z"
->>>>>>> 5b71e1c (Docs: db.json 2월 추가 및 기존 데이터 삭제 05-11)
-    },
-    {
-      "id": "1746504409360",
-      "date": "2025-05-01",
-      "type": "expense",
-      "category": "utilities",
-      "paymentMethod": "cash",
-      "amount": 600000,
-      "memo": "월세",
-      "createdAt": "2025-05-06T04:06:49.360Z"
-    },
-    {
-      "id": "1746504432056",
-      "date": "2025-05-01",
-      "type": "expense",
-      "category": "utilities",
-      "paymentMethod": "cash",
-      "amount": 10000,
-      "memo": "수도세",
-      "createdAt": "2025-05-06T04:07:12.056Z"
-    },
-    {
-      "id": "1746504450218",
-      "date": "2025-05-01",
-      "type": "expense",
-      "category": "utilities",
-      "paymentMethod": "cash",
-      "amount": 30000,
-      "memo": "전기세",
-      "createdAt": "2025-05-06T04:07:30.218Z"
-    },
-    {
-      "id": "1746504464590",
-      "date": "2025-05-01",
-      "type": "expense",
-      "category": "utilities",
-      "paymentMethod": "cash",
-      "amount": 10000,
-      "memo": "관리비",
-      "createdAt": "2025-05-06T04:07:44.590Z"
-    },
-    {
-      "id": "1746504478902",
-      "date": "2025-05-01",
-      "type": "expense",
-      "category": "utilities",
-      "paymentMethod": "cash",
-      "amount": 20000,
-      "memo": "가스비",
-      "createdAt": "2025-05-06T04:07:58.902Z"
-    },
-    {
-      "id": "1746504507019",
-      "date": "2025-05-01",
-      "type": "expense",
-      "category": "utilities",
-      "paymentMethod": "cash",
-      "amount": 50000,
-      "memo": "휴대폰 통신비",
-      "createdAt": "2025-05-06T04:08:27.019Z"
-    },
-    {
-      "id": "1746504528047",
-      "date": "2025-05-01",
-      "type": "expense",
-      "category": "utilities",
-      "paymentMethod": "cash",
-      "amount": 5500,
-      "memo": "넷플릭스 구독료",
-      "createdAt": "2025-05-06T04:08:48.047Z"
-    },
-    {
-      "id": "1746504549399",
-      "date": "2025-05-01",
-      "type": "expense",
-      "category": "transportation",
-      "paymentMethod": "cash",
-      "amount": 5000,
-      "memo": "서울시 따릉이 1개월권",
-      "createdAt": "2025-05-06T04:09:09.399Z"
-    },
-    {
-      "id": "1746504708077",
-      "date": "2025-05-01",
-      "type": "expense",
-      "category": "utilities",
-      "paymentMethod": "cash",
-      "amount": 8800,
-      "memo": "인터넷 와이파이",
-      "createdAt": "2025-05-06T04:11:48.077Z"
-    },
-    {
-      "id": "1746504728049",
-      "date": "2025-05-01",
-      "type": "income",
-      "category": "salary",
-      "paymentMethod": "",
-      "amount": 830000,
-      "memo": "학원 강습 알바",
-      "createdAt": "2025-05-06T04:12:08.049Z"
-    },
-    {
-      "id": "1746504740995",
-      "date": "2025-05-01",
-      "type": "income",
-      "category": "allowance",
-      "paymentMethod": "",
-      "amount": 500000,
-      "memo": "부모님 용돈",
-      "createdAt": "2025-05-06T04:12:20.995Z"
-    },
-    {
-      "id": "1746504755700",
-      "date": "2025-05-01",
-      "type": "income",
-      "category": "scholarship",
-      "paymentMethod": "",
-      "amount": 300000,
-      "memo": "부트캠프 지원금",
-      "createdAt": "2025-05-06T04:12:35.700Z"
-    },
-    {
-      "id": "1746510416497",
-      "date": "2025-05-01",
-      "type": "expense",
-      "category": "utilities",
-      "paymentMethod": "cash",
-      "amount": 100,
-      "memo": "멜론",
-      "createdAt": "2025-05-06T05:46:56.497Z"
-    },
-    {
-      "id": "1746510776274",
-      "date": "2025-05-03",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 56870,
-      "memo": "에이블리",
-      "createdAt": "2025-05-06T05:52:56.274Z"
-    },
-    {
-      "id": "1746510791743",
-      "date": "2025-05-03",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 24900,
-      "memo": "에이블리",
-      "createdAt": "2025-05-06T05:53:11.743Z"
-    },
-    {
-      "id": "1746510824261",
-      "date": "2025-05-07",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 33040,
-      "memo": "에이블리",
-      "createdAt": "2025-05-06T05:53:44.261Z"
-    },
-    {
-      "id": "1746510844431",
-      "date": "2025-05-16",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 62640,
-      "memo": "에이블리",
-      "createdAt": "2025-05-06T05:54:04.431Z"
-    },
-    {
-      "id": "1746510865678",
-      "date": "2025-05-20",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 35990,
-      "memo": "에이블리",
-      "createdAt": "2025-05-06T05:54:25.678Z"
-    },
-    {
-      "id": "1746510881940",
-      "date": "2025-05-23",
-      "type": "expense",
-      "category": "dessert",
-      "paymentMethod": "cash",
-      "amount": 13000,
-      "memo": "스타벅스",
-      "createdAt": "2025-05-06T05:54:41.940Z"
-    },
-    {
-      "id": "1746510926817",
-      "date": "2025-05-04",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 96000,
-      "memo": "헤어 디자인펌",
-      "createdAt": "2025-05-06T05:55:26.817Z"
-    },
-    {
-      "id": "1746511008268",
-      "date": "2025-05-16",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 60000,
-      "memo": "네일 젤",
-      "createdAt": "2025-05-06T05:56:48.268Z"
-    },
-    {
-      "id": "1746511036227",
-      "date": "2025-05-03",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 58000,
-      "memo": "블러셔(마가렛),립스틱(베어그레이프)",
-      "createdAt": "2025-05-06T05:57:16.227Z"
-    },
-    {
-      "id": "1746511057575",
-      "date": "2025-05-07",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 26900,
-      "memo": "토리든 세럼",
-      "createdAt": "2025-05-06T05:57:37.575Z"
-    },
-    {
-      "id": "1746511141428",
-      "date": "2025-05-08",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 42200,
-      "memo": "패브릭 쿠션 거울",
-      "createdAt": "2025-05-06T05:59:01.428Z"
-    },
-    {
-      "id": "1746511170627",
-      "date": "2025-05-08",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 9400,
-      "memo": "액자포스터",
-      "createdAt": "2025-05-06T05:59:30.627Z"
-    },
-    {
-      "id": "1746511233935",
-      "date": "2025-05-11",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 99900,
-      "memo": "차렵이불세트(피치샤베트)",
-      "createdAt": "2025-05-06T06:00:33.935Z"
-    },
-    {
-      "id": "1746511301102",
-      "date": "2025-05-09",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 19900,
-      "memo": "메탈하의걸이(10개)",
-      "createdAt": "2025-05-06T06:01:41.102Z"
-    },
-    {
-      "id": "1746511325416",
-      "date": "2025-05-11",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 27000,
-      "memo": "룸슈즈 1+1\n(레몬소다,아이보리핑크)",
-      "createdAt": "2025-05-06T06:02:05.416Z"
-    },
-    {
-      "id": "1746511363295",
-      "date": "2025-05-12",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 50000,
-      "memo": "다이소",
-      "createdAt": "2025-05-06T06:02:43.295Z"
-    },
-    {
-      "id": "1746511446063",
-      "date": "2025-05-05",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 13850,
-      "memo": "순수한면(중형+대형)",
-      "createdAt": "2025-05-06T06:04:06.063Z"
-    },
-    {
-      "id": "1746511463505",
-      "date": "2025-05-26",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "cash",
-      "amount": 47900,
-      "memo": "크록스 바야플랫폼클로그",
-      "createdAt": "2025-05-06T06:04:23.505Z"
-    },
-    {
-      "id": "1746511479108",
-      "date": "2025-05-07",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 13000,
-      "memo": "유가네닭갈비",
-      "createdAt": "2025-05-06T06:04:39.108Z"
-    },
-    {
-      "id": "1746511494336",
-      "date": "2025-05-08",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 11000,
-      "memo": "육전국밥",
-      "createdAt": "2025-05-06T06:04:54.336Z"
-    },
-    {
-      "id": "1746511516525",
-      "date": "2025-05-09",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 10500,
-      "memo": "샤브로21",
-      "createdAt": "2025-05-06T06:05:16.525Z"
-    },
-    {
-      "id": "1746511530179",
-      "date": "2025-05-12",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 11000,
-      "memo": "서울뼈칼국수",
-      "createdAt": "2025-05-06T06:05:30.179Z"
-    },
-    {
-      "id": "1746511552295",
-      "date": "2025-05-13",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 13000,
-      "memo": "금하",
-      "createdAt": "2025-05-06T06:05:52.295Z"
-    },
-    {
-      "id": "1746511586255",
-      "date": "2025-05-14",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 8000,
-      "memo": "학식",
-      "createdAt": "2025-05-06T06:06:26.255Z"
-    },
-    {
-      "id": "1746511605443",
-      "date": "2025-05-15",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 16500,
-      "memo": "사토규카츠",
-      "createdAt": "2025-05-06T06:06:45.443Z"
-    },
-    {
-      "id": "1746511642009",
-      "date": "2025-05-16",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 10000,
-      "memo": "멘츠루",
-      "createdAt": "2025-05-06T06:07:22.009Z"
-    },
-    {
-      "id": "1746511656255",
-      "date": "2025-05-19",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 11000,
-      "memo": "소사면옥",
-      "createdAt": "2025-05-06T06:07:36.255Z"
-    },
-    {
-      "id": "1746511684778",
-      "date": "2025-05-05",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 12960,
-      "memo": "제주삼다수(2L*12개)",
-      "createdAt": "2025-05-06T06:08:04.778Z"
-    },
-    {
-      "id": "1746511712246",
-      "date": "2025-05-05",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 15900,
-      "memo": "엉클탁 (백미 5kg)",
-      "createdAt": "2025-05-06T06:08:32.246Z"
-    },
-    {
-      "id": "1746511734228",
-      "date": "2025-05-05",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 4360,
-      "memo": "짜요짜요(딸기*6개입*2)",
-      "createdAt": "2025-05-06T06:08:54.228Z"
-    },
-    {
-      "id": "1746511757369",
-      "date": "2025-05-05",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 14820,
-      "memo": "곰곰 치킨너겟(850g*2)",
-      "createdAt": "2025-05-06T06:09:17.369Z"
-    },
-    {
-      "id": "1746511776504",
-      "date": "2025-05-05",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 10560,
-      "memo": "곰곰 광천 도시락김 (5g*32)",
-      "createdAt": "2025-05-06T06:09:36.504Z"
-    },
-    {
-      "id": "1746511797227",
-      "date": "2025-05-05",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 9480,
-      "memo": "목계촌 특란(30구)",
-      "createdAt": "2025-05-06T06:09:57.227Z"
-    },
-    {
-      "id": "1746511808096",
-      "date": "2025-05-05",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "cash",
-      "amount": 13400,
-      "memo": "비비고 썰은김치(1.2kg)",
-      "createdAt": "2025-05-06T06:10:08.096Z"
-    },
-    {
-      "id": "1746511841030",
-      "date": "2025-05-24",
-      "type": "expense",
-      "category": "etc",
-      "paymentMethod": "cash",
-      "amount": 16020,
-      "memo": "토익 ets 1000제 ",
-      "createdAt": "2025-05-06T06:10:41.030Z"
-    },
-    {
-      "id": "1746511859025",
-      "date": "2025-05-02",
-      "type": "expense",
-      "category": "etc",
-      "paymentMethod": "cash",
-      "amount": 27000,
-      "memo": "뇌를 자극하는 자바 (전공교재)",
-      "createdAt": "2025-05-06T06:10:59.025Z"
-    },
-    {
-      "id": "1746511882785",
-      "date": "2025-05-15",
-      "type": "expense",
-      "category": "leisure",
-      "paymentMethod": "cash",
-      "amount": 10400,
-      "memo": "야구 티켓팅 1루 내야석",
-      "createdAt": "2025-05-06T06:11:22.785Z"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 33ef322 (Update: 11월 db 업데이트 05-12)
     },
     {
       "id": "1746504409360",
@@ -4655,130 +3989,10 @@
       "amount": 10000,
       "memo": "유니세프 후원",
       "createdAt": "2025-05-12T04:35:47.495Z"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 0493a2f (Update : 1월 db 업데이트 05-12)
-=======
->>>>>>> 7ec3258 (Update : 3월 db 업데이트 05-12)
-=======
->>>>>>> b22abb4 (Update : 3월 db 빠진 내용 추가 05-12)
-=======
->>>>>>> 33ef322 (Update: 11월 db 업데이트 05-12)
-=======
->>>>>>> 9ced243 (Update : 페르소나 시나리오 db 50개 작성 완료)
-=======
->>>>>>> 54ddb50 (Update : 페르소나 시나리오 db 50개 작성 완료)
-=======
->>>>>>> 0a8982d (Update : db 수정)
     }
   ],
   "budgets": [
     {
-<<<<<<< HEAD
-=======
-    },
-    {
-      "id": "1746951885521",
-      "date": "2025-02-16",
-      "type": "expense",
-      "category": "leisure",
-      "paymentMethod": "card",
-      "amount": 14000,
-      "memo": "영화 관람",
-      "createdAt": "2025-05-11T08:24:45.521Z"
-    },
-    {
-      "id": "1746951911067",
-      "date": "2025-02-17",
-      "type": "expense",
-      "category": "dessert",
-      "paymentMethod": "card",
-      "amount": 6000,
-      "memo": "편의점",
-      "createdAt": "2025-05-11T08:25:11.067Z"
-    },
-    {
-      "id": "1746951960789",
-      "date": "2025-02-19",
-      "type": "expense",
->>>>>>> 2125a37 (Docs: db.json 2월 추가 05-11)
-      "category": "food",
-      "paymentMethod": "card",
-      "amount": 8100,
-      "memo": "맥도날드",
-      "createdAt": "2025-05-11T08:26:00.789Z"
-    },
-    {
-      "id": "1746951980039",
-      "date": "2025-02-20",
-      "type": "expense",
-      "category": "dessert",
-      "paymentMethod": "card",
-      "amount": 12100,
-      "memo": "스타벅스",
-      "createdAt": "2025-05-11T08:26:20.039Z"
-    },
-    {
-      "id": "1746952005408",
-      "date": "2025-02-22",
-      "type": "expense",
-      "category": "food",
-      "paymentMethod": "card",
-      "amount": 35000,
-      "memo": "식재료 배송",
-      "createdAt": "2025-05-11T08:26:45.408Z"
-    },
-    {
-      "id": "1746952111526",
-      "date": "2025-02-22",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "card",
-      "amount": 89200,
-      "memo": "올리브영",
-      "createdAt": "2025-05-11T08:28:31.526Z"
-    },
-    {
-      "id": "1746952130377",
-      "date": "2025-02-23",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "card",
-      "amount": 125700,
-      "memo": "무신사",
-      "createdAt": "2025-05-11T08:28:50.377Z"
-    },
-    {
-      "id": "1746952154127",
-      "date": "2025-02-27",
-      "type": "expense",
-      "category": "shopping",
-      "paymentMethod": "card",
-      "amount": 66600,
-      "memo": "헤라 쿠션",
-      "createdAt": "2025-05-11T08:29:14.127Z"
-    },
-    {
-      "id": "1746952202994",
-      "date": "2025-02-28",
-      "type": "expense",
-      "category": "contributions",
-      "paymentMethod": "card",
-      "amount": 30000,
-      "memo": "친구 생일선물",
-      "createdAt": "2025-05-11T08:30:02.994Z"
-    },
-    {
-      "id": "1746952222526",
-      "date": "2025-02-28",
-      "type": "expense",
-      "category": "contributions",
-      "paymentMethod": "card",
-      "amount": 35000,
-      "memo": "개강 전 동기 모임",
-      "createdAt": "2025-05-11T08:30:22.526Z"
-=======
       "category": "food",
       "amount": 1000000,
       "month": "2025-04",
@@ -4849,91 +4063,6 @@
       "amount": 0,
       "month": "2025-04",
       "id": "6b4d"
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> cf756ef (Docs: db.json 2월 추가 05-11)
-=======
-    },
-    {
-      "category": "food",
-      "amount": 200000,
-      "month": "2025-05",
-      "id": "2e50"
-    },
-    {
-      "category": "dessert",
-      "amount": 10000,
-      "month": "2025-05",
-      "id": "d83e"
-    },
-    {
-      "category": "entertainment",
-      "amount": 80000,
-      "month": "2025-05",
-      "id": "bdca"
-    },
-    {
-      "category": "shopping",
-      "amount": 100000,
-      "month": "2025-05",
-      "id": "9df9"
-    },
-    {
-      "category": "supplies",
-      "amount": 50000,
-      "month": "2025-05",
-      "id": "4cb8"
-    },
-    {
-      "category": "transportation",
-      "amount": 40000,
-      "month": "2025-05",
-      "id": "4454"
-    },
-    {
-      "category": "utilities",
-      "amount": 800000,
-      "month": "2025-05",
-      "id": "e932"
-    },
-    {
-      "category": "health",
-      "amount": 0,
-      "month": "2025-05",
-      "id": "2421"
-    },
-    {
-      "category": "leisure",
-      "amount": 30000,
-      "month": "2025-05",
-      "id": "8e3d"
-    },
-    {
-      "category": "travel",
-      "amount": 0,
-      "month": "2025-05",
-      "id": "8d5e"
-    },
-    {
-      "category": "contributions",
-      "amount": 0,
-      "month": "2025-05",
-      "id": "838f"
-    },
-    {
-      "category": "savings",
-      "amount": 100000,
-      "month": "2025-05",
-      "id": "3f3c"
-    },
-    {
-      "category": "etc",
-      "amount": 0,
-      "month": "2025-05",
-      "id": "adf3"
->>>>>>> b320dbd (Feat: 알림 기능 생성(예산 초과, 고정결제일 알림) Notifications.vue 05-12)
-=======
->>>>>>> ab833e9 (Update : db 수정)
     }
   ],
   "users": [
@@ -4954,7 +4083,7 @@
       "password": "1234",
       "name": "홍길동",
       "profileImage": "/src/img/profile/pretty_cabbage.jpg",
-      "status": "active",
+      "status": "deactivated",
       "role": "User",
       "createdAt": "2025-04-23-목 23:11:35",
       "updatedAt": "2025-05-05-월 12:24:11"
@@ -4964,14 +4093,7 @@
       "email": "admin@kb.com",
       "password": "1234",
       "name": "관리자",
-<<<<<<< HEAD
-<<<<<<< HEAD
       "profileImage": "/src/img/profile/pretty_cabbage.jpg",
-=======
->>>>>>> 73e720c (Fix: 프로필 클릭 시 나타나는 모달창 수정)
-=======
-      "profileImage": "/src/img/profile/pretty_cabbage.jpg",
->>>>>>> 0eac7ee (feature: 비밀번호 유효성 검증 작업중)
       "status": "active",
       "role": "Admin",
       "createdAt": "2025-04-29-수 23:11:35",
