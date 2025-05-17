@@ -4064,5 +4064,40 @@
       "month": "2025-04",
       "id": "6b4d"
     }
+  ],
+  "users": [
+    {
+      "email": "activeuser@kb.com",
+      "password": "123Qwe123!",
+      "name": "2222",
+      "profileImage": "/src/img/profile/pretty_cabbage.jpg",
+      "role": "User",
+      "status": "active",
+      "createdAt": "2025-04-30-목 23:11:35",
+      "updatedAt": "2025-05-09-금 04:36:36",
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "email": "deactivateduser@kb.com",
+      "password": "1234",
+      "name": "홍길동",
+      "profileImage": "/src/img/profile/pretty_cabbage.jpg",
+      "status": "active",
+      "role": "User",
+      "createdAt": "2025-04-23-목 23:11:35",
+      "updatedAt": "2025-05-05-월 12:24:11"
+    },
+    {
+      "id": "3",
+      "email": "admin@kb.com",
+      "password": "1234",
+      "name": "관리자",
+      "profileImage": "/src/img/profile/pretty_cabbage.jpg",
+      "status": "active",
+      "role": "Admin",
+      "createdAt": "2025-04-29-수 23:11:35",
+      "updatedAt": "2025-05-05-월 02:24:45"
+    }
   ]
 }
