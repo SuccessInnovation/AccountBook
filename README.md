@@ -18,7 +18,8 @@
 
 ## Introduction
 
-**Vue.js**를 이용하여 **온라인 가계부 웹 서비스**를 제작합니다.
+본 프로젝트는 **Vue.js** 프레임워크를 기반으로 하는 **온라인 가계부 웹 서비스** 개발을 목표로 합니다.<br>
+사용자가 개인 재정을 효율적이고 직관적으로 관리할 수 있도록 돕는 기능을 제공합니다.
 
 ---
 
@@ -76,7 +77,7 @@
      <tr/>
       <td align="center"><a href="https://github.com/woojeans7"><img src="https://github.com/woojeans7.png" width="100px;" alt=""/><br /><sub><b>팀원 : 송우진 </b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/yurissssss"><img src="https://github.com/yurissssss.png" width="100px;" alt=""/><br /><sub><b>팀원 : 신유리 </b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/lolddong"><img src="https://github.com/lolddong.png" width="100px;" alt=""/><br /><sub><b>팀원 : 안다윤</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/dahyoon"><img src="https://github.com/dahyoon.png" width="100px;" alt=""/><br /><sub><b>팀원 : 안다윤</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/kthrc"><img src="https://github.com/kthrc.png" width="100px;" alt=""/><br /><sub><b>팀원 : 최유정</b></sub></a><br /></td>
     </tr>
   </tbody>
@@ -191,15 +192,19 @@
 
 > ### 안다윤
 
-**1. 레이아웃 디자인**
+**1. 사용자 정보 관련 기능 구현**
+- 로그인 및 로그아웃 기능
+- 유효성 검사 후 회원가입 및 회원탈퇴 (관리자에게 요청) 기능
+- 마이페이지 및 관리자페이지에서 사용자 정보 조회, 수정 및 관리 기능
 
-- 헤더, 사이드바, 푸터 설정
+**2. 레이아웃 디자인**
 
-**2. 전체 코드 통합**
+- 헤더, 사이드바 메뉴, 푸터 설정
+
+**3. 전체 코드 통합**
 
 - 각 컴포넌트 병합
 - 컴포넌트별 디자인 조정
-
 - 상세 구현
 
 ---
