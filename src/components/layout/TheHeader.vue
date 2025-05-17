@@ -1,10 +1,14 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> cba3b96 (Refactor: TheHeader.vue에 작성했던 프로필 영역을 컴포넌트로 분리(TheProfile.vue), components 디렉토리에 header 디렉토리 추가 (Notifications.vue, TheProfile.vue를 여기로 이동))
 <script setup>
-import { useRoute } from 'vue-router'
-import { computed } from 'vue'
-
-import Notifications from '../Notifications.vue'
+import { useRouter, useRoute } from 'vue-router'
+import { ref, computed } from 'vue'
+import Notifications from '../header/Notifications.vue'
+import TheProfile from '../header/TheProfile.vue'
+// import { useUsersTableStore } from '@/stores/UsersTableStore'
 
 =======
 =======
@@ -20,6 +24,7 @@ import Notifications from '../Notifications.vue'
 
 >>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
 const route = useRoute()
+<<<<<<< HEAD
 const headerTitle = computed(() => {
   return route.meta.title || '페이지'
 })
@@ -55,6 +60,33 @@ const toggleAlarm = () => {
 
 >>>>>>> 7279e2c (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
 >>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
+=======
+const router = useRouter()
+const headerTitle = computed(() => route.meta.title || '페이지')
+
+// const { getUserInfoLocalStorage, logoutUser } = useUsersTableStore()
+// const userInfo = getUserInfoLocalStorage()
+
+// const modalShow = ref(false)
+const alarmVisible = ref(false)
+
+// function toggleModal() {
+//   modalShow.value = !modalShow.value
+//   console.log(modalShow.value)
+// }
+
+// function logout() {
+//   console.log('로그아웃 버튼 클릭됨')
+//   try {
+//     logoutUser()
+//     console.log('logoutUser 실행 완료')
+//     router.push({ name: 'Login' })
+//   } catch (error) {
+//     console.log('로그아웃 실패: ', error)
+//   }
+// }
+</script>
+>>>>>>> cba3b96 (Refactor: TheHeader.vue에 작성했던 프로필 영역을 컴포넌트로 분리(TheProfile.vue), components 디렉토리에 header 디렉토리 추가 (Notifications.vue, TheProfile.vue를 여기로 이동))
 <template>
   <div class="header_grid">
     <h1 class="logo">
@@ -64,6 +96,7 @@ const toggleAlarm = () => {
       </router-link>
     </h1>
     <div id="title">{{ headerTitle }}</div>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -147,40 +180,15 @@ const toggleAlarm = () => {
       </router-link>
 >>>>>>> 6378ae2 (Feat: 알림 기능 아이콘 생성 05-05)
     </div>
+=======
+    <!-- 알림 컴포넌트 -->
+    <Notifications />
+    <!-- 프로필 컴포넌트 -->
+    <TheProfile />
+>>>>>>> cba3b96 (Refactor: TheHeader.vue에 작성했던 프로필 영역을 컴포넌트로 분리(TheProfile.vue), components 디렉토리에 header 디렉토리 추가 (Notifications.vue, TheProfile.vue를 여기로 이동))
   </div>
 </template>
 
-<script setup>
-import { useRouter, useRoute } from 'vue-router'
-import { ref, computed } from 'vue'
-import { useUsersTableStore } from '@/stores/UsersTableStore'
-
-const route = useRoute()
-const router = useRouter()
-const headerTitle = computed(() => {
-  return route.meta.title || '페이지'
-})
-
-const { getUserInfoLocalStorage, logoutUser } = useUsersTableStore()
-const userInfo = getUserInfoLocalStorage()
-const modalShow = ref(false)
-
-function toggleModal() {
-  modalShow.value = !modalShow.value
-  console.log(modalShow.value)
-}
-
-function logout() {
-  console.log('로그아웃 버튼 클릭됨')
-  try {
-    logoutUser()
-    console.log('logoutUser 실행 완료')
-    router.push({ name: 'Login' })
-  } catch (error) {
-    console.log('로그아웃 실패: ', error)
-  }
-}
-</script>
 <style scoped>
 .header_grid {
   position: relative;
@@ -219,6 +227,7 @@ function logout() {
   overflow: hidden;
   justify-self: center;
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -264,6 +273,10 @@ function logout() {
 .alarm_box li {
   padding: 5px 0;
   border-bottom: 1px solid #eee;
+=======
+.more-wrapper {
+  position: relative; /* 자식인 .modal의 기준점이 됨 */
+>>>>>>> cba3b96 (Refactor: TheHeader.vue에 작성했던 프로필 영역을 컴포넌트로 분리(TheProfile.vue), components 디렉토리에 header 디렉토리 추가 (Notifications.vue, TheProfile.vue를 여기로 이동))
 }
 >>>>>>> 86740bb (Fix: 알림 아이콘 클릭 시 알림내역 뜨기 구현 05-06)
 .profile {
@@ -277,12 +290,15 @@ function logout() {
   width: 200px;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 73e720c (Fix: 프로필 클릭 시 나타나는 모달창 수정)
 =======
 =======
 
 >>>>>>> 7279e2c (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
 >>>>>>> 1df8724 (Feat: 알림 컴포넌트 Notifications.vue 추가 05-11)
+=======
+>>>>>>> cba3b96 (Refactor: TheHeader.vue에 작성했던 프로필 영역을 컴포넌트로 분리(TheProfile.vue), components 디렉토리에 header 디렉토리 추가 (Notifications.vue, TheProfile.vue를 여기로 이동))
 #profile_img {
   width: 70px;
   height: 70px;
@@ -299,18 +315,18 @@ function logout() {
 
 /* 모달창 */
 .modal {
-  background: grey;
-  height: 170px;
+  background: white;
+  height: 175px;
   width: 200px;
   position: absolute;
-  top: 50px; /* 상단 여백 조정 */
-  left: 10px;
-  z-index: 1000; /* 다른 요소들 위로 올리기 */
+  top: 70px;
+  left: -30px;
+  z-index: 1000;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
-  padding: 0; /* 내용에 맞춰서 크기 조절 */
+  padding: 0; /* 내용에 맞춰 크기 조절 */
   overflow-y: visible; /* 내용이 넘칠 경우 스크롤 생기도록 */
 }
 
@@ -319,22 +335,23 @@ function logout() {
   padding: 0;
   list-style: none;
 }
-
-.modal li {
-  cursor: pointer;
+#email {
   display: block;
-  padding: 10px;
-  background-color: white;
+  text-align: center;
+  padding: 13px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.modal_item {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 10px 10px 20px;
   border-bottom: 1px solid var(--color-point-5);
   font-size: 14px;
 }
 
 .modal li:not(#email):hover {
   background-color: var(--color-point-5);
-}
-
-#email {
-  text-align: center;
-  padding-bottom: 14px;
 }
 </style>

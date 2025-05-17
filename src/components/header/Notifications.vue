@@ -5,10 +5,10 @@
   <div id="alarm_img" @click="toggleAlarm">
     <img
       v-if="hasNotifications"
-      src="../img/icons/alarm_on.png"
+      src="../../img/icons/alarm_on.png"
       alt="알림내역 있음"
     />
-    <img v-else src="../img/icons/alarm_off.png" alt="알림내역 없음" />
+    <img v-else src="../../img/icons/alarm_off.png" alt="알림내역 없음" />
   </div>
 
   <!-- 알림 목록 -->
