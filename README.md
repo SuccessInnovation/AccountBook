@@ -326,6 +326,11 @@
     npm install xlsx
     ```
 
+- 🔛 swiper (스와이프 기능)
+    ```
+    npm install swiper
+    ```
+
 ### 3. 프로젝트 초기 세팅
 
 - 기본 컴포넌트 및 아이콘 폴더, base.css, logo.css, view-Home, About 삭제
