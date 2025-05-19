@@ -2,21 +2,16 @@
   <!-- 로그인 페이지 시작 -->
   <div class="app_wrapper">
     <!-- 로그인 박스 타이틀 -->
-    <div class="header">
-      <h1>배추</h1>
-      <img
-        class="logo_png"
-        src="@/img/cabbage/logo1.png"
-        alt="배추캐릭터로고"
-      />
-    </div>
-    <!-- 로그인 폼작성 -->
+    <h1>로그인</h1>
+    <!-- 로그인 폼 -->
     <form
       action=""
       method="post"
       @submit.prevent="login"
-      class="login_form_box"
+      class="form_box"
+      novalidate
     >
+      <label for="email">Email</label>
       <input
         class="input_login"
         type="email"
@@ -25,6 +20,7 @@
         placeholder="이메일"
         v-model="userInput.email"
       />
+      <label for="password">Password</label>
       <input
         class="input_login"
         type="password"
@@ -36,37 +32,30 @@
       <div class="options_row">
         <label class="checkbox_wrapper">
           <input type="checkbox" name="remember_id" v-model="rememberEmail" />
-          <span>아이디 저장</span>
+          <span id="saveId_txt">아이디 저장</span>
         </label>
-
-        <a href="#" class="reset_link">비밀번호 초기화</a>
       </div>
-      <button
-        class="login_btn btn clickable_text"
-        :disabled="!userInput.email || !userInput.password"
-        @click="login"
-      >
+      <button class="login_btn btn clickable_text" @click="login">
         로그인
       </button>
-      <button class="signfor_btn btn">
-        <!-- 임시로 회원가입 클릭시 서비스 준비중 페이지로 이동 -->
-        <router-link to="/register" class="clickable_text"
-          >회원가입</router-link
-        >
-      </button>
-      <!-- 로그인 실패 메시지 -->
-      <p
-        class="error"
-        :style="{ visibility: errorMessage ? 'visible' : 'hidden' }"
-      >
-        {{ errorMessage || '에러 메세지 영역' }}
-      </p>
     </form>
+    <button class="signfor_btn btn">
+      <!-- 임시로 회원가입 클릭시 서비스 준비중 페이지로 이동 -->
+      <router-link to="/register" class="clickable_text">회원가입</router-link>
+    </button>
+    <!-- 로그인 실패 메시지 -->
+    <p
+      class="error"
+      :style="{ visibility: errorMessage ? 'visible' : 'hidden' }"
+    >
+      {{ errorMessage || '에러 메세지 영역' }}
+    </p>
   </div>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
+import { isEmpty, isValidEmail } from '@/utils/validators'
 import { useRouter } from 'vue-router'
 import { useUsersTableStore } from '@/stores/UsersTableStore.js'
 
@@ -128,97 +117,82 @@ const login = () => {
 <style scoped>
 /* 전체 하얀 박스 */
 .app_wrapper {
-  width: 450px;
+  width: 520px;
   height: 700px;
   margin: 0 auto;
+  padding: 50px 0 50px 0;
   background-color: #fff;
   border: 1px solid #fff;
-  border-radius: 20px;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  justify-items: center;
   justify-content: center;
   align-items: center;
-  align-content: center;
-  gap: 2rem;
+  box-shadow: var(--box-shadow-center);
 }
 
-/* h1 & 로고 */
-.header {
-  width: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-  color: var(--color-font-main);
-  /* border: 1px solid blueviolet; */
-}
-/* 배추 제목 이미지 */
-.logo_png {
-  width: 55px;
+/* h1 */
+h1 {
+  font-size: 26px;
+  color: var(--main-font-color);
+  margin-bottom: 100px;
 }
 
 /* 로그인 폼 박스 */
-.login_form_box {
+.form_box {
   display: flex;
   flex-direction: column;
-  height: 400px;
-  gap: 1rem;
-  /* border: 1px solid blue; */
+  width: 370px;
+  font-size: 14px;
+  margin-bottom: 20px;
 }
-/* input 스타일 초기화에 따른 설정 */
 .input_login {
-  width: 350px;
-  height: 3rem;
+  height: 48px;
   padding-left: 1rem;
-  border: 1px solid var(--color-input-box);
-  border-radius: 5px;
-  background-color: var(--color-input-box);
+  border: 1px solid var(--btn-border-color);
+  border-radius: 8px;
+  margin: 5px 0 16px 0;
+  font-weight: 400;
+}
+.input_login::placeholder {
+  color: rgba(0, 0, 0, 0.3);
 }
 /* 로그인 옵션 가로 정렬 */
 .options_row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 /* 체크박스와 레이블이 따로 떨어져서 하나로 묶어주는 클래스 */
 .checkbox_wrapper {
+  margin-left: 5px;
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 }
 /* 체크박스 스타일 초기화에 따른 재설정 */
 .checkbox_wrapper input[type='checkbox'] {
-  transform: scale(1.2); /* 숫자 조절하면 크기 변경 가능 */
-  border: 2px solid var(--color-input-box);
-}
-
-/* 비밀번호 초기화 */
-.reset_link {
-  font-size: 0.9rem;
-  color: var(--font-color);
-  text-decoration: none;
-  cursor: pointer;
+  transform: scale(1.2);
 }
 
 /* 로그인 버튼 스타일 */
 .login_btn {
   margin-top: 3rem;
-  background-color: var(--color-point-1);
-  color: var(--color-brown-very-light);
+  background-color: #2fa26c;
+  color: #ffffff;
 }
 
 /* 회원가입 버튼 스타일 */
 .signfor_btn {
-  color: var(--color-point-1);
+  color: var(--btn-main-color);
 }
 
 /* 로그인 / 회원가입 버튼 공통 스타일 */
 .btn {
-  border: 1px solid var(--color-point-1);
-  height: 4rem;
-  border-radius: 10px;
+  border: 1px solid var(--btn-main-color);
+  height: 48px;
+  border-radius: 8px;
+  width: 370px;
 }
 
 /* 로그인 실패 메세지 */

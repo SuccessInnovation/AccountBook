@@ -2,7 +2,12 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 import { reactive } from 'vue'
 import { BASE_URI } from '@/constants/api' // BASE_URI (db.json)
-import { isEmpty, isValidPassword, validateUserInput } from '@/utils/validators'
+import {
+  isEmpty,
+  isValidEmail,
+  isValidPassword,
+  validateUserInput,
+} from '@/utils/validators'
 import { currentTimestampToString, currentDateToString } from '@/utils/date'
 import { createTestJwt, parseJwt } from '@/utils/jwt'
 
@@ -180,8 +185,12 @@ export const useUsersTableStore = defineStore('users', () => {
       const users = response.data
       const user = users.find(u => u.email === email)
       // 사용자 정보 확인
+      if (isEmpty(email)) return failCallback?.('이메일을 입력해주세요.')
+      if (!isValidEmail(email))
+        return failCallback?.('올바른 형식의 이메일을 입력해주세요.')
       if (!user)
         return failCallback?.('존재하지 않는 계정입니다. 회원가입을 해주세요.')
+      if (isEmpty(password)) return failCallback?.('비밀번호를 입력해주세요.')
       if (user.password !== password)
         return failCallback?.('비밀번호가 일치하지 않습니다.')
       if (user.status === 'deactivated')

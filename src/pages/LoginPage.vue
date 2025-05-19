@@ -12,7 +12,7 @@ import LoginForm from '@/components/users/LoginForm.vue'
 .LoginPage {
   width: 100%;
   height: 100vh;
-  background-color: var(--color-point-4);
+  background-color: var(--bg-color);
   display: flex;
   align-items: center;
   justify-content: center;
