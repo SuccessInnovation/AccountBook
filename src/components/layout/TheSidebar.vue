@@ -7,28 +7,28 @@ const menuLists = [
   {
     label: '수입/지출 내역',
     to: '/transaction',
-    icon: '/src/img/icons/transactions_unselected.svg',
+    icon: '/src/img/icons/transactions_selected.svg',
   },
   {
     label: '통계 및 내보내기',
-    icon: '/src/img/icons/statistics_unselected.svg',
+    icon: '/src/img/icons/statistics_selected.svg',
     submenu: [
       {
         label: '요약 통계',
         to: '/statistics/summary',
-        icon: '/src/img/icons/statistics_summary.svg',
+        icon: '/src/img/icons/summary_selected.svg',
       },
       {
         label: '엑셀 내보내기',
         to: '/statistics/export',
-        icon: '/src/img/icons/export_excel.svg',
+        icon: '/src/img/icons/excel_unselected.svg',
       },
     ],
   },
   {
     label: '예산',
     to: '/budget',
-    icon: '/src/img/icons/budgets_unselected.svg',
+    icon: '/src/img/icons/budgets_selected.svg',
   },
 ]
 
