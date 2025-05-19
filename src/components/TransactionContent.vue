@@ -20,7 +20,6 @@ const calendar = use_calendar_store()
 const { current_year, current_month } = storeToRefs(calendar)
 
 const transaction_store = useTransactionStore()
-const router = useRouter()
 
 // 마운트될 때 거래 내역 불러오기
 onMounted(() => {
@@ -35,10 +34,11 @@ const expense_checked = ref(true)
 const category_selected = ref('all')
 // 메모 검색창 - 기본: ''
 const memo_inputted = ref('')
-
+// 수정 모달 표시 여부 - 기본: 표시 안 함
 const show_edit_modal = ref(false)
+// 현재 수정할 거래 ID - 기본: null
 const current_edit_id = ref(null)
-
+// 자식 컴포넌트 재랜더링용 키
 const reset_key = ref(0)
 
 // '수입/지출' 체크박스 상태를 기준으로 거래 내역 필터링
@@ -62,6 +62,7 @@ const filtered_transactions = computed(() => {
   })
 })
 
+// 거래 금액 포맷팅, 수입/지출에 따라 부호를 붙여 반환
 function prettyAmount(value, type) {
   const amt = parseFloat(value)
   if (isNaN(amt)) return value
@@ -71,14 +72,19 @@ function prettyAmount(value, type) {
   return formatted
 }
 
+// 현재 선택된 수입/지출 체크박스에 따라 보여줄 카테고리 목록 계산
 const available_categories = computed(() => {
   if (income_checked.value && expense_checked.value) {
+    // 둘 다 선택되었으면 모든 카테고리 반환
     return [...INCOME_CATEGORIES, ...EXPENSE_CATEGORIES]
   } else if (income_checked.value) {
+    // 수입만 선택된 경우 수입 카테고리만
     return [...INCOME_CATEGORIES]
   } else if (expense_checked.value) {
+    // 지출만 선택된 경우 지출 카테고리만
     return [...EXPENSE_CATEGORIES]
   } else {
+    // 아무 것도 선택되지 않으면 빈 배열 반환
     return []
   }
 })
@@ -113,15 +119,18 @@ const filtered_list = computed(() => {
   })
 })
 
+// 수입/지출 체크박스가 변경될 때마다
 watch([income_checked, expense_checked], () => {
   category_selected.value = 'all'
   reset_key.value++
 })
 
+// 선택된 모든 항목이 체크되었는지 여부 (전체 선택 체크박스 표시용)
 const is_all_selected = computed(() =>
   transaction_store.transactions.every(record => record.selected === true),
 )
 
+// 전체 선택 토글 (헤더 체크박스 클릭 시 모든 항목 선택/해제)
 function toggleSelectAll(e) {
   const checked = e.target.checked
   transaction_store.transactions.forEach(record => {
@@ -129,6 +138,7 @@ function toggleSelectAll(e) {
   })
 }
 
+// 단일 거래 항목 삭제 처리
 async function deleteHandler(id) {
   if (confirm('정말 삭제하시겠습니까?')) {
     try {
@@ -141,20 +151,24 @@ async function deleteHandler(id) {
   }
 }
 
+// 거래 수정 아이콘 클릭 시 모달 열기
 function handleEdit(record) {
   current_edit_id.value = record.id
   show_edit_modal.value = true
 }
 
+// 수정 모달 닫기
 function closeEditModal() {
   show_edit_modal.value = false
   current_edit_id.value = null
 }
 
+// 거래 수정 완료
 function handleTransactionUpdated() {
   transaction_store.fetchTransactions()
 }
 
+// 선택된 항목만 삭제
 function selectedDeleteHandler() {
   const selected_ids = transaction_store.transactions
     .filter(record => record.selected)
@@ -172,6 +186,7 @@ function selectedDeleteHandler() {
   }
 }
 
+// 각 행 클릭 시 개별 선택 상태 토글
 function toggleRow(record, event) {
   record.selected = !record.selected
 }
@@ -314,6 +329,8 @@ function toggleRow(record, event) {
       </div>
     </div>
 
+    <!-- 거래 수정 모달 컴포넌트 -->
+    <!-- 조건부 렌더링: show_edit_modal이 true일 때만 표시 -->
     <TransactionEditModal
       v-if="show_edit_modal"
       :transactionId="current_edit_id"
@@ -324,7 +341,7 @@ function toggleRow(record, event) {
 </template>
 
 <style scoped>
-/* ✨ style은 그대로 template 순서에 맞춰 정리 ✨ */
+/* 전체 페이지 컨테이너 */
 .container {
   background-color: var(--color-point-3);
   border-radius: 30px;
@@ -336,6 +353,7 @@ function toggleRow(record, event) {
   gap: 10px;
 }
 
+/* 현재 연도 및 월 표시 영역 */
 .current-month {
   display: flex;
   flex-direction: column;
@@ -353,6 +371,7 @@ function toggleRow(record, event) {
   margin-top: 2px;
 }
 
+/* 카테고리 선택 드롭다운 */
 .category-select {
   background-color: #fff;
   color: #333;
@@ -361,6 +380,7 @@ function toggleRow(record, event) {
   border-radius: 4px;
 }
 
+/* 메모 검색 입력창 */
 .search-input {
   width: 300px;
   padding: 8px 12px;
@@ -369,6 +389,7 @@ function toggleRow(record, event) {
   outline: none;
 }
 
+/* 수입/지출 체크박스 wrapper */
 .income-checkbox,
 .expense-checkbox {
   display: flex;
@@ -376,7 +397,7 @@ function toggleRow(record, event) {
   gap: 4px;
   cursor: pointer;
 }
-
+/* 부트스트랩 nav-tabs 안의 링크에 커서 포인터 */
 .nav-tabs .nav-link {
   cursor: pointer;
 }
@@ -416,6 +437,7 @@ function toggleRow(record, event) {
   margin: 20px;
 }
 
+/* 수정/삭제 아이콘 hover 시 1.2 배확대 효과 */
 .icon-hover:hover {
   transform: scale(1.2);
   transition: transform 0.2s ease;
