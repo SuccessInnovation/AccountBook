@@ -9,6 +9,7 @@ import FilterCategory from '@/components/FilterCategory.vue'
 import SearchByMemo from '@/components/SearchByMemo.vue'
 import TransactionEditModal from '@/components/TransactionEditModal.vue'
 
+// 미리 정의된 카테고리 목록 (수입 / 지출), 카테고리 항목 '영어 - 한글' 매핑
 import {
   INCOME_CATEGORIES,
   EXPENSE_CATEGORIES,
@@ -21,13 +22,18 @@ const { current_year, current_month } = storeToRefs(calendar)
 const transaction_store = useTransactionStore()
 const router = useRouter()
 
+// 마운트될 때 거래 내역 불러오기
 onMounted(() => {
   transaction_store.fetchTransactions()
 })
 
+// '수입' 체크박스 - 기본: 체크됨
 const income_checked = ref(true)
+// '지출' 체크박스 - 기본: 체크됨
 const expense_checked = ref(true)
+// 카테고리 필터 - 기본: all(전체)
 const category_selected = ref('all')
+// 메모 검색창 - 기본: ''
 const memo_inputted = ref('')
 
 const show_edit_modal = ref(false)
@@ -35,6 +41,7 @@ const current_edit_id = ref(null)
 
 const reset_key = ref(0)
 
+// '수입/지출' 체크박스 상태를 기준으로 거래 내역 필터링
 const filtered_transactions = computed(() => {
   return transaction_store.transactions.filter(record => {
     const date = new Date(record.date)
@@ -76,24 +83,32 @@ const available_categories = computed(() => {
   }
 })
 
+// 카테고리 선택 이벤트
 function categoryChangeHandler(category) {
+  // FilteredCategory.vue(자식 컴포넌트)에서 emit된 값
   category_selected.value = category
 }
 
+// 메모 검색창 입력 이벤트
 function memoSearchHandler(text) {
+  // 검색어 - 소문자로 변경, 공백 제거
   memo_inputted.value = text.toLowerCase().trim()
 }
 
+// 필터링된 거래내역 (카테고리 + 메모)
 const filtered_list = computed(() => {
   return filtered_transactions.value.filter(item => {
+    // 선택된 카테고리가 'all'이거나 선택된 카테고리와 카테고리가 같은 항목
     const category_match =
       category_selected.value === 'all' ||
       item.category === category_selected.value
 
+    // 메모 검색어가 비어있거나 메모 검색어가 메모에 들어있는 경우 - 검색어 모두 소문자로 변경
     const memo_match =
       memo_inputted.value === '' ||
       (item.memo && item.memo.toLowerCase().includes(memo_inputted.value))
 
+    // 두 조건을 모두 만족하는 항목 반환
     return category_match && memo_match
   })
 })
@@ -179,12 +194,15 @@ function toggleRow(record, event) {
           </button>
         </div>
 
+        <!-- 카테고리 필터 컴포넌트 (드롭다운) -->
+        <!-- props - 'FilterCategory.vue'로 '카테고리/resetKey' 전달 -->
         <FilterCategory
           :categories="available_categories"
           :resetKey="reset_key"
           @categorySelected="categoryChangeHandler"
         />
 
+        <!-- 메모 검색창 컴포넌트 -->
         <SearchByMemo @memoInputted="memoSearchHandler" />
 
         <div class="d-flex align-items-center bg-white px-3 py-2 gap-3">
@@ -215,10 +233,12 @@ function toggleRow(record, event) {
         </div>
       </div>
 
+      <!-- 거래내역이 없을 경우 메시지 출력 -->
       <div v-if="filtered_list.length === 0" id="emptyTransaction">
         표시할 내역이 없습니다.
       </div>
 
+      <!-- '수입/지출' 필터링된 거래내역 -->
       <div
         v-else
         class="table-responsive rounded shadow-sm bg-white px-3 w-100"
@@ -243,6 +263,7 @@ function toggleRow(record, event) {
               <th scope="col" style="width: 60px">삭제</th>
             </tr>
           </thead>
+          <!-- 카테고리 필터링된 거래내역 -->
           <tbody>
             <tr
               v-for="filtered in filtered_list"
@@ -262,6 +283,7 @@ function toggleRow(record, event) {
               <td>
                 {{ CATEGORY_MAP[filtered.category] || filtered.category }}
               </td>
+              <!-- text-truncate: 길어지면 말줄임표(...) 처리 (너비제한 필요) -->
               <td class="text-start text-truncate" style="max-width: 300px">
                 {{ filtered.memo }}
               </td>
