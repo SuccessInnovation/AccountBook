@@ -381,30 +381,36 @@ function toggleRow(record, event) {
   cursor: pointer;
 }
 
+/* '수입/지출' 체크박스  */
 .align-items-center {
   border-radius: 15px;
 }
 
+/* '수입' 체크박스 */
 #incomeCheck {
   background-color: var(--color-green-light);
   border-color: var(--color-point-1);
 }
 
+/* '수입' 체크박스 선택 */
 #incomeCheck:checked {
   background-color: var(--color-point-1);
   border-color: var(--color-point-1);
 }
 
+/* '지출' 체크박스 */
 #expenseCheck {
   background-color: var(--color-red-light);
   border-color: var(--color-red-100);
 }
 
+/* '지출' 체크박스 선택 */
 #expenseCheck:checked {
   background-color: var(--color-red-100);
   border-color: var(--color-red-100);
 }
 
+/* 거래내역 없을 때 텍스트 */
 #emptyTransaction {
   text-align: center;
   margin: 20px;
