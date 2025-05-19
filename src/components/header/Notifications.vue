@@ -17,6 +17,7 @@
       <div v-if="notifications.length > 0" class="m-1">
         <p class="mb-2">알림 내역</p>
         <ul>
+          <!-- 알림 하나씩 출력 -->
           <li
             v-for="(notification, index) in notifications"
             :key="index"
@@ -45,25 +46,36 @@ import { useBudgetStore } from '@/stores/UseBudgetStore'
 import { use_calendar_store } from '@/stores/MonthSelector'
 import { statisticsStore } from '@/stores/statisticsStore'
 import { useBudgetProgress } from '@/stores/useBudgetProgress'
+
+// 총 예산, 총 지출 데이터 가져오기
 const { totalBudget, totalSpent } = useBudgetProgress()
 
+// pinia store
 const calendar = use_calendar_store()
 const budgetStore = useBudgetStore()
 const statsStore = statisticsStore()
+
+// 알림창 열림 상태
 const isAlarmOpen = ref(false)
 const toggleAlarm = () => (isAlarmOpen.value = !isAlarmOpen.value)
 
-// 알림 리스트 (삭제 가능하게 ref로 설정)
+// 알림 리스트 상태
 const notifications = ref([])
+
+// 알림 존재 여부
 const hasNotifications = computed(() => notifications.value.length > 0)
+
+// 알림 삭제
 const removeNotification = index => notifications.value.splice(index, 1)
 
 onMounted(async () => {
+  // 예산 및 통계 데이터 로딩
   await budgetStore.fetchBudgets(calendar.monthKey)
   await statsStore.fetchTransactionsByPeriod()
 
   const alerts = []
 
+  // 총 예산 초과 여부 확인
   if (totalSpent.value > totalBudget.value) {
     const exceeded = totalSpent.value - totalBudget.value
     alerts.push(
@@ -72,31 +84,57 @@ onMounted(async () => {
     )
   }
 
+  // 매달 1일 고정지출 알림 - 3일 전 날짜 체크
+  // 오늘 날짜 받아오기
   const today = new Date()
-  if (today.getDate() === 12) {
+
+  // 다음 달 1일
+  const next_month_first_date = new Date(
+    today.getFullYear(),
+    today.getMonth() + 1,
+    1,
+  )
+
+  // 고정지출일 3일 전 계산
+  const three_days_before_due_date = new Date(next_month_first_date)
+  three_days_before_due_date.setDate(three_days_before_due_date.getDate() - 3)
+
+  // 오늘 날짜가 3일 전과 일치하는지 확인
+  const is_today_three_days_before_due =
+    today.getFullYear() === three_days_before_due_date.getFullYear() &&
+    today.getMonth() === three_days_before_due_date.getMonth() &&
+    today.getDate() === three_days_before_due_date.getDate()
+
+  // 3일 전이면 알림 추가
+  if (is_today_three_days_before_due) {
     alerts.push('📌 D-3 매달 1일은 고정지출 결제일입니다.')
   }
 
+  // 알림 리스트 저장
   notifications.value = alerts
 })
 </script>
 
 <style scoped>
+/* 알림 아이콘 */
 #alarm_img img {
   width: 25px;
   height: 25px;
-  object-fit: cover; /* 이미지 비율 잘 맞추기: 화면 비율 고정*/
+  object-fit: cover;
   cursor: pointer;
 }
 
+/* 알림 박스 위치 */
 .alarm_wrapper {
-  position: relative; /* 자식인 .alarm_box의 기준점 */
+  position: relative;
 }
+
+/* 알림 목록 팝업 스타일 */
 .alarm_box {
   position: absolute;
   top: 40px;
   right: 15px;
-  width: 320px; /* 기존보다 넓게 */
+  width: 320px;
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -104,6 +142,7 @@ onMounted(async () => {
   z-index: 999;
 }
 
+/* 알림 텍스트 및 리스트 스타일 */
 .alarm_box p {
   font-weight: bold;
   margin-bottom: 5px;
@@ -127,6 +166,7 @@ onMounted(async () => {
   font-weight: 400;
 }
 
+/* 삭제 버튼 스타일 */
 .btn_delete {
   border: var(--color-red-100) 1px solid;
   color: var(--color-red-100);
