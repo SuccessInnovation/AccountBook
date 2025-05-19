@@ -86,6 +86,7 @@ watch(
 <style scoped>
 /* 전체 페이지 */
 .transaction_page {
+  background: #f5f7fa;
   display: flex;
   flex-direction: column;
   align-items: center;

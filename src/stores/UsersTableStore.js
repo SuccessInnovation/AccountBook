@@ -7,21 +7,7 @@ import { currentTimestampToString, currentDateToString } from '@/utils/date'
 import { createTestJwt, parseJwt } from '@/utils/jwt'
 
 export const useUsersTableStore = defineStore('users', () => {
-  // State 정의 (usersList)
-  const state = reactive({
-    usersList: [],
-  })
-
-  // 로컬 스토리지 관련 함수
-  const setUserInfoLocalStorage = userInfo => {
-    try {
-      localStorage.setItem('userInfo', JSON.stringify(userInfo))
-      console.log('✅ 로컬 스토리지에 userInfo 저장됨:', userInfo)
-    } catch (error) {
-      console.error('❌ 로컬 스토리지에 userInfo 저장 실패:', error)
-    }
-  }
-
+  // 로컬 스토리지 관련 함수 - state에서 사용하므로 먼저 정의함
   const getUserInfoLocalStorage = () => {
     try {
       const data = localStorage.getItem('userInfo')
@@ -33,12 +19,28 @@ export const useUsersTableStore = defineStore('users', () => {
     }
   }
 
+  const setUserInfoLocalStorage = userInfo => {
+    try {
+      localStorage.setItem('userInfo', JSON.stringify(userInfo))
+      console.log('✅ 로컬 스토리지에 userInfo 저장됨:', userInfo)
+    } catch (error) {
+      console.error('❌ 로컬 스토리지에 userInfo 저장 실패:', error)
+    }
+  }
+
+  // State 정의 (usersList)
+  const state = reactive({
+    usersList: [],
+    currentUser: getUserInfoLocalStorage(),
+  })
+
   // API: 전체 사용자 조회
   const fetchUsers = async () => {
     try {
       const response = await axios.get(`${BASE_URI}/users`)
       if (response.status === 200) {
         state.usersList = response.data
+        return response.data
       } else {
         console.log('❌ 사용자 목록 조회 실패')
       }
@@ -55,6 +57,7 @@ export const useUsersTableStore = defineStore('users', () => {
       if (response.status === 200) {
         const userInfo = response.data
         successCallback(userInfo)
+        console.log('userInfo from db by id: ', userInfo)
         return userInfo
       } else {
         console.log('❌ 사용자 정보 조회 실패')
@@ -143,18 +146,19 @@ export const useUsersTableStore = defineStore('users', () => {
         // localStorage 업데이트
         const existingUserInfo = getUserInfoLocalStorage()
         console.log('existingUserInfo: ', existingUserInfo)
-
-        if (existingUserInfo?.token) {
-          setUserInfoLocalStorage({
-            ...existingUserInfo,
-            email,
-            name,
-          })
-        }
+        setUserInfoLocalStorage({
+          ...existingUserInfo,
+          email,
+          name,
+          profileImage,
+        })
         console.log(
           '로컬 스토리지에 새로 !!!! 저장된 userInfo:',
           getUserInfoLocalStorage(),
         )
+        // currentUser 업데이트
+        state.currentUser = getUserInfoLocalStorage()
+        console.log('업데이트된 currentUser: ', state.currentUser)
         successCallback?.()
       } else {
         console.log('❌ 사용자 정보 변경 실패: ', response.data.message)
@@ -175,6 +179,7 @@ export const useUsersTableStore = defineStore('users', () => {
       const response = await axios.get(`${BASE_URI}/users`)
       const users = response.data
       const user = users.find(u => u.email === email)
+      // 사용자 정보 확인
       if (!user)
         return failCallback?.('존재하지 않는 계정입니다. 회원가입을 해주세요.')
       if (user.password !== password)
@@ -187,14 +192,18 @@ export const useUsersTableStore = defineStore('users', () => {
         email: user.email,
         name: user.name,
         role: user.role,
+        profileImage: user.profileImage,
       }
+      console.log('로그인 시 userInfo:', userInfo)
+      // 현재 사용자 정보 업데이트 (state)
+      state.currentUser = userInfo
       // JWT 생성 및 파싱, 만료 여부 확인
       const token = createTestJwt(userInfo) // JWT 생성 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoZW50aWNhdGVkIjp0cnVlLCJpZCI6IjMiLCJlbWFpbCI6ImFkbWluQGtiLmNvbSIsIm5hbWUiOiLqtIDrpqzsnpAiLCJyb2xlIjoiYWRtaW4ifQ.7V1gERK7LXjCs2mq9STlDGS5AN8WJl3BfeDleBCgXfY
       const parsedToken = parseJwt(token) // {authenticated: true, id: '3', email: 'admin@kb.com', name: '관리자', role: 'admin'}
 
       if (parsedToken) {
         setUserInfoLocalStorage(userInfo)
-        // 로그인 성공 후, axios 기본 헤더에 토큰 설정
+        // axios 기본 헤더에 토큰 설정
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         successCallback?.()
       } else {
@@ -212,6 +221,10 @@ export const useUsersTableStore = defineStore('users', () => {
       localStorage.removeItem('userInfo')
       // 로그아웃 시 Authorization 헤더를 초기화
       delete axios.defaults.headers.common['Authorization']
+      // state 초기화
+      state.usersList = null
+      state.currentUser = null
+      // state.currentUser = null
       console.log('✅ 로그아웃 완료: userInfo 삭제됨')
     } catch (error) {
       console.error('❌ 로그아웃 중 에러 발생:', error)

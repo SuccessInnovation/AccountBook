@@ -10,15 +10,15 @@
 
 <style scoped>
 #footer {
-  background-color: #fff;
+  background: #f5f7fa;
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
-  border-top: 0.5px solid var(--color-brown-dark);
-  padding-right: 30px;
 }
 #copyright {
   margin-left: auto;
+  padding-right: 30px;
+  color: rgba(0, 0, 0, 0.4);
 }
 </style>

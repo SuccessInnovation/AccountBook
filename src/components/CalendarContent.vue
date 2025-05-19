@@ -122,7 +122,6 @@ function isToday(day) {
   max-width: 860px;
   margin: 2rem auto;
   padding: 1rem;
-  background-color: white;
   border-radius: 20px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
@@ -148,7 +147,7 @@ function isToday(day) {
   padding: 0.5rem;
   vertical-align: top;
   text-align: left;
-  background-color: white;
+  /* background-color: white; */
   cursor: pointer;
 }
 

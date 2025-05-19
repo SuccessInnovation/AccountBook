@@ -6,7 +6,7 @@
       <h1>배추</h1>
       <img
         class="logo_png"
-        src="../img/cabbage/logo1.png"
+        src="@/img/cabbage/logo1.png"
         alt="배추캐릭터로고"
       />
     </div>
@@ -35,20 +35,20 @@
       />
       <div class="options_row">
         <label class="checkbox_wrapper">
-          <input type="checkbox" name="save_id" />
+          <input type="checkbox" name="remember_id" v-model="rememberEmail" />
           <span>아이디 저장</span>
         </label>
 
         <a href="#" class="reset_link">비밀번호 초기화</a>
       </div>
       <button
-        class="login_btn btn disabled_box clickable_text"
+        class="login_btn btn clickable_text"
         :disabled="!userInput.email || !userInput.password"
         @click="login"
       >
         로그인
       </button>
-      <button class="signfor_btn btn disabled_box">
+      <button class="signfor_btn btn">
         <!-- 임시로 회원가입 클릭시 서비스 준비중 페이지로 이동 -->
         <router-link to="/register" class="clickable_text"
           >회원가입</router-link
@@ -61,13 +61,12 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref, reactive, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useUsersTableStore } from '@/stores/UsersTableStore.js'
 
 // 라우터 객체 가져오기
 const router = useRouter()
-const route = useRoute()
 
 // 사용자 입력 상태
 const userInput = reactive({
@@ -75,8 +74,20 @@ const userInput = reactive({
   password: '',
 })
 
+// 아이디 저장 체크박스 상태
+const rememberEmail = ref(false)
+
 // 에러 메시지 상태
 const errorMessage = ref('')
+
+// 저장된 이메일 불러오기
+onMounted(() => {
+  const remember = localStorage.getItem('rememberEmail')
+  if (remember) {
+    userInput.email = remember
+    rememberEmail.value = true
+  }
+})
 
 // 로그인 성공 시
 const successCallback = () => {
@@ -93,11 +104,19 @@ const failCallback = message => {
 // 로그인 처리
 const login = () => {
   const store = useUsersTableStore()
+
+  // 로그인
   store.loginUser(
     { email: userInput.email, password: userInput.password },
     successCallback,
     failCallback,
   )
+  // 아이디 저장
+  if (rememberEmail.value) {
+    localStorage.setItem('rememberEmail', userInput.email)
+  } else {
+    localStorage.removeItem('rememberEmail')
+  }
 }
 </script>
 
@@ -195,10 +214,6 @@ const login = () => {
   border: 1px solid var(--color-point-1);
   height: 4rem;
   border-radius: 10px;
-}
-/* 버튼 클릭 이벤트 오류에 따른 이벤트 발생 방지 */
-.disabled_box {
-  pointer-events: none;
 }
 
 /* 로그인 실패 메세지 */

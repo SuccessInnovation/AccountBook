@@ -33,6 +33,7 @@ const handleSubmit = () => {
 
 <style scoped>
 .BudgetPage {
+  background: #f5f7fa;
   display: flex;
   justify-content: center;
   align-items: center;

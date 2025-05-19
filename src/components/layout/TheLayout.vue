@@ -32,6 +32,11 @@ body {
 .content {
   grid-area: content;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: #f5f7fa;
 }
 .footer {
   grid-area: footer;

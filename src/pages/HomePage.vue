@@ -168,8 +168,8 @@ const chartOptions = computed(() => {
 </script>
 
 <template>
-  <CalendarNav />
   <div class="home">
+    <CalendarNav />
     <!-- 값이 정의되었을 때만 렌더링 -->
     <div class="summary_card_wrap">
       <SummaryCard
@@ -200,11 +200,12 @@ const chartOptions = computed(() => {
 <style scoped>
 /* 홈페이지 중앙 정렬을 위한 스타일 */
 .home {
-  /* position: absolute;
-  top: 0px; */
+  position: absolute;
+  top: 0px;
+  background: #f5f7fa;
   width: 100%;
   display: flex;
-  /* flex-direction: column; */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding-top: 20px; /* 상단 여백 */

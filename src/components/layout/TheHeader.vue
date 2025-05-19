@@ -1,24 +1,15 @@
 <script setup>
 import { useRoute } from 'vue-router'
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import Notifications from '../header/Notifications.vue'
 import TheProfile from '../header/TheProfile.vue'
-import { useUsersTableStore } from '@/stores/UsersTableStore'
 
 const route = useRoute()
 const headerTitle = computed(() => {
   return route.meta.title || '페이지'
 })
-
-const { getUserInfoLocalStorage } = useUsersTableStore()
-const userInfo = getUserInfoLocalStorage()
-const modalShow = ref(false)
-
-function toggleModal() {
-  modalShow.value = !modalShow.value
-  console.log(modalShow.value)
-}
 </script>
+
 <template>
   <div class="header_grid">
     <h1 class="logo">
@@ -27,19 +18,23 @@ function toggleModal() {
         <img id="logo_img" src="../../img/cabbage/logo1.png" alt="로고" />
       </router-link>
     </h1>
-    <div id="title">{{ headerTitle }}</div>
-    <!-- 알림 컴포넌트 -->
-    <Notifications />
-    <!-- 프로필 컴포넌트 -->
-    <TheProfile />
+    <div class="info">
+      <div id="title">{{ headerTitle }}</div>
+      <div class="right_section">
+        <!-- 알림 컴포넌트 -->
+        <Notifications />
+        <!-- 프로필 컴포넌트 -->
+        <TheProfile />
+      </div>
+    </div>
   </div>
 </template>
 <style scoped>
 .header_grid {
   position: relative;
-  background-color: var(--color-point-5);
+  background-color: #fff;
   display: grid;
-  grid-template-columns: 200px 1fr 100px;
+  grid-template-columns: 200px 1fr;
   align-items: center;
   height: 100%;
 }
@@ -56,30 +51,35 @@ function toggleModal() {
   align-items: center;
 }
 #logo_txt {
-  font-size: 45px;
+  font-size: 28px;
   font-weight: bold;
 }
 #logo_img {
-  width: 55px;
-  height: 82px;
+  width: 25px;
+  height: auto;
+}
+.info {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* 좌우로 정렬 */
 }
 #title {
-  grid-column: 2 / 4; /* 2번 칸 - 4번 칸 전까지 차지 */
-  font-size: 27px;
+  font-size: 28px;
   font-weight: bold;
+  justify-self: left;
+  padding-left: 30px;
   white-space: nowrap;
   overflow: hidden;
-  justify-self: center;
 }
-
-#profile_img {
-  position: fixed;
-  right: 10px;
-  width: 70px;
-  height: 70px;
-  object-fit: cover; /* 이미지 비율 잘 맞추기: 화면 비율 고정*/
-  border-radius: 50%;
-  border: 3px solid white;
-  cursor: pointer;
+.right_section {
+  /* position: absolute;
+  top: 20px;
+  right: 10px; */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+  margin-right: 10px;
 }
 </style>

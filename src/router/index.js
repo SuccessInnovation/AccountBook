@@ -58,8 +58,8 @@ const routes = [
     meta: { title: '마이페이지', layout: 'default' },
   },
   {
-    path: '/admin',
-    name: 'Admin',
+    path: '/adminpage',
+    name: 'AdminPage',
     component: AdminPage,
     meta: { title: '관리자페이지', layout: 'default' },
   },

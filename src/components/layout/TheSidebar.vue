@@ -3,16 +3,33 @@ import { ref } from 'vue'
 
 // 메뉴 목록
 const menuLists = [
-  { label: 'HOME', to: '/home' },
-  { label: '수입/지출 내역', to: '/transaction' },
+  { label: 'Home', to: '/home', icon: '/src/img/icons/home_selected.svg' },
+  {
+    label: '수입/지출 내역',
+    to: '/transaction',
+    icon: '/src/img/icons/transactions_unselected.svg',
+  },
   {
     label: '통계 및 내보내기',
+    icon: '/src/img/icons/statistics_unselected.svg',
     submenu: [
-      { label: '요약 통계', to: '/statistics/summary' },
-      { label: '엑셀 내보내기', to: '/statistics/export' },
+      {
+        label: '요약 통계',
+        to: '/statistics/summary',
+        icon: '/src/img/icons/statistics_summary.svg',
+      },
+      {
+        label: '엑셀 내보내기',
+        to: '/statistics/export',
+        icon: '/src/img/icons/export_excel.svg',
+      },
     ],
   },
-  { label: '예산', to: '/budget' },
+  {
+    label: '예산',
+    to: '/budget',
+    icon: '/src/img/icons/budgets_unselected.svg',
+  },
 ]
 
 // 메뉴 버튼 클릭 시 메뉴 목록 표시
@@ -26,6 +43,7 @@ const showStatsSubMenu = ref(false)
 const toggleStatsSubMenu = () => {
   showStatsSubMenu.value = !showStatsSubMenu.value
 }
+console.log(showStatsSubMenu.value)
 </script>
 
 <template>
@@ -41,9 +59,15 @@ const toggleStatsSubMenu = () => {
             :key="'desktop-' + index"
           >
             <li class="list-group-item" v-if="!menu.submenu">
+              <span class="icon_wrap"
+                ><img :src="menu.icon" alt="아이콘"
+              /></span>
               <router-link :to="menu.to">{{ menu.label }}</router-link>
             </li>
             <li class="list-group-item submenu_wrapper" v-else>
+              <span class="icon_wrap"
+                ><img :src="menu.icon" alt="아이콘"
+              /></span>
               <div @click="toggleStatsSubMenu" style="cursor: pointer">
                 {{ menu.label }}
               </div>
@@ -54,6 +78,9 @@ const toggleStatsSubMenu = () => {
                   class="sub_item"
                   :class="{ 'pt-3': subIndex === 0, 'pt-2': subIndex !== 0 }"
                 >
+                  <span class="icon_wrap"
+                    ><img :src="sub.icon" alt="아이콘"
+                  /></span>
                   <router-link :to="sub.to">{{ sub.label }}</router-link>
                 </li>
               </ul>
@@ -84,28 +111,36 @@ const toggleStatsSubMenu = () => {
 /* 모든 사이드바 적용 */
 .snb_grid {
   position: relative;
-  background-color: var(--color-point-5);
+  background-color: #fff;
   align-items: center;
   height: 100%;
 }
 .snb {
   height: calc(100vh - 100px); /* 100px = header height*/
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 400;
 }
-.list-group-item {
+.list-group-item,
+.sub_item {
   background-color: transparent;
   border: none;
-  padding: 20px 10px 20px 50px;
+  padding: 20px 0px 20px 35px;
   color: var(--color-font-main);
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 12px;
+}
+.icon_wrap {
+  width: 16px;
 }
 .list-group-item:hover > a,
 .list-group-item:hover > div,
 .sub_item:hover {
-  color: var(--color-point-1);
   transition: 0.3s;
 }
 .submenu {
+  color: black;
   overflow: hidden;
   max-height: 0;
   opacity: 0;
@@ -114,11 +149,11 @@ const toggleStatsSubMenu = () => {
     opacity 0.3s ease;
 }
 .submenu.submenu_open {
-  max-height: 250px;
+  max-height: 500px;
   opacity: 1;
 }
 .router-link-active {
-  color: var(--color-point-1);
+  color: #28bf6c;
 }
 /* 테블렛/모바일 화면에 표시되는 메뉴버튼 */
 #snb_btn_area {

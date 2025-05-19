@@ -5,31 +5,36 @@
   <div id="alarm_img" @click="toggleAlarm">
     <img
       v-if="hasNotifications"
-      src="../../img/icons/alarm_on.png"
+      src="../../img/icons/alarm_on.svg"
       alt="알림내역 있음"
     />
-    <img v-else src="../../img/icons/alarm_off.png" alt="알림내역 없음" />
+    <img v-else src="../../img/icons/alarm_off.svg" alt="알림내역 없음" />
   </div>
 
   <!-- 알림 목록 -->
-  <div v-if="isAlarmOpen" class="alarm_box">
-    <div v-if="notifications.length > 0" class="m-1">
-      <p class="mb-2">알림 내역</p>
-      <ul>
-        <li
-          v-for="(notification, index) in notifications"
-          :key="index"
-          class="d-flex align-item-center"
-        >
-          <span>{{ notification }}</span>
-          <button @click="removeNotification(index)" class="btn_delete ms-auto">
-            삭제
-          </button>
-        </li>
-      </ul>
-    </div>
-    <div v-else>
-      <p>알림 내역이 없습니다.</p>
+  <div class="alarm_wrapper">
+    <div v-if="isAlarmOpen" class="alarm_box">
+      <div v-if="notifications.length > 0" class="m-1">
+        <p class="mb-2">알림 내역</p>
+        <ul>
+          <li
+            v-for="(notification, index) in notifications"
+            :key="index"
+            class="d-flex align-item-center"
+          >
+            <span>{{ notification }}</span>
+            <button
+              @click="removeNotification(index)"
+              class="btn_delete ms-auto"
+            >
+              삭제
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div v-else>
+        <p>알림 내역이 없습니다.</p>
+      </div>
     </div>
   </div>
 </template>
@@ -77,24 +82,24 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-#alarm_img {
-  position: fixed;
-  top: 15px;
-  right: 100px;
-  width: 50px;
-  height: 50px;
+#alarm_img img {
+  width: 25px;
+  height: 25px;
+  object-fit: cover; /* 이미지 비율 잘 맞추기: 화면 비율 고정*/
   cursor: pointer;
 }
 
+.alarm_wrapper {
+  position: relative; /* 자식인 .alarm_box의 기준점 */
+}
 .alarm_box {
-  position: fixed;
-  top: 70px;
-  right: 100px;
+  position: absolute;
+  top: 40px;
+  right: 15px;
   width: 320px; /* 기존보다 넓게 */
   background-color: white;
-  border: 2px solid #ccc;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 12px;
   z-index: 999;
 }

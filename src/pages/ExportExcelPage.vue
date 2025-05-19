@@ -75,6 +75,7 @@ const downloadExcel = data => {
 
 <style scoped>
 .ExportExcelPage {
+  background: #f5f7fa;
   padding-top: 20px;
   display: flex;
   justify-content: center;

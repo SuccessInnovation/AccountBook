@@ -62,10 +62,10 @@ watch(
 
 <style scoped>
 /* 전체 페이지 스타일 */
-/* .statistics_page {
-  padding: 0 20px 20px 20px;
-  background-color: red;
-} */
+.statistics_page {
+  /* padding: 0 20px 20px 20px; */
+  background: #f5f7fa;
+}
 .statistics_page {
   display: flex;
   flex-direction: column;

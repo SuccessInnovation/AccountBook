@@ -4069,12 +4069,12 @@
     {
       "email": "activeuser@kb.com",
       "password": "123Qwe123!",
-      "name": "2222",
+      "name": "사용자이름",
       "profileImage": "/src/img/profile/pretty_cabbage.jpg",
       "role": "User",
       "status": "active",
       "createdAt": "2025-04-30-목 23:11:35",
-      "updatedAt": "2025-05-09-금 04:36:36",
+      "updatedAt": "2025-05-18-일 00:48:43",
       "id": "1"
     },
     {
@@ -4089,15 +4089,15 @@
       "updatedAt": "2025-05-05-월 12:24:11"
     },
     {
-      "id": "3",
       "email": "admin@kb.com",
-      "password": "1234",
-      "name": "관리자",
+      "password": "Pp?4054486",
+      "name": "관리22자",
       "profileImage": "/src/img/profile/pretty_cabbage.jpg",
-      "status": "active",
       "role": "Admin",
+      "status": "active",
       "createdAt": "2025-04-29-수 23:11:35",
-      "updatedAt": "2025-05-05-월 02:24:45"
+      "updatedAt": "2025-05-19-월 17:03:59",
+      "id": "3"
     }
   ]
 }

@@ -26,7 +26,7 @@ const layout = computed(() => route.meta.layout || 'default')
         <TheSidebar />
       </template>
       <template v-slot:content>
-        <router-view />
+        <router-view style="flex: 1" />
       </template>
       <template v-slot:footer>
         <TheFooter />
