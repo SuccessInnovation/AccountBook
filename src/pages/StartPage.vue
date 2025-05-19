@@ -12,8 +12,7 @@
                 >실속 그 자체 온라인 가계부 배추!</strong
               >
             </p>
-            <br />
-            <p>오늘도 <strong>배추</strong>하세요</p>
+            <p>오늘도 <strong>배추</strong>하세요~</p>
           </div>
         </div>
         <div class="function_slide">
@@ -22,7 +21,6 @@
       </div>
       <div class="start-button-box">
         <router-link to="login">시작하기</router-link>
-        <!-- <router-link to="home">홈으로</router-link> -->
       </div>
     </section>
   </div>
@@ -39,7 +37,7 @@ h1 {
 .StartPage {
   width: 100%;
   height: 100vh;
-  background-color: var(--color-point-4);
+  background-color: var(--bg-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,43 +45,45 @@ h1 {
 section {
   justify-items: center;
 }
+.wrap_content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  max-width: 1000px;
+  max-height: 560px;
+  padding: 3rem;
+  background-color: var(--box-bg-color);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
 h1 {
   position: relative;
-  font-size: 100px;
-  margin-bottom: 1rem;
+  font-size: 80px;
+  margin-bottom: 2rem;
   margin-top: 0;
   color: var(--color-font-main);
+  font-weight: 600;
 }
 h1::after {
   content: '';
   display: inline-block;
   position: absolute;
-  top: -3px;
-  width: 120px;
-  height: 200px;
-  background-image: url('../img/cabbage/logo1.png');
+  top: 10px;
+  right: 0;
+  width: 140px;
+  height: 220px;
+  background-image: url('../img/cabbage/logo1.svg');
   background-size: cover;
   background-repeat: no-repeat;
   z-index: 1;
 }
 p {
-  color: var(--color-brown-dark);
-}
-/* 좌우 콘텐츠 배치 */
-.wrap_content {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-
-  align-items: center;
-
-  margin: 0 auto;
-  max-width: 960px;
-  padding: 3rem;
-  background-color: white;
-  border-radius: 30px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  color: #706d54;
+  font-size: 16px;
 }
 
 /* 좌측 소개 박스 */
@@ -94,36 +94,36 @@ p {
 }
 .introduction_innerbox {
   width: 350px;
-  /* border: 1px solid black; */
 }
 /* 우측 기능 슬라이드 */
 .function_slide {
   flex: 1 1 400px;
-  width: 500px;
-  height: 500px;
+  width: 430px;
+  height: 445px;
   border-radius: 10px;
   padding: 1rem;
-  background-color: lightgray;
+  background-color: #f3f7f1;
   align-content: center;
   text-align: justify;
 }
 
-/* 시작 버튼 박스 (가운데 정렬) */
-.start-button-box {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-  gap: 3rem;
-}
-
 /* 시작 버튼 스타일 */
 .start-button-box {
-  width: 300px;
-  padding: 1rem 2rem;
-  background-color: var(--color-point-1); /* 배추 연두색 느낌 */
+  position: fixed;
+  top: 87%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 360px;
+  height: 60px;
+  line-height: 60px;
+  background-color: #2fa26c;
+  border-radius: 8px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   color: white;
-  font-weight: bold;
-  border-radius: 12px;
+  font-weight: 500;
+  font-size: 30px;
+
   text-decoration: none;
   transition: background-color 0.3s;
 }

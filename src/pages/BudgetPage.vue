@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue'
-import BudgetSetting from '@/components/BudgetSetting.vue'
-import BudgetProgress from '@/components/BudgetProgress.vue'
-import CalendarContent from '@/components/CalendarNav.vue'
+import BudgetSetting from '@/components/budgets/BudgetSetting.vue'
+import BudgetProgress from '@/components/budgets/BudgetProgress.vue'
+import CalendarContent from '@/components/common/CalendarNav.vue'
 
 const isSetting = ref(false)
 const progressRef = ref(null) // 예산 추가 시 바로 반영되기 위함

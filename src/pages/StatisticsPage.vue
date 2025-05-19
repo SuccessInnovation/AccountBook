@@ -25,13 +25,13 @@
 
 <script setup>
 // 컴포넌트 및 스토어 import
-import CalendarNav from '@/components/CalendarNav.vue'
+import CalendarNav from '@/components/common/CalendarNav.vue'
 import { statisticsStore } from '@/stores/statisticsStore'
 import { use_calendar_store } from '@/stores/MonthSelector'
 import { onMounted, watch } from 'vue'
-import MonthlyPieChart from '@/components/MonthlyPieChart.vue'
-import MonthlyLineChart from '@/components/MonthlyLineChart.vue'
-import NetProfit from '@/components/NetProfit.vue'
+import MonthlyPieChart from '@/components/statistics/MonthlyPieChart.vue'
+import MonthlyLineChart from '@/components/statistics/MonthlyLineChart.vue'
+import NetProfit from '@/components/statistics/NetProfit.vue'
 
 // 통계 데이터 및 캘린더 데이터 스토어 사용
 const store = statisticsStore()

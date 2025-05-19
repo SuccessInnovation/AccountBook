@@ -3,10 +3,10 @@ import { ref, onMounted, watch } from 'vue'
 import { useTransactionStore } from '@/stores/TransactionStore'
 import { useRoute } from 'vue-router'
 
-import CalendarNav from '@/components/CalendarNav.vue'
-import CalendarContent from '@/components/CalendarContent.vue'
-import AddListBtn from '@/components/AddListBtn.vue'
-import TransactionContent from '@/components/TransactionContent.vue'
+import CalendarNav from '@/components/common/CalendarNav.vue'
+import CalendarContent from '@/components/transactions/CalendarContent.vue'
+import AddListBtn from '@/components/transactions/AddListBtn.vue'
+import TransactionContent from '@/components/transactions/TransactionContent.vue'
 
 const transaction_store = useTransactionStore()
 const route = useRoute()

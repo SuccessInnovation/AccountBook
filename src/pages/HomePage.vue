@@ -2,9 +2,9 @@
 import { ref, computed } from 'vue' // ref, computed 임포트
 
 // 홈페이지 내부 구성 : 월 선택 / 수입지출예산 요약 / 파이차트 그래프
-import CalendarNav from '@/components/CalendarNav.vue'
-import SummaryCard from '@/components/SummaryCard.vue'
-import SummaryPieChart from '@/components/SummaryPieChart.vue'
+import CalendarNav from '@/components/common/CalendarNav.vue'
+import SummaryCard from '@/components/home/SummaryCard.vue'
+import SummaryPieChart from '@/components/home/SummaryPieChart.vue'
 import { useBudgetProgress } from '@/stores/useBudgetProgress'
 
 // 수입 지출 예산 변수 store 함수 호출

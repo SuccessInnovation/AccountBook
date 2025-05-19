@@ -65,7 +65,15 @@
 
 /* 변수 설정 */
 :root {
-  --color-font-main: #3f3e3c;
+  --main-color: #28bf6c;
+  --main-font-color: #121212;
+  --sub-font-color: #acacac;
+  --btn-main-color: #1c3e2e;
+  --btn-sub-color: #b0d8c6;
+  --btn-border-color: #cccccc;
+  --box-bg-color: #fdfdfd;
+  --bg-color: #f5f7fa;
+
   --color-point-1: #328e6e;
   --color-point-2: #67ae6e;
   --color-point-3: #99bc85;

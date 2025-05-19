@@ -18,8 +18,8 @@
 </template>
 
 <script setup>
-import ExcelFilter from '@/components/ExcelFilter.vue'
-import ExcelList from '@/components/ExcelList.vue'
+import ExcelFilter from '@/components/statistics/ExcelFilter.vue'
+import ExcelList from '@/components/statistics/ExcelList.vue'
 import * as XLSX from 'xlsx'
 import { ref } from 'vue'
 import { statisticsStore } from '@/stores/statisticsStore'

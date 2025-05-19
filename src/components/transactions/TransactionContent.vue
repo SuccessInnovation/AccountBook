@@ -5,9 +5,9 @@ import { use_calendar_store } from '@/stores/MonthSelector'
 import { useTransactionStore } from '@/stores/TransactionStore'
 import { useRouter } from 'vue-router'
 
-import FilterCategory from '@/components/FilterCategory.vue'
-import SearchByMemo from '@/components/SearchByMemo.vue'
-import TransactionEditModal from '@/components/TransactionEditModal.vue'
+import FilterCategory from '@/components/transactions/FilterCategory.vue'
+import SearchByMemo from '@/components/transactions/SearchByMemo.vue'
+import TransactionEditModal from '@/components/transactions/TransactionEditModal.vue'
 
 // 미리 정의된 카테고리 목록 (수입 / 지출), 카테고리 항목 '영어 - 한글' 매핑
 import {
