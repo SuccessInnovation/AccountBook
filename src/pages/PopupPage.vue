@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
+
+// 카테고리 상수
 import {
   CATEGORY_MAP,
   INCOME_CATEGORIES,
@@ -8,10 +10,12 @@ import {
 } from '@/constants/categories'
 import { useTransactionStore } from '@/stores/TransactionStore'
 
+// API 주소 및 store
 const api_url = 'http://localhost:3000/transactions'
 const transaction_store = useTransactionStore()
 const records = ref([])
 
+// 거래 목록 불러오기
 async function getRecords() {
   try {
     const response = await axios.get(api_url)
@@ -21,17 +25,21 @@ async function getRecords() {
   }
 }
 
+// 거래 데이터 로딩
 onMounted(() => {
   getRecords()
 })
 
+// 모달을 닫기 위한 emit 함수
 const emit = defineEmits(['close'])
 function closeModal() {
   emit('close')
 }
 
+// 현재 선택된 거래 유형: 수입/지출
 const transaction_type = ref('expenses')
 
+// 폼 입력값 바인딩을 위한 객체
 const form_data = ref({
   date: '',
   amount: '',
@@ -40,6 +48,7 @@ const form_data = ref({
   memo: '',
 })
 
+// 필수 입력값 오류 메시지 저장 객체
 const errors = ref({
   date: '',
   amount: '',
@@ -47,6 +56,7 @@ const errors = ref({
   payment: '',
 })
 
+// 필수 항목 확인 함수
 function checkRequired(field) {
   if (!form_data.value[field]) {
     errors.value[field] = '필수 항목입니다'
@@ -55,6 +65,7 @@ function checkRequired(field) {
   }
 }
 
+// 금액 입력값 유효성 검사
 function checkAmount() {
   if (!form_data.value.amount) {
     errors.value.amount = '필수 항목입니다'
@@ -68,20 +79,26 @@ function checkAmount() {
   }
 }
 
+// 0원 이하 입력 방지(computed)
 const amount_error = computed(() => {
   if (form_data.value.amount === '') return ''
   const num = Number(form_data.value.amount)
   return num <= 0 ? '금액은 0원보다 커야 합니다' : ''
 })
 
+// 폼 제출 함수
 async function handleSubmit() {
+  // 필수 항목 및 유효성 검사 실행
   checkRequired('date')
   checkAmount()
   checkRequired('category')
+
+  // 지출이면 결제수단도 체크
   if (transaction_type.value === 'expenses') {
     checkRequired('payment')
   }
 
+  // 오류가 하나라도 있으면 제출 중단
   if (
     errors.value.date ||
     errors.value.amount ||
@@ -91,6 +108,7 @@ async function handleSubmit() {
     return
   }
 
+  // 데이터 포맷 구성
   const data_to_send = {
     id: String(Date.now()),
     date: form_data.value.date,
@@ -103,11 +121,15 @@ async function handleSubmit() {
     createdAt: new Date().toISOString(),
   }
 
+  // POST 요청으로 거래 추가
   try {
     await axios.post(api_url, data_to_send)
     alert('새 항목이 추가되었습니다!')
+    // 전역 상태 동기화
     await transaction_store.fetchTransactions()
+    // 모달 닫기
     closeModal()
+    // 폼 초기화
     form_data.value = {
       date: '',
       amount: '',
@@ -124,11 +146,13 @@ async function handleSubmit() {
 </script>
 
 <template>
+  <!-- 배경 클릭 시 모달 닫힘 -->
   <div class="popup_overlay" @click.self="closeModal">
     <div class="popup_container">
       <h1 style="text-align: center; margin-bottom: 16px">내역 추가</h1>
       <button class="close_btn" @click="closeModal">✕</button>
 
+      <!-- 지출/수입 탭 -->
       <div class="tab_area">
         <button
           class="tab_button"
@@ -154,7 +178,9 @@ async function handleSubmit() {
         </button>
       </div>
 
+      <!-- 입력 폼 -->
       <form novalidate @submit.prevent="handleSubmit" class="form_area">
+        <!-- 날짜 입력 -->
         <div>
           <input
             type="date"
@@ -166,6 +192,7 @@ async function handleSubmit() {
           <div v-if="errors.date" class="error_text">{{ errors.date }}</div>
         </div>
 
+        <!-- 금액 입력 -->
         <div>
           <input
             type="text"
@@ -181,6 +208,8 @@ async function handleSubmit() {
           </div>
         </div>
 
+        <!-- 거래 종류 선택 (지출 or 수입) -->
+        <!-- 거래: 지출 -->
         <div v-if="transaction_type === 'expenses'">
           <select
             v-model="form_data.category"
@@ -202,6 +231,7 @@ async function handleSubmit() {
           </div>
         </div>
 
+        <!-- 거래: 수입 -->
         <div v-else>
           <select
             v-model="form_data.category"
@@ -223,6 +253,7 @@ async function handleSubmit() {
           </div>
         </div>
 
+        <!-- 결제수단 (지출일 경우만) -->
         <div v-if="transaction_type === 'expenses'">
           <select
             v-model="form_data.payment"
@@ -239,6 +270,7 @@ async function handleSubmit() {
           </div>
         </div>
 
+        <!-- 메모 -->
         <div>
           <textarea
             placeholder="메모"
@@ -247,6 +279,7 @@ async function handleSubmit() {
           ></textarea>
         </div>
 
+        <!-- 제출 버튼 -->
         <button
           type="submit"
           class="submit_button"
@@ -260,6 +293,7 @@ async function handleSubmit() {
 </template>
 
 <style scoped>
+/* 팝업 모달 전체 배경 */
 .popup_overlay {
   position: fixed;
   top: 0;
@@ -273,6 +307,7 @@ async function handleSubmit() {
   z-index: 999;
 }
 
+/* 팝업 모달 컨테이너 */
 .popup_container {
   width: 350px;
   padding: 20px;
@@ -283,6 +318,7 @@ async function handleSubmit() {
   position: relative;
 }
 
+/* 닫기 버튼 */
 .close_btn {
   position: absolute;
   right: 24px;
@@ -291,6 +327,7 @@ async function handleSubmit() {
   font-size: 24px;
 }
 
+/* 탭 버튼 영역 */
 .tab_area {
   display: flex;
   gap: 4px;
@@ -298,6 +335,7 @@ async function handleSubmit() {
   margin-bottom: 16px;
 }
 
+/* 탭 버튼 */
 .tab_button {
   flex: 1;
   padding: 12px;
@@ -307,6 +345,7 @@ async function handleSubmit() {
   border: none;
 }
 
+/* 폼 영역 (input, textarea)*/
 .form_area {
   display: flex;
   flex-direction: column;
@@ -328,11 +367,13 @@ async function handleSubmit() {
   height: 60px;
 }
 
+/* 오류 메시지 */
 .error_text {
   color: red;
   font-size: 12px;
 }
 
+/* 제출 버튼 */
 .submit_button {
   background-color: #47a447;
   color: white;

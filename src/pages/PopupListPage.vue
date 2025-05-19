@@ -1,4 +1,5 @@
 <script setup>
+// 거래 내역 관련 스토어 & 라우터
 import { ref, computed, onMounted, watch, defineEmits } from 'vue'
 import { useTransactionStore } from '@/stores/TransactionStore'
 import { useRoute } from 'vue-router'
@@ -13,9 +14,12 @@ const transaction_store = useTransactionStore()
 const route = useRoute()
 const api_url = 'http://localhost:3000/transactions'
 
+// 선택된 날짜와 모달 관련 상태 관리
 const selected_date = ref(route.query.date || '')
 const show_edit_modal = ref(false)
 const selected_transaction_id = ref(null)
+
+// 수정 폼 데이터
 const form_data = ref({
   date: '',
   type: '',
@@ -25,12 +29,15 @@ const form_data = ref({
   memo: '',
 })
 
+// 모달 닫기
 const emit = defineEmits(['close'])
 
+// 거래 데이터 초기 로딩
 onMounted(() => {
   transaction_store.fetchTransactions()
 })
 
+// 날짜 쿼리 변경 감지하여 selected_date에 반영
 watch(
   () => route.query.date,
   new_val => {
@@ -38,12 +45,14 @@ watch(
   },
 )
 
+// 선택된 날짜에 해당하는 거래 필터링
 const filtered_by_date = computed(() => {
   return transaction_store.transactions.filter(
     t => t.date === selected_date.value,
   )
 })
 
+// 수입/지출 유형에 따라 카테고리 목록 필터링
 const categories_list = computed(() => {
   if (form_data.value.type === 'income') {
     return INCOME_CATEGORIES
@@ -59,6 +68,7 @@ const amount_error = computed(() => {
   return amount <= 0 ? '금액은 0원보다 커야 합니다' : ''
 })
 
+// 전체 폼 유효성 검사(금액, 카테고리, 수입/지출, 날짜, 결제수단)
 const is_form_valid = computed(() => {
   const amount = Number(form_data.value.amount)
   const category = form_data.value.category
@@ -81,6 +91,7 @@ const is_form_valid = computed(() => {
   )
 })
 
+// 금액 포맷 함수(소득은 +, 지출은 -)
 function formatAmount(value, type) {
   const num = parseFloat(value)
   if (isNaN(num)) return value
@@ -92,21 +103,25 @@ function formatAmount(value, type) {
       : formatted
 }
 
+// 요일 출력함수(e.g. 월요일)
 function getKoreanDayName(date_str) {
   const date = new Date(date_str)
   return date.toLocaleDateString('ko-KR', { weekday: 'long' })
 }
 
+// 거래 삭제
 function handleDelete(id) {
   if (window.confirm('정말 삭제하시겠습니까?')) {
     transaction_store.deleteTransaction(id)
   }
 }
 
+// 모달 닫기
 function closeModal() {
   emit('close')
 }
 
+// 거래 수정 요청 - 폼에 데이터 채우기
 async function handleEdit(transaction) {
   selected_transaction_id.value = transaction.id
   try {
@@ -118,6 +133,7 @@ async function handleEdit(transaction) {
   }
 }
 
+// 수정 완료 요청
 async function handleUpdate() {
   try {
     await axios.put(
@@ -133,6 +149,7 @@ async function handleUpdate() {
   }
 }
 
+// 수정 모달 닫기
 function closeEditModal() {
   show_edit_modal.value = false
   selected_transaction_id.value = null
@@ -140,6 +157,7 @@ function closeEditModal() {
 </script>
 
 <template>
+  <!-- 수정 모드가 아닐 때 표시되는 거래 목록 팝업 -->
   <div
     v-if="!show_edit_modal"
     class="popup_overlay p-4 border rounded shadow"
@@ -154,6 +172,7 @@ function closeEditModal() {
       </div>
       <button class="close_btn mt-0" @click="closeModal">✕</button>
 
+      <!-- 거래 내역 없을 경우 -->
       <div
         v-if="filtered_by_date.length === 0"
         id="empty_transaction"
@@ -163,12 +182,14 @@ function closeEditModal() {
         표시할 내역이 없습니다.
       </div>
 
+      <!-- 거래 내역이 있을 경우 테이블 렌더링 -->
       <div
         v-else
         class="table-responsive rounded shadow-sm bg-white px-3 w-100"
         style="max-height: 400px; overflow-y: auto"
       >
         <table class="table table-hover mt-5 mb-0 text-center align-middle">
+          <!-- 테이블 헤더 -->
           <thead class="table-light">
             <tr>
               <th scope="col" style="width: 160px">날짜</th>
@@ -210,6 +231,7 @@ function closeEditModal() {
     </div>
   </div>
 
+  <!-- 수정 모드일 때 표시되는 거래 수정 폼 -->
   <div
     v-if="show_edit_modal"
     class="popup_overlay"
@@ -273,8 +295,7 @@ function closeEditModal() {
 </template>
 
 <style scoped>
-/* 스네이크 케이스 통일 스타일 */
-/* 오버레이 */
+/* 팝업 전체(오버레이) */
 .popup_overlay {
   position: fixed;
   top: 0;
@@ -288,7 +309,7 @@ function closeEditModal() {
   z-index: 9999;
 }
 
-/* 컨테이너 */
+/* 거래 목록 팝업 컨테이너(테이블+내역) */
 .popup_container {
   width: 60rem;
   padding: 20px;
@@ -299,12 +320,12 @@ function closeEditModal() {
   position: relative;
 }
 
-/* 날짜 */
+/* 날짜 텍스트 */
 .top_date {
   text-align: center;
 }
 
-/* 닫기버튼 */
+/* 팝업 닫기 버튼 */
 .close_btn {
   position: absolute;
   right: 40px;
@@ -313,7 +334,7 @@ function closeEditModal() {
   font-size: 24px;
 }
 
-/* 테이블 */
+/* 거래 내역 테이블 스타일 */
 .scrollable_table {
   max-height: 300px;
   overflow-y: auto;
@@ -329,10 +350,12 @@ function closeEditModal() {
   margin-top: 3rem;
 }
 
+/* 테이블 헤더 배경 */
 .ledger_table thead {
   background-color: #e2e2e2;
 }
 
+/* 테이블 셀 공통 스타일 */
 .ledger_table th,
 .ledger_table td {
   text-align: left;
@@ -340,6 +363,7 @@ function closeEditModal() {
   border-bottom: 1px solid #eee;
 }
 
+/* 헤더 텍스트 스타일 */
 .ledger_table th {
   font-weight: bold;
   font-size: 0.9rem;
@@ -355,13 +379,13 @@ function closeEditModal() {
   cursor: pointer;
 }
 
-/* 버튼 */
+/* 리스트 닫기 버튼 */
 .close_popup_list {
   background-color: var(--point-1-color);
   color: white;
 }
 
-/* 수정 모달 */
+/* 거래 수정 모달 컨테이너 */
 .edit_container {
   width: 550px;
   padding: 20px;
@@ -372,21 +396,25 @@ function closeEditModal() {
   position: relative;
 }
 
+/* 모달 제목 */
 .edit_container h2 {
   margin-bottom: 16px;
   text-align: center;
 }
 
+/* 폼 전체 레이아웃 */
 .edit_container form {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
+/* 결제 수단 */
 .payment_block {
   gap: 10px;
 }
 
+/* 폼 입력 필드 & 선택 박스 */
 .edit_container form > input,
 .edit_container form > select,
 .payment_block > select {
@@ -396,11 +424,12 @@ function closeEditModal() {
   border-radius: 4px;
   width: 100%;
 }
-
+/* 날짜 수정 칸 커서 포인터 */
 #edit_date {
   cursor: pointer;
 }
 
+/* 수정/취소 버튼 영역*/
 .button_group {
   display: flex;
   justify-content: space-between;
@@ -427,6 +456,8 @@ function closeEditModal() {
   background-color: #ddd;
   color: #333;
 }
+
+/* 수정/삭제 아이콘 hover 시 1.2 배확대 효과 */
 .icon-hover:hover {
   transform: scale(1.2);
   transition: transform 0.2s ease;

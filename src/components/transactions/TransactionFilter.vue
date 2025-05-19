@@ -9,6 +9,7 @@
 <template>
   <!-- 수입/지출 필터 -->
   <div class="filter_container">
+    <!-- 수입 체크박스 -->
     <label class="income_checkbox">
       <input
         type="checkbox"
@@ -17,6 +18,7 @@
       />
       <span>수입</span>
     </label>
+    <!-- 지출 체크박스 -->
     <label class="expense_checkbox">
       <input
         type="checkbox"
@@ -29,13 +31,13 @@
 </template>
 
 <style scoped>
-/* 1. 수입/지출 필터 컨테이너 */
+/* 수입/지출 필터 컨테이너 */
 .filter_container {
   display: flex;
   gap: 10px;
 }
 
-/* 2. 수입 체크박스 */
+/* 수입 체크박스 */
 .income_checkbox {
   display: flex;
   align-items: center;
@@ -43,7 +45,7 @@
   cursor: pointer;
 }
 
-/* 3. 지출 체크박스 */
+/* 지출 체크박스 */
 .expense_checkbox {
   display: flex;
   align-items: center;
