@@ -8,6 +8,7 @@
 
 <style scoped>
 .RegisterPage {
+  background: #f5f7fa;
   display: flex;
   justify-content: center;
   align-items: center;

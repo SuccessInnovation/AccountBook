@@ -17,6 +17,7 @@ export function useBudgetProgress() {
   // 입력 데이터 저장용
   const expenseData = ref([])
   const incomeData = ref([])
+  const budgetCategoryData = ref([]) // --- 새로 추가: 카테고리별 예산 데이터 ---
 
   // @params = 전체 예산, 전체 지출, 전체 비율
   const totalBudget = ref(0)
@@ -102,6 +103,14 @@ export function useBudgetProgress() {
       }
     })
 
+    // 예산 데이터 추가
+    budgetCategoryData.value = store.budgets.map(cat => ({
+      category: cat.category, // 예산 항목의 카테고리 (예: '식비', '저축')
+      name: CATEGORY_MAP[cat.category] || cat.category, // 카테고리 이름
+      amount: cat.amount ?? 0, // 설정된 예산 금액
+      icon: CATEGORY_IMG[cat.category], // 아이콘 추가
+    }))
+
     //   총 지출, 총 예산을 계산
     totalBudget.value = expenseData.value.reduce(
       (sum, item) => sum + item.budget,
@@ -175,6 +184,7 @@ export function useBudgetProgress() {
   return {
     expenseData,
     incomeData,
+    budgetCategoryData, // --- 새로 추가: 카테고리별 예산 데이터 노출 ---
     totalBudget,
     totalSpent,
     totalIncome,

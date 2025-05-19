@@ -8,9 +8,8 @@
 
 <template>
   <!-- 수입/지출 필터 -->
-  <div class="filter-container">
-    <label class="income-checkbox">
-      <!-- :checked와 @change를 이용해 부모와 연동 -->
+  <div class="filter_container">
+    <label class="income_checkbox">
       <input
         type="checkbox"
         :checked="showIncome"
@@ -18,7 +17,7 @@
       />
       <span>수입</span>
     </label>
-    <label class="expense-checkbox">
+    <label class="expense_checkbox">
       <input
         type="checkbox"
         :checked="showExpense"
@@ -30,12 +29,22 @@
 </template>
 
 <style scoped>
-.filter-container {
+/* 1. 수입/지출 필터 컨테이너 */
+.filter_container {
   display: flex;
   gap: 10px;
 }
-.income-checkbox,
-.expense-checkbox {
+
+/* 2. 수입 체크박스 */
+.income_checkbox {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+/* 3. 지출 체크박스 */
+.expense_checkbox {
   display: flex;
   align-items: center;
   gap: 4px;

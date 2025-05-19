@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template>
   <!-- 로그인 페이지 시작 -->
   <div class="app_wrapper">
@@ -8,18 +6,24 @@
       <h1>배추</h1>
       <img
         class="logo_png"
-        src="../img/cabbage/logo1.png"
+        src="@/img/cabbage/logo1.png"
         alt="배추캐릭터로고"
       />
     </div>
     <!-- 로그인 폼작성 -->
-    <form action="" method="post" class="login_form_box">
+    <form
+      action=""
+      method="post"
+      @submit.prevent="login"
+      class="login_form_box"
+    >
       <input
         class="input_login"
         type="email"
         name="email"
         id="email"
         placeholder="이메일"
+        v-model="userInput.email"
       />
       <input
         class="input_login"
@@ -27,28 +31,94 @@
         name="password"
         id="password"
         placeholder="비밀번호"
+        v-model="userInput.password"
       />
       <div class="options_row">
         <label class="checkbox_wrapper">
-          <input type="checkbox" name="save_id" v-model="saveId" />
+          <input type="checkbox" name="remember_id" v-model="rememberEmail" />
           <span>아이디 저장</span>
         </label>
 
         <a href="#" class="reset_link">비밀번호 초기화</a>
       </div>
-      <button class="login_btn btn disabled_box">
-        <!-- 임시로 로그인 클릭시 홈페이지로 이동 -->
-        <router-link to="/home" class="clickable_text">로그인</router-link>
+      <button
+        class="login_btn btn clickable_text"
+        :disabled="!userInput.email || !userInput.password"
+        @click="login"
+      >
+        로그인
       </button>
-      <button class="signfor_btn btn disabled_box">
+      <button class="signfor_btn btn">
         <!-- 임시로 회원가입 클릭시 서비스 준비중 페이지로 이동 -->
         <router-link to="/register" class="clickable_text"
           >회원가입</router-link
         >
       </button>
+      <!-- 로그인 실패 메시지 -->
+      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
     </form>
   </div>
 </template>
+
+<script setup>
+import { ref, reactive, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useUsersTableStore } from '@/stores/UsersTableStore.js'
+
+// 라우터 객체 가져오기
+const router = useRouter()
+
+// 사용자 입력 상태
+const userInput = reactive({
+  email: '',
+  password: '',
+})
+
+// 아이디 저장 체크박스 상태
+const rememberEmail = ref(false)
+
+// 에러 메시지 상태
+const errorMessage = ref('')
+
+// 저장된 이메일 불러오기
+onMounted(() => {
+  const remember = localStorage.getItem('rememberEmail')
+  if (remember) {
+    userInput.email = remember
+    rememberEmail.value = true
+  }
+})
+
+// 로그인 성공 시
+const successCallback = () => {
+  errorMessage.value = '' // 성공 시 메시지 초기화
+  router.push({ name: 'Home' })
+  console.log('로그인 성공')
+}
+
+// 로그인 실패 시
+const failCallback = message => {
+  errorMessage.value = message || '로그인 실패'
+}
+
+// 로그인 처리
+const login = () => {
+  const store = useUsersTableStore()
+
+  // 로그인
+  store.loginUser(
+    { email: userInput.email, password: userInput.password },
+    successCallback,
+    failCallback,
+  )
+  // 아이디 저장
+  if (rememberEmail.value) {
+    localStorage.setItem('rememberEmail', userInput.email)
+  } else {
+    localStorage.removeItem('rememberEmail')
+  }
+}
+</script>
 
 <style scoped>
 /* 전체 하얀 박스 */
@@ -145,14 +215,10 @@
   height: 4rem;
   border-radius: 10px;
 }
-/* 버튼 클릭 이벤트 오류에 따른 이벤트 발생 방지 */
-.disabled_box {
-  pointer-events: none;
-}
 
-/* 텍스트만 이벤트 발생 : 라우트 정상작동 */
-.clickable_text {
-  pointer-events: auto; /* 이 글자만 클릭 가능하게 */
-  cursor: pointer;
+/* 로그인 실패 메세지 */
+.error {
+  color: red;
+  margin-top: 10px;
 }
 </style>

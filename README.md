@@ -193,6 +193,7 @@
 > ### 안다윤
 
 **1. 사용자 정보 관련 기능 구현**
+
 - 로그인 및 로그아웃 기능
 - 유효성 검사 후 회원가입 및 회원탈퇴 (관리자에게 요청) 기능
 - 마이페이지 및 관리자페이지에서 사용자 정보 조회, 수정 및 관리 기능
@@ -282,9 +283,10 @@
 ### 1. Vue 프로젝트 생성
 
 - Vue CLI 이용하여 새 프로젝트 생성
-    ```
-    npm create-vue@3.16.3
-    ```
+
+  ```
+  npm create-vue@3.16.3
+  ```
 
   - Project name : `AccountBook`
   - Package name : `accountbook`
@@ -292,44 +294,51 @@
 ### 2. 의존성 및 주요 라이브러리 설치
 
 - 📦 프로젝트 기본 의존성
-    ```
-    npm install
-    ```
+
+  ```
+  npm install
+  ```
 
 - 🎨 Bootstrap (UI 프레임워크)
-    ```
-    npm install bootstrap@5
-    ```
+
+  ```
+  npm install bootstrap@5
+  ```
 
 - 🧭 Vue Router (페이지 이동 라우팅)
-    ```
-    npm install vue-router
-    ```
+
+  ```
+  npm install vue-router
+  ```
 
 - 🌐 Axios (HTTP 통신 라이브러리)
-    ```
-    npm install axios
-    ```
+
+  ```
+  npm install axios
+  ```
 
 - ⚙️ Pinia (상태 관리 라이브러리)
-    ```
-    npm install pinia
-    ```
+
+  ```
+  npm install pinia
+  ```
 
 - 📊 Chart.js & Vue Chart.js (차트 시각화 도구)
-    ```
-    npm install chart.js vue-chartjs
-    ```
+
+  ```
+  npm install chart.js vue-chartjs
+  ```
 
 - 📁 xlsx (엑셀 내보내기 기능용 라이브러리)
-    ```
-    npm install xlsx
-    ```
+
+  ```
+  npm install xlsx
+  ```
 
 - 🔛 swiper (스와이프 기능)
-    ```
-    npm install swiper
-    ```
+  ```
+  npm install swiper
+  ```
 
 ### 3. 프로젝트 초기 세팅
 
@@ -342,6 +351,7 @@
 #### 📦 JSON 서버 설치
 
 - macOS / Linux
+
   ```
   sudo npm install -g json-server
   ```
@@ -354,9 +364,10 @@
 #### 🚀 JSON 서버 실행
 
 - 서버 실행
-    ```
-    json-server --watch db.json
-    ```
+
+  ```
+  json-server --watch db.json
+  ```
 
 - 실행 후 `localhost:3000` 접속하여 더미 데이터 확인
 

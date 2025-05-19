@@ -4,12 +4,17 @@ import { createRouter, createWebHistory } from 'vue-router'
 import StartPage from '@/pages/StartPage.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import RegisterPage from '@/pages/RegisterPage.vue'
+import MyPage from '@/pages/MyPage.vue'
+import AdminPage from '@/pages/AdminPage.vue'
 import HomePage from '@/pages/HomePage.vue'
 import TransactionPage from '@/pages/TransactionPage.vue'
 import PopupPage from '@/pages/PopupPage.vue'
 import StatisticsPage from '@/pages/StatisticsPage.vue'
 import BudgetPage from '@/pages/BudgetPage.vue'
 import ExportExcelPage from '@/pages/ExportExcelPage.vue'
+// import TransactionEdit from '@/pages/TransactionEditPage.vue'
+// import TransactionEditPage from '@/pages/TransactionEditPage.vue'
+import { useUsersTableStore } from '@/stores/UsersTableStore'
 
 const routes = [
   {
@@ -30,11 +35,6 @@ const routes = [
     },
   },
   {
-    path: '/transaction/edit/:id',
-    name: 'TransactionEdit',
-    component: () => import('@/pages/TransactionEdit.vue'), // 혹은 적절한 컴포넌트 경로
-  },
-  {
     path: '/login',
     name: 'Login',
     component: LoginPage,
@@ -52,6 +52,18 @@ const routes = [
     meta: { title: '회원가입', layout: 'none' },
   },
   {
+    path: '/mypage',
+    name: 'MyPage',
+    component: MyPage,
+    meta: { title: '마이페이지', layout: 'default' },
+  },
+  {
+    path: '/adminpage',
+    name: 'AdminPage',
+    component: AdminPage,
+    meta: { title: '관리자페이지', layout: 'default' },
+  },
+  {
     path: '/transaction',
     name: 'Transaction',
     component: TransactionPage,
@@ -63,6 +75,11 @@ const routes = [
     component: PopupPage,
     meta: { layout: 'default' },
   },
+  //   {
+  //     path: '/transaction/edit/:id',
+  //     name: 'TransactionEdit',
+  //     component: TransactionEditPage,
+  //   },
   {
     path: '/statistics/summary',
     name: 'Statistics',
@@ -88,4 +105,30 @@ const router = createRouter({
   routes,
 })
 
+router.beforeEach((to, from, next) => {
+  const userStore = useUsersTableStore()
+  const userInfo = userStore.getUserInfoLocalStorage?.()
+  const isAuthenticated = !!userInfo
+  // 로그인이 필요한 라우터
+  const authRequiredRoutes = [
+    'MyPage',
+    'Admin',
+    'Home',
+    'Transaction',
+    'Statistics',
+    'Exports',
+    'Budget',
+  ]
+
+  if (authRequiredRoutes.includes(to.name) && !isAuthenticated) {
+    next({ name: 'Login' })
+  } else {
+    next()
+  }
+})
+
+// 화면 전환 전 후
+router.afterEach((to, from) => {
+  console.log(`✅ 이동 완료: ${from.fullPath} ➡ ${to.fullPath}`)
+})
 export default router

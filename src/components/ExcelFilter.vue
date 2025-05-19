@@ -1,5 +1,5 @@
 <template>
-  <form class="box" @submit.prevent="handleSubmit">
+  <div class="box">
     <div class="search">
       <label class="period_selector">
         <input
@@ -15,17 +15,23 @@
         3개월
       </label>
       <label class="period_selector">
+        <input type="radio" value="1year" v-model="selectPeriod" />
+        1년
+      </label>
+      <label class="period_selector">
         <input type="radio" value="custom" v-model="selectPeriod" />
         기간설정
       </label>
-      <button id="submit_btn" type="submit">조회</button>
+      <button id="submit_btn" type="submit" @click="handleSubmit">조회</button>
     </div>
+    <!-- 날짜 UI가 반영되는 곳 -->
     <div class="date_inputs">
       <input
         id="date_start"
         class="period_selector"
         type="date"
         v-model="customStartDate"
+        :disabled="selectPeriod !== 'custom'"
       />
       <span>~</span>
       <input
@@ -33,13 +39,14 @@
         class="period_selector"
         type="date"
         v-model="customEndDate"
+        :disabled="selectPeriod !== 'custom'"
       />
     </div>
-  </form>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { statisticsStore } from '@/stores/statisticsStore'
 import { defineEmits } from 'vue'
 
@@ -55,6 +62,7 @@ const formatDate = date => date.toISOString().split('T')[0]
 // 기본값 설정
 const customStartDate = ref(formatDate(oneMonthAgo))
 const customEndDate = ref(formatDate(today))
+const todayStr = ref(formatDate(today))
 
 const emit = defineEmits(['search'])
 
@@ -62,18 +70,39 @@ const emit = defineEmits(['search'])
 const handleSubmit = () => {
   console.log('선택된 기간:', selectPeriod.value)
 
+  // 1개월
   if (selectPeriod.value === '1months') {
     store.fetchTransactionsByPeriod()
-  } else if (selectPeriod.value === '3months') {
+  }
+  // 3개월
+  else if (selectPeriod.value === '3months') {
     const startDate = new Date()
     startDate.setMonth(today.getMonth() - 3)
 
     const start = formatDate(startDate)
     store.fetchTransactionsByPeriod(start, formatDate(today))
-  } else if (selectPeriod.value === 'custom') {
+  }
+  // 1년
+  else if (selectPeriod.value === '1year') {
+    const startDate = new Date()
+    startDate.setFullYear(today.getFullYear() - 1)
+
+    const start = formatDate(startDate)
+    store.fetchTransactionsByPeriod(start, formatDate(today))
+  }
+  // 기간 설정
+  else if (selectPeriod.value === 'custom') {
     // 입력 확인
     if (!customStartDate.value || !customEndDate.value) {
       alert('시작일과 종료일을 모두 입력하세요.')
+      return
+    }
+    if (customStartDate.value > customEndDate.value) {
+      alert('시작일이 종료일보다 늦을 수 없습니다.')
+      return
+    }
+    if (customEndDate.value > todayStr.value) {
+      alert('미래 기간은 조회할 수 없습니다.')
       return
     }
 
@@ -81,6 +110,29 @@ const handleSubmit = () => {
   }
   emit('search') // 조회 완료 → 부모 컴포넌트에게 알림!
 }
+
+watch(selectPeriod, newVal => {
+  const today = new Date()
+  if (newVal === '1months') {
+    const oneMonthAgo = new Date()
+    oneMonthAgo.setMonth(today.getMonth() - 1)
+    customStartDate.value = formatDate(oneMonthAgo)
+    customEndDate.value = formatDate(today)
+  } else if (newVal === '3months') {
+    const threeMonthsAgo = new Date()
+    threeMonthsAgo.setMonth(today.getMonth() - 3)
+    customStartDate.value = formatDate(threeMonthsAgo)
+    customEndDate.value = formatDate(today)
+  } else if (newVal === '1year') {
+    const oneYearAgo = new Date()
+    oneYearAgo.setFullYear(today.getFullYear() - 1)
+    customStartDate.value = formatDate(oneYearAgo)
+    customEndDate.value = formatDate(today)
+  } else if (newVal === 'custom') {
+    customStartDate.value = ''
+    customEndDate.value = ''
+  }
+})
 </script>
 
 <style scoped>
@@ -142,5 +194,11 @@ const handleSubmit = () => {
   border-radius: 10px;
   border: none;
   padding: 0 10px;
+}
+
+input:disabled {
+  background-color: #e7e7e7; /* 흐릿한 회색 배경 */
+  color: #797979; /* 텍스트 색도 조금 흐리게 */
+  cursor: not-allowed; /* 마우스 커서도 금지 표시 */
 }
 </style>

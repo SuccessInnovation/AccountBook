@@ -92,7 +92,6 @@ body {
   height: 100%;
   font-family: 'NotoSansKR', sans-serif;
   color: var(--color-font-main);
-  /* overflow: hidden; */
 }
 #app {
   margin: 0;
@@ -129,8 +128,10 @@ ol {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-color: #f5f7fa;
 }
 main-content {
   display: flex;
   flex: 1;
+  background-color: #f5f7fa;
 }

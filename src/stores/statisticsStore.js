@@ -14,7 +14,8 @@ export const statisticsStore = defineStore('statistics', {
   state: () => ({
     transactions: [],
     filteredTransaction: [],
-
+    // 알림 상태 추가
+    notifications: [],
     // 통계용 데이터
     monthlyCategoryData: {},
     monthlyExpenseData: {},
