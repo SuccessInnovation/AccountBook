@@ -55,7 +55,12 @@
         >
       </button>
       <!-- 로그인 실패 메시지 -->
-      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+      <p
+        class="error"
+        :style="{ visibility: errorMessage ? 'visible' : 'hidden' }"
+      >
+        {{ errorMessage || '에러 메세지 영역' }}
+      </p>
     </form>
   </div>
 </template>
@@ -219,6 +224,7 @@ const login = () => {
 /* 로그인 실패 메세지 */
 .error {
   color: red;
-  margin-top: 10px;
+  margin-top: 5px;
+  min-height: 0;
 }
 </style>
