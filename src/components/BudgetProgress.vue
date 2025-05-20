@@ -4,6 +4,7 @@
       <!-- 제목 -->
       <div class="budget_title">
         <h2>{{ calendar.current_month + 1 }}월 총예산</h2>
+        <!-- 예산설정 버튼 -->
         <div class="btn_wrap">
           <button class="setting_btn" @click.prevent="budgetSetting">
             <img src="../img/cabbage/배추9.png" alt="예산설정버튼" />
@@ -63,9 +64,11 @@
           <div class="category_title">
             <img class="category_icon" :src="item.icon" alt="{{item.name}}" />
             <span>{{ item.name }}</span>
+            <!-- 비율 표시 -->
             <div class="percentage">
               {{ item.budget === 0 ? '-' : item.percent + '%' }}
             </div>
+            <!-- 예산 초과, 남음 표시 -->
             <span class="left_budget" :class="{ deficit: item.left < 0 }">
               {{
                 (item.left < 0 ? item.left * -1 : item.left).toLocaleString()
@@ -74,6 +77,7 @@
             </span>
           </div>
           <div class="bar_wrapper">
+            <!-- Percentage 바 -->
             <div class="bar_background">
               <div
                 class="bar_fill"
@@ -82,6 +86,7 @@
                 }"
               ></div>
             </div>
+            <!-- 지출, 남은 예산 현황 -->
             <div class="bar_text">
               <span>{{ item.spent.toLocaleString() }}원 지출</span>
               <span>예산 {{ item.budget.toLocaleString() }}원</span>
@@ -214,6 +219,7 @@ const budgetSetting = () => {
 .progress_item {
   padding: 1rem;
 }
+/* 스크롤바 */
 .progress_list::-webkit-scrollbar {
   width: 0.625rem;
   background-color: var(--color-input-box);

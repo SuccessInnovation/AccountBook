@@ -1,6 +1,7 @@
 <template>
   <div class="box">
     <div class="search">
+      <!-- 기간 선택 -->
       <label class="period_selector">
         <input
           type="radio"

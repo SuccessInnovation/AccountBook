@@ -2,7 +2,7 @@
   <div class="ExportExcelPage">
     <div class="container">
       <!-- 상단 수평 정렬 -->
-      <div class="top-bar">
+      <div class="top_bar">
         <ExcelFilter class="excel_filter" @search="handleSearch" />
         <button
           id="btn_export"
@@ -43,12 +43,14 @@ const PAYMENT_METHOD_MAP = {
   transfer: '이체',
 }
 
+// 데이터가 없으면 알림
 const downloadExcel = data => {
   if (!data || data.length === 0) {
     alert('내보낼 데이터가 없습니다!')
     return
   }
 
+  //  내보낼 데이터 저장
   const exportData = data.map(item => ({
     날짜: item.date,
     유형: TYPE_MAP[item.type] || item.type,
@@ -74,6 +76,7 @@ const downloadExcel = data => {
 </script>
 
 <style scoped>
+/* 엑셀 페이지 css */
 .ExportExcelPage {
   background: #f5f7fa;
   padding-top: 20px;
@@ -91,12 +94,13 @@ const downloadExcel = data => {
   flex-direction: column;
   gap: 10px;
 }
-.top-bar {
+.top_bar {
   width: 100%;
   display: flex;
   justify-content: space-between;
   position: relative;
 }
+/* 내보내기 버튼 */
 #btn_export {
   background-color: var(--color-point-1);
   color: white;
