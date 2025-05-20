@@ -13,7 +13,7 @@ const budgetSetting = () => {
 
 const handleSubmit = () => {
   isSetting.value = false // 팝업 닫기
-  progressRef.value?.refresh() // ✅ 저장 후 진척도 갱신
+  progressRef.value?.refresh() // 저장 후 진척도 갱신
 }
 </script>
 

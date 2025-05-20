@@ -125,6 +125,7 @@ watch(
 </template>
 
 <style scoped>
+/* *** 리스트 출력 페이지 시작 *** */
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -162,6 +163,7 @@ tbody td {
 #data_amount {
   text-align: right;
 }
+/* 페이지네이션 */
 .pagination {
   position: absolute;
   bottom: 10px;
@@ -181,6 +183,7 @@ tbody td {
   border: none;
 }
 
+/* 카테고리 아이콘 출력 */
 .category_icon {
   width: 1rem;
 }
@@ -189,4 +192,5 @@ tbody td {
   display: flex;
   gap: 1rem;
 }
+/* *** 출력 페이지 끝 *** */
 </style>
