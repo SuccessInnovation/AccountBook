@@ -44,7 +44,7 @@
         placeholder="비밀번호 확인"
         v-model="userInput.password2"
       />
-      <button class="register_btn btn">회원가입</button>
+      <button class="register_btn">회원가입</button>
     </form>
     <!-- 회원가입 실패 메시지 -->
     <p
@@ -85,6 +85,7 @@ const successCallback = email => {
 // 회원가입 실패 시
 const failCallback = message => {
   errorMessage.value = message || '회원가입 실패'
+  console.log('회원가입 실패')
 }
 
 // 회원가입 처리
@@ -99,8 +100,8 @@ const register = () => {
       password1: userInput.password1,
       password2: userInput.password2,
     },
-    successCallback(userInput.email),
-    failCallback,
+    () => successCallback(userInput.email), // 유효성 통과 후에만 호출
+    failCallback, // 검증 실패 시 호출
   )
 }
 </script>
