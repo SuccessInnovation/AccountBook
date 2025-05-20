@@ -59,7 +59,7 @@ onMounted(async () => {
 
 <style scoped>
 .container {
-  background: #f5f7fa;
+  background: var(--bg-color);
   display: flex;
   flex-direction: column;
   margin: 0;

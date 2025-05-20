@@ -78,7 +78,7 @@ const downloadExcel = data => {
 <style scoped>
 /* 엑셀 페이지 css */
 .ExportExcelPage {
-  background: #f5f7fa;
+  background: var(--bg-color);
   padding-top: 20px;
   display: flex;
   justify-content: center;

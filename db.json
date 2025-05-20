@@ -4091,12 +4091,12 @@
     {
       "email": "admin@kb.com",
       "password": "Pp?4054486",
-      "name": "관리22자",
-      "profileImage": "/src/img/profile/pretty_cabbage.jpg",
+      "name": "관리자",
+      "profileImage": "src/img/cabbage/logo2.png",
       "role": "Admin",
       "status": "active",
       "createdAt": "2025-04-29-수 23:11:35",
-      "updatedAt": "2025-05-19-월 17:03:59",
+      "updatedAt": "2025-05-20-화 13:24:16",
       "id": "3"
     }
   ]
