@@ -56,7 +56,7 @@ const submitSearch = () => {
     <span class="search_icon" @click="submitSearch"
       ><img
         id="magnifier"
-        src="../img/icons/magnifying-glass-solid.png"
+        src="../../img/icons/magnifying-glass-solid.png"
         alt="magnifier"
     /></span>
   </div>
