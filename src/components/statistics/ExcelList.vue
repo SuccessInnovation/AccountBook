@@ -97,7 +97,7 @@ watch(
             class="page-link pt-2"
             href="#"
             @click.prevent="goToPage(currentPage - 1)"
-            ><img src="../img/icons/forward-step-solid-1.svg" alt="이전"
+            ><img src="../../img/icons/forward-step-solid-1.svg" alt="이전"
           /></a>
         </li>
         <li
@@ -116,7 +116,7 @@ watch(
             href="#"
             @click.prevent="goToPage(currentPage + 1)"
           >
-            <img src="../img/icons/forward-step-solid-2.svg" alt="다음" />
+            <img src="../../img/icons/forward-step-solid-2.svg" alt="다음" />
           </a>
         </li>
       </ul>
@@ -157,7 +157,10 @@ tbody td {
   font-size: 15px;
   font-weight: 400;
   border-bottom: 0.3px solid #328e6e59;
-  color: var(--color-font-main);
+  color: var(--main-font-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #col_amount,
 #data_amount {
