@@ -35,14 +35,11 @@
           <span id="saveId_txt">아이디 저장</span>
         </label>
       </div>
-      <button class="login_btn btn clickable_text" @click="login">
-        로그인
-      </button>
+      <button class="login_btn btn" @click="login">로그인</button>
     </form>
-    <button class="signfor_btn btn">
-      <!-- 임시로 회원가입 클릭시 서비스 준비중 페이지로 이동 -->
-      <router-link to="/register" class="clickable_text">회원가입</router-link>
-    </button>
+    <router-link to="/register">
+      <button class="register_btn btn">회원가입</button></router-link
+    >
     <!-- 로그인 실패 메시지 -->
     <p
       class="error"
@@ -55,12 +52,12 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { isEmpty, isValidEmail } from '@/utils/validators'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useUsersTableStore } from '@/stores/UsersTableStore.js'
 
-// 라우터 객체 가져오기
+// 라우터 및 라우트 객체 가져오기
 const router = useRouter()
+const route = useRoute()
 
 // 사용자 입력 상태
 const userInput = reactive({
@@ -74,12 +71,17 @@ const rememberEmail = ref(false)
 // 에러 메시지 상태
 const errorMessage = ref('')
 
-// 저장된 이메일 불러오기
+// 회원가입한 / 저장된 이메일 불러오기
 onMounted(() => {
-  const remember = localStorage.getItem('rememberEmail')
-  if (remember) {
-    userInput.email = remember
-    rememberEmail.value = true
+  // 회원가입 했을 경우
+  if (route.query.email) {
+    userInput.email = route.query.email
+  } else {
+    const remember = localStorage.getItem('rememberEmail')
+    if (remember) {
+      userInput.email = remember
+      rememberEmail.value = true
+    }
   }
 })
 
@@ -183,7 +185,7 @@ h1 {
 }
 
 /* 회원가입 버튼 스타일 */
-.signfor_btn {
+.register_btn {
   color: var(--btn-main-color);
 }
 
@@ -199,6 +201,5 @@ h1 {
 .error {
   color: red;
   margin-top: 5px;
-  min-height: 0;
 }
 </style>

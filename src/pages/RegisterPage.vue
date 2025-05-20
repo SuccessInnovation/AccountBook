@@ -1,19 +1,20 @@
-<script setup></script>
+<script setup>
+import RegisterForm from '@/components/users/RegisterForm.vue'
+</script>
 
 <template>
   <div class="RegisterPage">
-    <p><strong>서비스 준비중입니다</strong></p>
+    <RegisterForm />
   </div>
 </template>
 
 <style scoped>
 .RegisterPage {
-  background: #f5f7fa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
   height: 100vh;
-  font-size: 10rem;
-  color: #333;
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

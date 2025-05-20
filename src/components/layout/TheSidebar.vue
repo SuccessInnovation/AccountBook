@@ -21,7 +21,7 @@ const menuLists = [
       {
         label: '엑셀 내보내기',
         to: '/statistics/export',
-        icon: '/src/img/icons/excel_unselected.svg',
+        icon: '/src/img/icons/excel_selected.svg',
       },
     ],
   },
@@ -39,11 +39,11 @@ const toggleMenu = () => {
 }
 
 // '통계' 메뉴 버튼 클릭 시 하위 메뉴 목록 표시
-const showStatsSubMenu = ref(false)
-const toggleStatsSubMenu = () => {
-  showStatsSubMenu.value = !showStatsSubMenu.value
+const showSubMenu = ref(false)
+const toggleSubMenu = () => {
+  showSubMenu.value = !showSubMenu.value
 }
-console.log(showStatsSubMenu.value)
+console.log(showSubMenu.value)
 </script>
 
 <template>
@@ -58,20 +58,36 @@ console.log(showStatsSubMenu.value)
             v-for="(menu, index) in menuLists"
             :key="'desktop-' + index"
           >
-            <li class="list-group-item" v-if="!menu.submenu">
+            <li
+              class="list-group-item"
+              v-if="!menu.submenu && menu.label !== '예산'"
+            >
               <span class="icon_wrap"
                 ><img :src="menu.icon" alt="아이콘"
               /></span>
               <router-link :to="menu.to">{{ menu.label }}</router-link>
             </li>
-            <li class="list-group-item submenu_wrapper" v-else>
+            <li
+              class="list-group-item"
+              v-else-if="!menu.submenu && menu.label === '예산'"
+              :style="{
+                marginTop: showSubMenu ? '70px' : '0',
+                transition: 'margin-top 1 ease',
+              }"
+            >
               <span class="icon_wrap"
                 ><img :src="menu.icon" alt="아이콘"
               /></span>
-              <div @click="toggleStatsSubMenu" style="cursor: pointer">
+              <router-link :to="menu.to">{{ menu.label }}</router-link>
+            </li>
+            <li class="list-group-item statistics" v-else>
+              <span class="icon_wrap"
+                ><img :src="menu.icon" alt="아이콘"
+              /></span>
+              <div @click="toggleSubMenu" style="cursor: pointer">
                 {{ menu.label }}
               </div>
-              <ul class="submenu" :class="{ submenu_open: showStatsSubMenu }">
+              <ul class="submenu" :class="{ submenu_open: showSubMenu }">
                 <li
                   v-for="(sub, subIndex) in menu.submenu"
                   :key="'desktop-sub-' + subIndex"
@@ -120,9 +136,7 @@ console.log(showStatsSubMenu.value)
   font-size: 14px;
   font-weight: 400;
 }
-.list-group-item,
-.sub_item {
-  background-color: transparent;
+.list-group-item {
   border: none;
   padding: 20px 0px 20px 35px;
   color: var(--color-font-main);
@@ -137,9 +151,17 @@ console.log(showStatsSubMenu.value)
 .list-group-item:hover > a,
 .list-group-item:hover > div,
 .sub_item:hover {
+  color: #28bf6c;
   transition: 0.3s;
 }
+.statistics {
+  position: relative; /* 하위 메뉴 기준 */
+}
 .submenu {
+  position: absolute;
+  top: 70%; /* 부모 바로 아래 */
+  left: 0; /* 부모 왼쪽에 맞춤 */
+  display: block;
   color: black;
   overflow: hidden;
   max-height: 0;
@@ -151,6 +173,15 @@ console.log(showStatsSubMenu.value)
 .submenu.submenu_open {
   max-height: 500px;
   opacity: 1;
+  z-index: 100; /* 위로 표시 */
+}
+.sub_item {
+  padding: 10px 0px 10px 35px;
+  color: var(--color-font-main);
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 12px;
 }
 .router-link-active {
   color: #28bf6c;

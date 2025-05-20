@@ -1,6 +1,6 @@
 // YYYY-MM-DD HH:MM:SS 형식으로 포맷
 export function currentTimestampToString() {
-  return new Date().toString()
+  return Date.now().toString()
 }
 
 export function currentDateToString() {
@@ -16,4 +16,11 @@ export function currentDateToString() {
   const seconds = String(now.getSeconds()).padStart(2, '0')
 
   return `${year}-${month}-${day}-${weekday} ${hours}:${minutes}:${seconds}`
+}
+
+export function formatDate(dateStr) {
+  if (!dateStr) return '-'
+  const [date] = dateStr.split(' ') // ["2025-05-08"]
+  const [year, month, day, weekday] = date.split('-') // ['2025', '05', '08', '목']
+  return `${year}년 ${parseInt(month)}월 ${parseInt(day)}일 ${weekday}요일`
 }

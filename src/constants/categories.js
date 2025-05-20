@@ -56,6 +56,7 @@ export const CATEGORY_IMG = {
   dessert: '/src/img/icons/mug-saucer-solid.svg',
   entertainment: '/src/img/icons/wine-glass-solid.svg',
   shopping: '/src/img/icons/bag-shopping-solid.svg',
+  supplies: '/src/img/icons/house-solid.svg',
   transportation: '/src/img/icons/bus-simple-solid.svg',
   utilities: '/src/img/icons/gear-solid.svg',
   health: '/src/img/icons/house-medical-solid.svg',

@@ -6,7 +6,7 @@
         <h2>{{ calendar.current_month + 1 }}월 총예산</h2>
         <div class="btn_wrap">
           <button class="setting_btn" @click.prevent="budgetSetting">
-            <img src="../img/cabbage/배추9.png" alt="예산설정버튼" />
+            <img src="../../img/cabbage/배추9.png" alt="예산설정버튼" />
             <span class="btn_txt"><strong>예산설정</strong></span>
           </button>
         </div>
@@ -15,7 +15,7 @@
       <div v-if="expenseData.length === 0" class="budget_box">
         <div class="no_budget">
           <p>이번 달 예산이 설정되지 않았어요</p>
-          <img src="../img/cabbage/logo1.png" alt="배추이미지" />
+          <img src="../../img/cabbage/logo1.png" alt="배추이미지" />
         </div>
       </div>
       <!-- 예산이 있을 경우 -->

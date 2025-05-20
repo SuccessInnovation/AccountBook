@@ -24,7 +24,7 @@ function goToPopup() {
   display: flex;
   justify-content: center;
   padding: 20px;
-  background-color: #fff;
+  background-color: var(--bg-color);
 }
 
 /* 2. 추가 버튼 */

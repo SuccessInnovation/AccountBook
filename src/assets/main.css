@@ -68,11 +68,14 @@
   --main-color: #28bf6c;
   --main-font-color: #121212;
   --sub-font-color: #acacac;
-  --btn-main-color: #1c3e2e;
+  /* --btn-main-color: #1c3e2e; */
+  --btn-main-color: #2fa26c;
   --btn-sub-color: #b0d8c6;
-  --btn-border-color: #cccccc;
+  --btn-border-color: #e7e7e7;
   --box-bg-color: #fdfdfd;
   --bg-color: #f5f7fa;
+  --box-shadow-below: 0 4px 4px rgba(0, 0, 0, 0.25);
+  --box-shadow-center: 0 0 20px rgba(205, 198, 219, 0.3);
 
   --color-point-1: #328e6e;
   --color-point-2: #67ae6e;
@@ -100,6 +103,7 @@ body {
   height: 100%;
   font-family: 'NotoSansKR', sans-serif;
   color: var(--color-font-main);
+  background-color: var(--bg-color);
 }
 #app {
   margin: 0;

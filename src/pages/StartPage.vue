@@ -117,7 +117,7 @@ p {
   width: 360px;
   height: 60px;
   line-height: 60px;
-  background-color: #2fa26c;
+  background-color: var(--btn-main-color);
   border-radius: 8px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   color: white;

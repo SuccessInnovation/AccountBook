@@ -45,10 +45,15 @@ function logout() {
         @click="toggleModal"
       />
       <!-- 모달창 -->
-      <div
+      <!-- <div
         class="modal"
         v-if="modalShow"
         :style="{ height: userInfo?.role === 'Admin' ? '217px' : '175px' }"
+      > Dark Mode 있을 경우 -->
+      <div
+        class="modal"
+        v-if="modalShow"
+        :style="{ height: userInfo?.role === 'Admin' ? '175px' : '133px' }"
       >
         <ul>
           <li id="email" v-if="userInfo">{{ userInfo.email }}</li>
@@ -63,9 +68,9 @@ function logout() {
               <img src="@/img/icons/mypage.svg" />Admin Page
             </li></router-link
           >
-          <li id="datrkmode_btn" class="modal_item">
+          <!-- <li id="datrkmode_btn" class="modal_item">
             <img src="@/img/icons/darkmode.svg" />Dark Mode
-          </li>
+          </li> -->
           <li id="logout_btn" class="modal_item" @click="logout">
             <img src="@/img/icons/logout.svg" />Log out
           </li>
@@ -108,7 +113,8 @@ function logout() {
 }
 .modal {
   background: white;
-  height: 175px;
+  /* height: 175px; Dark Mode 있을 경우*/
+  height: 133px;
   width: 200px;
   position: absolute;
   top: 50px;
@@ -119,7 +125,6 @@ function logout() {
   display: flex;
   flex-direction: column;
 }
-
 .modal ul {
   margin: 0;
   padding: 0;
@@ -146,7 +151,6 @@ function logout() {
   border-bottom: 1px solid var(--color-point-5);
   font-size: 14px;
 }
-
 .modal li:not(#email):hover {
   background-color: var(--color-point-5);
 }

@@ -1,11 +1,15 @@
 <template>
-  <div class="container" v-if="user && editMode === false">
+  <div class="container">
     <img
-      :src="user.profileImage || defaultProfileImage"
+      :src="
+        editMode
+          ? editedUser.profileImage
+          : user.profileImage || defaultProfileImage
+      "
       id="profile_img"
       alt="사용자 프로필"
     />
-    <table>
+    <table v-if="user && !editMode">
       <tbody>
         <tr>
           <td>이름</td>
@@ -16,38 +20,24 @@
           <td>{{ user.email }}</td>
         </tr>
         <tr>
-          <td>권한</td>
-          <td>{{ user.role }}</td>
-        </tr>
-        <tr>
-          <td>계정 상태</td>
-          <td>{{ user.status }}</td>
-        </tr>
-        <tr>
           <td>가입일</td>
           <td>{{ formatDate(user.createdAt) }}</td>
         </tr>
         <tr>
           <td>수정일</td>
-          <td>{{ formatDate(user.updatedAt) }}</td>
+          <td>
+            {{ formatDate(user.updatedAt) }}
+          </td>
         </tr>
       </tbody>
     </table>
-    <div
-      class="btn_area mt-4"
-      :class="{ admin_btn_center: user.role === 'Admin' }"
-    >
-      <button id="delete" v-if="user.role == 'User'">탈퇴 요청</button>
-      <button id="edit" @click="toggleEditMode">정보 수정</button>
+    <div class="btn_area mt-4">
+      <button id="edit" @click="toggleEditMode" v-if="user && !editMode">
+        정보 수정
+      </button>
     </div>
-  </div>
-  <div class="container" v-if="user && editMode === true">
-    <img
-      :src="user.profileImage || defaultProfileImage"
-      id="profile_img"
-      alt="사용자 프로필"
-    />
-    <table>
+
+    <table v-if="user && editMode">
       <tbody>
         <tr>
           <td>이름 변경</td>
@@ -96,42 +86,35 @@
           </td>
         </tr>
         <tr>
-          <td>프로필 사진 변경</td>
+          <td>프로필 사진</td>
           <td>
-            <label for="fileInput" id="fileLabel"
-              ><img src="/src/img/icons/upload_file.svg" id="upload_icon" />파일
-              선택 -
-              <span
-                id="fileName"
-                :style="{
-                  color: fileSelected
-                    ? 'var(--color-font-main)'
-                    : 'var(--color-point-4)',
-                }"
-                >{{ fileName || extractFileName(user.profileImage) }}</span
-              ></label
-            >
-            <input
-              class="input_box"
-              type="file"
-              id="fileInput"
-              @change="updateFileName"
-            />
+            <div class="profile_img_opt_wrap">
+              <div
+                v-for="(img, index) in profileImages"
+                :key="index"
+                class="profile_img_opt"
+                :class="{ selected: editedUser.profileImage === img.dir }"
+                @click="selectProfileImage(img.dir)"
+              >
+                <img :src="img.dir" :alt="img.name" />
+              </div>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
-    <div class="btn_area mt-4">
+    <div class="btn_area" v-if="user && editMode">
       <button id="cancel" @click="toggleEditMode">취소</button>
       <button id="apply" @click="saveChanges">적용</button>
     </div>
+    <div v-if="!user">사용자 정보를 불러오는 중입니다...</div>
   </div>
-  <div v-if="!user">사용자 정보를 불러오는 중입니다...</div>
 </template>
 
 <script setup>
 import { reactive, ref, onMounted } from 'vue'
 import { useUsersTableStore } from '@/stores/UsersTableStore'
+import { formatDate } from '@/utils/date'
 
 // 사용자 정보
 const user = reactive({})
@@ -143,13 +126,17 @@ const editedUser = reactive({
 })
 const { getUserInfoLocalStorage, getUserInfoById, updateUser } =
   useUsersTableStore()
-const defaultProfileImage = '@/img/profile/pretty_cabbage.jpg' // 기본 이미지
+const defaultProfileImage = 'src/img/profile/pretty_cabbage.jpg' // 기본 이미지
+const profileImages = [
+  { name: 'real cabbage', dir: 'src/img/cabbage/pretty_cabbage.jpg' },
+  { name: 'green cabbage', dir: 'src/img/cabbage/logo1.svg' },
+  { name: 'yellow cabbage', dir: 'src/img/cabbage/logo4.png' },
+  { name: 'red cabbage', dir: 'src/img/cabbage/logo2.png' },
+]
 
 // 사용자 정보 수정
 const editMode = ref(false)
 const confirmPassword = ref('')
-const fileName = ref('')
-const fileSelected = ref(false)
 
 onMounted(() => {
   const userInfo = getUserInfoLocalStorage()
@@ -171,35 +158,19 @@ onMounted(() => {
   }
 })
 
-function formatDate(dateStr) {
-  if (!dateStr) return '-'
-  const [date] = dateStr.split(' ') // ["2025-05-08"]
-  const [year, month, day, weekday] = date.split('-') // ['2025', '05', '08', '목']
-  return `${year}년 ${parseInt(month)}월 ${parseInt(day)}일 ${weekday}요일`
-}
-
 function toggleEditMode() {
   editMode.value = !editMode.value
+  if (editMode.value) {
+    // 수정 모드 진입 시 비밀번호_확인 값 초기화
+    confirmPassword.value = ''
+    // 프로필 이미지 선택 사용자의 현재 프로필 이미지로 초기화
+    Object.assign(editedUser, user)
+  }
   console.log('수정하기 모드:', editMode.value)
 }
 
-function extractFileName(path) {
-  return path.split('/').pop()
-}
-
-function updateFileName(event) {
-  const file = event.target.files[0] // 파일 선택
-  console.log('file: ', file)
-  if (file) {
-    fileName.value = file.name // 파일명 업데이트
-    fileSelected.value = true // 파일 선택 상태로 업데이트
-    // editedUser.profileImage에 파일 설정
-    const reader = new FileReader()
-    reader.onload = e => {
-      editedUser.profileImage = e.target.result
-    }
-    reader.readAsDataURL(file)
-  }
+function selectProfileImage(imageDir) {
+  editedUser.profileImage = imageDir
 }
 
 function saveChanges() {
@@ -207,20 +178,12 @@ function saveChanges() {
     alert('비밀번호가 일치하지 않습니다.')
     return
   }
-  const formData = new FormData()
-  formData.append('name', editedUser.name)
-  formData.append('email', editedUser.email)
-  formData.append('password', editedUser.password || '')
-  if (editedUser.profileFile) {
-    formData.append('profileImage', editedUser.profileFile) // 실제 파일 첨부
-    console.log('editedUser.profileFile: ', editedUser.profileFile)
-  }
   try {
     const success = updateUser(editedUser)
     if (success) {
-      Object.assign(user, editedUser) // user 변경 내용 반영
+      Object.assign(user, { ...editedUser }) // user 변경 내용 반영
       toggleEditMode()
-      console.log('정보가 업데이트되었습니다.')
+      console.log('정보가 업데이트되었습니다. user:', user)
     } else {
       return
     }
@@ -250,8 +213,8 @@ function saveChanges() {
 table {
   margin: 30px 0 0 0;
   padding: 10px 30px;
-  width: 530px;
-  border-spacing: 0 20px; /* tr 수직 간격 */
+  width: 480px;
+  border-spacing: 20px 20px; /* 수평 20px, 수직 20px 간격 */
   border-collapse: separate;
   font-size: 14px;
 }
@@ -267,6 +230,29 @@ td:nth-of-type(2) {
   text-align: right;
   width: 350px;
 }
+.profile_img_opt_wrap {
+  display: flex;
+  gap: 10px;
+}
+.profile_img_opt {
+  border: 2px solid transparent;
+  border-radius: 30px;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+}
+
+.profile_img_opt img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile_img_opt.selected {
+  border-color: var(--main-color);
+  box-shadow: var(--box-shadow-below);
+}
 .btn_area {
   display: flex;
   justify-content: space-between;
@@ -275,7 +261,7 @@ td:nth-of-type(2) {
   width: 350px;
 }
 button {
-  width: 80%;
+  width: 100%;
   height: 35px;
   border-radius: 4px;
   font-size: 14px;

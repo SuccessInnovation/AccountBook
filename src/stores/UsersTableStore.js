@@ -6,7 +6,7 @@ import {
   isEmpty,
   isValidEmail,
   isValidPassword,
-  validateUserInput,
+  isValidPasswordChk,
 } from '@/utils/validators'
 import { currentTimestampToString, currentDateToString } from '@/utils/date'
 import { createTestJwt, parseJwt } from '@/utils/jwt'
@@ -19,7 +19,7 @@ export const useUsersTableStore = defineStore('users', () => {
       console.log('로컬 스토리지에 저장된 userInfo:', data)
       return data ? JSON.parse(data) : null
     } catch (error) {
-      console.error('❌ 로컬 스토리지에서 userInfo 가져오기 실패:', error)
+      console.error('로컬 스토리지에서 userInfo 가져오기 실패:', error)
       return null
     }
   }
@@ -27,9 +27,9 @@ export const useUsersTableStore = defineStore('users', () => {
   const setUserInfoLocalStorage = userInfo => {
     try {
       localStorage.setItem('userInfo', JSON.stringify(userInfo))
-      console.log('✅ 로컬 스토리지에 userInfo 저장됨:', userInfo)
+      console.log('로컬 스토리지에 userInfo 저장됨:', userInfo)
     } catch (error) {
-      console.error('❌ 로컬 스토리지에 userInfo 저장 실패:', error)
+      console.error('로컬 스토리지에 userInfo 저장 실패:', error)
     }
   }
 
@@ -47,10 +47,10 @@ export const useUsersTableStore = defineStore('users', () => {
         state.usersList = response.data
         return response.data
       } else {
-        console.log('❌ 사용자 목록 조회 실패')
+        console.log('사용자 목록 조회 실패')
       }
     } catch (error) {
-      console.error('❌ 사용자 목록 조회 에러:', error)
+      console.error('사용자 목록 조회 에러:', error)
     }
   }
 
@@ -65,27 +65,47 @@ export const useUsersTableStore = defineStore('users', () => {
         console.log('userInfo from db by id: ', userInfo)
         return userInfo
       } else {
-        console.log('❌ 사용자 정보 조회 실패')
+        console.log('사용자 정보 조회 실패')
       }
     } catch (error) {
-      console.error('❌ 사용자 정보 조회 에러:', error)
+      console.error('사용자 정보 조회 에러:', error)
     }
   }
 
   // API: 사용자 추가
-  const addUser = async ({ email, password, name }, successCallback) => {
-    if (!validateUserInput({ email, password, name })) return
+  const registerUser = async (
+    { name, email, password1, password2 },
+    successCallback,
+    failCallback,
+  ) => {
+    // 유효성 검사
+    if (isEmpty(name)) return failCallback?.('이름을 입력해주세요.')
+    if (isEmpty(email)) return failCallback?.('이메일을 입력해주세요.')
+    if (!isValidEmail(email))
+      return failCallback?.('올바른 이메일 형식을 입력해주세요.')
     const isDuplicate = state.usersList.some(user => user.email === email)
-    if (isDuplicate) return console.log('⚠️ 이미 존재하는 이메일입니다.')
+    if (isDuplicate)
+      return failCallback?.(
+        '이미 존재하는 이메일입니다. 로그인을 진행해주세요.',
+      )
+    if (isEmpty(password1)) return failCallback?.('비밀번호를 입력해주세요.')
+    if (!isValidPassword(password1))
+      return failCallback?.(
+        '비밀번호는 8자 이상이며 영문자, 숫자, 특수문자를 포함해야 합니다.',
+      )
+    if (!isValidPasswordChk(password1, password2))
+      return failCallback?.('비밀번호가 일치하지 않습니다.')
+
     const payload = {
-      id: currentTimestampToString(),
+      id: currentTimestampToString(), // 예: "1746951112734"
       email,
-      password,
+      password: password1,
       name,
-      createdAt: currentDateToString(),
-      updatedAt: null,
+      profileImage: 'src/img/profile/pretty_cabbage.jpg',
       status: 'active',
       role: 'user',
+      createdAt: currentDateToString(),
+      updatedAt: null,
     }
 
     try {
@@ -94,10 +114,10 @@ export const useUsersTableStore = defineStore('users', () => {
         await fetchUsers()
         successCallback?.()
       } else {
-        console.log('❌ 사용자 추가 실패')
+        console.log('사용자 추가 실패')
       }
     } catch (error) {
-      console.error('❌ 사용자 추가 에러:', error)
+      console.error('사용자 추가 에러:', error)
     }
   }
 
@@ -166,10 +186,10 @@ export const useUsersTableStore = defineStore('users', () => {
         console.log('업데이트된 currentUser: ', state.currentUser)
         successCallback?.()
       } else {
-        console.log('❌ 사용자 정보 변경 실패: ', response.data.message)
+        console.log('사용자 정보 변경 실패: ', response.data.message)
       }
     } catch (error) {
-      console.error('❌ 사용자 정보 수정 에러:', error)
+      console.error('사용자 정보 수정 에러:', error)
     }
     return true
   }
@@ -219,7 +239,7 @@ export const useUsersTableStore = defineStore('users', () => {
         failCallback?.('토큰이 만료되었거나 유효하지 않습니다.')
       }
     } catch (error) {
-      console.error('❌ 로그인 에러:', error)
+      console.error('로그인 에러:', error)
       failCallback?.('서버 오류: ' + error)
     }
   }
@@ -231,12 +251,12 @@ export const useUsersTableStore = defineStore('users', () => {
       // 로그아웃 시 Authorization 헤더를 초기화
       delete axios.defaults.headers.common['Authorization']
       // state 초기화
-      state.usersList = null
-      state.currentUser = null
+      state.usersList = []
+      state.currentUser = {}
       // state.currentUser = null
-      console.log('✅ 로그아웃 완료: userInfo 삭제됨')
+      console.log('로그아웃 완료: userInfo 삭제됨')
     } catch (error) {
-      console.error('❌ 로그아웃 중 에러 발생:', error)
+      console.error('로그아웃 중 에러 발생:', error)
     }
   }
 
@@ -246,7 +266,7 @@ export const useUsersTableStore = defineStore('users', () => {
     getUserInfoLocalStorage,
     fetchUsers,
     getUserInfoById,
-    addUser,
+    registerUser,
     updateUser,
     loginUser,
     logoutUser,

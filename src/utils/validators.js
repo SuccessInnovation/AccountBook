@@ -16,18 +16,7 @@ export const isValidPassword = password => {
   return regex.test(password)
 }
 
-// 유효성 검사
-export const validateUserInput = ({ email, password, name }) => {
-  if (isEmpty(email)) return alert('이메일을 입력해주세요.')
-  if (!isValidEmail(email)) return alert('올바른 이메일 형식을 입력해주세요.')
-
-  if (isEmpty(password)) return alert('비밀번호를 입력해주세요.')
-  if (!isValidPassword(password))
-    return alert(
-      '비밀번호는 8자 이상이며 영문자, 숫자, 특수문자를 포함해야 합니다.',
-    )
-
-  if (isEmpty(name)) return alert('이름을 입력해주세요.')
-
-  return true
+// 비밀번호1, 비밀번호2 유효성 검사 (8자 이상, 영문/숫자/특수문자 포함)
+export const isValidPasswordChk = (password1, password2) => {
+  return password1 === password2
 }
