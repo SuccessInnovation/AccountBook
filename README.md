@@ -332,6 +332,10 @@
   ```
   npm install swiper
   ```
+- 🍎 jwt.io (로그인 회원가입 토큰)
+  ```
+  npm install jsonwebtoken
+  ```
 
 ### 3. 프로젝트 초기 세팅
 
