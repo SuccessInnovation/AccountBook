@@ -20,6 +20,7 @@
     "jsrsasign": "^11.1.0",
     "pinia": "^3.0.2",
     "router": "^2.2.0",
+    "swiper": "^11.2.7",
     "vue": "^3.5.13",
     "vue-chart": "^2.0.0",
     "vue-chartjs": "^5.3.2",
@@ -36,5 +37,9 @@
     "prettier": "3.5.3",
     "vite": "^5.2.10",
     "vite-plugin-vue-devtools": "^7.7.2"
-  }
+  },
+  "description": "안녕하세요, 온라인 가계부 서비스 \"배추\"입니다. 다같이 배춧잎을 지갑에 넣어볼까요?",
+  "main": "eslint.config.js",
+  "author": "",
+  "license": "ISC"
 }

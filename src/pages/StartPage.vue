@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import FeautureSlider from '@/components/start/FeautureSlider.vue'
+</script>
 
 <template>
   <div class="StartPage">
@@ -16,12 +18,11 @@
           </div>
         </div>
         <div class="function_slide">
+          <FeautureSlider />
           <!-- <h2>제공하는 기능들 보여주는 슬라이드 (아래 > 위 슬라이드)</h2> -->
         </div>
       </div>
-      <div class="start-button-box">
-        <router-link to="login">시작하기</router-link>
-      </div>
+      <router-link to="login" class="start-button-box">시작하기</router-link>
     </section>
   </div>
 </template>
